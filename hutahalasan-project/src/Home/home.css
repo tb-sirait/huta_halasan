@@ -1,0 +1,327 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  line-height: 1.6;
+  color: #333;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* Header */
+
+/* Hero Section */
+.hero {
+  height: 100vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/api/placeholder/1200/800") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.hero-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-content {
+  color: white;
+  max-width: 600px;
+  padding: 2rem;
+}
+
+.hero-title {
+  font-size: 3.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+  line-height: 1.2;
+}
+
+.hero-subtitle {
+  display: block;
+  font-size: 3rem;
+}
+
+.hero-description {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
+}
+
+.hero-location {
+  font-size: 1.4rem;
+  font-weight: bold;
+  margin-bottom: 0.3rem;
+}
+
+.hero-location-sub {
+  font-size: 1rem;
+  opacity: 0.8;
+}
+
+/* Spirituality Section */
+.spirituality {
+  height: 70vh;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+    url("/api/placeholder/1200/600") center/cover no-repeat;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+
+.spirituality-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spirituality-content {
+  color: white;
+  max-width: 800px;
+  padding: 2rem;
+}
+
+.spirituality-title {
+  font-size: 2.5rem;
+  font-weight: bold;
+  margin-bottom: 1rem;
+}
+
+.spirituality-subtitle {
+  font-size: 1.5rem;
+  opacity: 0.9;
+}
+
+/* About Section */
+.about {
+  padding: 80px 0;
+  background: #f8f9fa;
+}
+
+.section-title {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 3rem;
+  font-weight: bold;
+}
+
+.section-title.white {
+  color: white;
+}
+
+.about-content {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  gap: 3rem;
+  align-items: center;
+}
+
+.about-image img {
+  width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+}
+
+.about-text {
+  font-size: 1.1rem;
+  line-height: 1.8;
+  color: #555;
+}
+
+/* Documents Section */
+.documents {
+  padding: 80px 0;
+  background: white;
+}
+
+.documents-carousel {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.carousel-btn {
+  background: #333;
+  color: white;
+  border: none;
+  padding: 1rem 1.5rem;
+  font-size: 2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s;
+}
+
+.carousel-btn:hover {
+  background: #555;
+}
+
+.document-card {
+  background: #f8f9fa;
+  border-radius: 10px;
+  overflow: hidden;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  width: 400px;
+}
+
+.document-preview {
+  height: 200px;
+  background: #ddd;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+  font-size: 1.1rem;
+}
+
+.document-info {
+  padding: 1.5rem;
+  text-align: center;
+}
+
+.document-info h3 {
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.document-info p {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+/* Organization Section */
+.organization {
+  padding: 80px 0;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+.org-chart {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.org-level-1,
+.org-level-2,
+.org-level-3 {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+.org-level-2 {
+  justify-content: space-around;
+}
+
+.org-card {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  min-width: 150px;
+}
+
+.org-card.wide {
+  min-width: 300px;
+  padding: 2rem;
+}
+
+.org-photo {
+  width: 80px;
+  height: 80px;
+  background: #ddd;
+  border-radius: 50%;
+  margin: 0 auto 1rem;
+}
+
+.org-info h4 {
+  font-size: 0.9rem;
+  color: #666;
+  margin-bottom: 0.5rem;
+}
+
+.org-info p {
+  font-size: 1.1rem;
+  font-weight: bold;
+  color: #333;
+}
+
+/* Bottom Sections */
+.bottom-sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  height: 50vh;
+}
+
+.bottom-section {
+  position: relative;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.news-section {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/api/placeholder/400/300");
+}
+
+.education-section {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/api/placeholder/400/300");
+}
+
+.knowledge-section {
+  background-image:
+    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
+    url("/api/placeholder/400/300");
+}
+
+.section-overlay {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.section-overlay.red {
+  background: linear-gradient(rgba(220, 53, 69, 0.8), rgba(220, 53, 69, 0.8));
+}
+
+.section-overlay.blue {
+  background: linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.8));
+}
+
+.bottom-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  text-align: center;
+}
