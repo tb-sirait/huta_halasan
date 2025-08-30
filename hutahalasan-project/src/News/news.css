@@ -1,7 +1,6 @@
 /* News Page Styles - With Hero Section */
 
 .news-page-container {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
   background-color: #f8f9fa;
   min-height: 100vh;
   color: #333;
@@ -10,9 +9,6 @@
 /* Hero Section */
 .news-hero-section {
   height: 400px;
-  background: 
-    linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-    url('/api/placeholder/1200/400') center/cover;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -47,6 +43,16 @@
   opacity: 0.9;
   font-weight: 300;
   text-shadow: 1px 1px 4px rgba(0, 0, 0, 0.5);
+}
+
+.news-hero-background {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 1;
 }
 
 /* Navigation Bar */

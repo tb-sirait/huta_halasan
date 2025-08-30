@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./home.css";
 import Footer from "../Footer/Footer";
 import Header from "../Navbar/Header";
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 
 const App = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
@@ -29,6 +30,7 @@ const App = () => {
 
       {/* Hero Section */}
       <section className="hero">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="hero-background" />
         <div className="hero-overlay">
           <div className="hero-content">
             <h1 className="hero-title">
@@ -56,10 +58,10 @@ const App = () => {
       {/* About Section */}
       <section className="about">
         <div className="container">
-          <h2 className="section-title">About Us</h2>
+          <h2 className="home-section-title">About Us</h2>
           <div className="about-content">
             <div className="about-image">
-              <img src="/api/placeholder/300/200" alt="Bale Pasogit Building" />
+              <img src={imgHutaHalasan} alt="Bale Pasogit Building" className="building" />
             </div>
             <div className="about-text">
               <p>
@@ -94,7 +96,7 @@ const App = () => {
       {/* Legality Documents */}
       <section className="documents">
         <div className="container">
-          <h2 className="section-title">Legality Documents</h2>
+          <h2 className="home-section-title">Legality Documents</h2>
           <div className="documents-carousel">
             <button className="carousel-btn prev" onClick={prevDoc}>
               ‹
@@ -118,7 +120,7 @@ const App = () => {
       {/* Organization Structure */}
       <section className="organization">
         <div className="container">
-          <h2 className="section-title white">Organization Structure</h2>
+          <h2 className="home-section-title white">Organization Structure</h2>
           <div className="org-chart">
             <div className="org-level-1">
               <div className="org-card">

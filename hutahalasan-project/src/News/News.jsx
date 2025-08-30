@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "./news.css";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
+import imgHutaHalasan from '../assets/gambar_huta_halasan.jpg';
 
 const NewsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState("Related");
@@ -123,6 +124,7 @@ const NewsPage = () => {
       
       {/* Hero Section with Background Image */}
       <div className="news-hero-section">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="news-hero-background" />
         <div className="news-hero-overlay">
           <div className="news-hero-content">
             <h1 className="news-hero-title">News</h1>

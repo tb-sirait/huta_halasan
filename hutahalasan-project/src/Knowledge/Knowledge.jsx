@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Header from '../Navbar/Header.jsx';
 import Footer from '../Footer/Footer.jsx';
 import './Knowledge.css';
+import imgHutaHalasan from '../assets/gambar_huta_halasan.jpg';
 
 const Knowledge = () => {
   const [searchQuery, setSearchQuery] = useState('');
@@ -11,7 +12,7 @@ const Knowledge = () => {
   // Sample data for main featured article
   const featuredArticle = {
     id: 1,
-    title: 'Upacara Adat Batak Toba di Samosir',
+    title: 'Acara Ulaon Sipaha Lima di Huta Halasan',
     subtitle: 'Ritual tradisional yang masih lestari | Journalist',
     image: '/api/placeholder/600/400',
     category: 'Budaya',
@@ -86,8 +87,9 @@ const Knowledge = () => {
       {/* Hero Section with Background Image */}
       <div className="news-hero-section">
         <div className="news-hero-overlay">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="knowledge-hero-background" />
           <div className="news-hero-content">
-            <h1 className="news-hero-title">News</h1>
+            <h1 className="news-hero-title">Knowledge</h1>
             <p className="news-hero-subtitle">(batak script)</p>
           </div>
         </div>
@@ -96,7 +98,7 @@ const Knowledge = () => {
 
         {/* Header Section */}
         <div className="knowledge-header">
-          <h2 className="knowledge-section-title">News</h2>
+          <h2 className="knowledge-section-title">Knowledge</h2>
           <div className="knowledge-controls">
           
             <div className="knowledge-search-wrapper">
