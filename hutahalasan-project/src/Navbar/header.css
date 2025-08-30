@@ -65,3 +65,53 @@
   color: white;
   font-size: 0.9rem;
 }
+
+option {
+  background: white;
+  color: black;
+}
+
+.brand-logo {
+  width: 40px;
+  height: 40px;
+  border-radius: 5px;
+}
+
+.hamburger {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  /* Sembunyikan menu utama */
+  .nav {
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 70px; /* tinggi header */
+    right: 20px;
+    background: rgba(0, 0, 0, 0.95);
+    padding: 1rem;
+    border-radius: 8px;
+    gap: 1rem;
+  }
+
+  /* Kalau ada class "open" dari state React */
+  .nav.open {
+    display: flex;
+  }
+
+  /* Hamburger icon */
+  .hamburger {
+    display: block;
+    background: none;
+    border: none;
+    font-size: 28px;
+    color: white;
+    cursor: pointer;
+  }
+
+  /* Supaya header lebih rapat di mobile */
+  .header .container {
+    padding: 0 1rem;
+  }
+}

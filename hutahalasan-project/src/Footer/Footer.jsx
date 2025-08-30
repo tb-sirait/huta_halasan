@@ -11,7 +11,7 @@ function Footer() {
               <div className="footer-logo">
                 <div className="footer-logo-icon"></div>
                 <div>
-                  <p className="footer-brand">Pameran Sari Pamgit</p>
+                  <p className="footer-brand">Parmalim Bale Pasogit</p>
                   <p className="footer-brand-sub">Huta Halasan</p>
                 </div>
               </div>
@@ -20,9 +20,9 @@ function Footer() {
                   <p>
                     Huta Halasan
                     <br />
-                    1005+GH, Sionggang, Tapanul, Jnc.
+                    1005+GH, Sionggang, Tapanuli Utara,
                     <br />
-                    Lombap Julu, Toba, Sumatera Utara
+                    Lumban Julu, Toba, Sumatera Utara
                     <br />
                     North Sumatera 22316, Indonesia
                   </p>
