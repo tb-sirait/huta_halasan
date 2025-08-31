@@ -3,6 +3,10 @@ import "./home.css";
 import Footer from "../Footer/Footer";
 import Header from "../Navbar/Header";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import newsBg from "../assets/1.jpg";
+import eduBg from "../assets/2.jpg";
+import knowledgeBg from "../assets/gambar_huta_halasan.jpg";
+import { Link } from "react-router-dom";
 
 const App = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
@@ -181,21 +185,59 @@ const App = () => {
 
       {/* Bottom Sections */}
       <section className="bottom-sections">
-        <div className="bottom-section news-section">
+        {/* News */}
+        <Link
+          to="/news"
+          className="bottom-section"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${newsBg})`,
+          }}
+        >
           <div className="section-overlay">
-            <h2 className="bottom-title">News</h2>
+            <div className="text-container">
+              <h2 className="bottom-title">News</h2>
+              <p className="hover-subtext">
+                Menjelajahi halaman News untuk berita terbaru
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="bottom-section education-section">
+        </Link>
+
+        {/* Education */}
+        <Link
+          to="/edu"
+          className="bottom-section"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${eduBg})`,
+          }}
+        >
           <div className="section-overlay red">
-            <h2 className="bottom-title">Educations</h2>
+            <div className="text-container">
+              <h2 className="bottom-title">Educations</h2>
+              <p className="hover-subtext">
+                Menjelajahi halaman Education untuk materi pembelajaran
+              </p>
+            </div>
           </div>
-        </div>
-        <div className="bottom-section knowledge-section">
+        </Link>
+
+        {/* Knowledge */}
+        <Link
+          to="/knowledge"
+          className="bottom-section"
+          style={{
+            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${knowledgeBg})`,
+          }}
+        >
           <div className="section-overlay blue">
-            <h2 className="bottom-title">Knowledges</h2>
+            <div className="text-container">
+              <h2 className="bottom-title">Knowledges</h2>
+              <p className="hover-subtext">
+                Menjelajahi halaman Knowledge untuk wawasan tambahan
+              </p>
+            </div>
           </div>
-        </div>
+        </Link>
       </section>
       {/* Footer */}
       <Footer />

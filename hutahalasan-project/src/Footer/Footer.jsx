@@ -1,5 +1,6 @@
 import React from "react";
 import "./footer.css";
+import imgLogo from "../assets/logo_huta_halasan.jpg";
 
 function Footer() {
   return (
@@ -9,7 +10,9 @@ function Footer() {
           <div className="footer-content">
             <div className="footer-left">
               <div className="footer-logo">
-                <div className="footer-logo-icon"></div>
+                <div className="footer-logo-icon">
+                  <img src={imgLogo} alt="Huta Halasan Logo" />
+                </div>
                 <div>
                   <p className="footer-brand">Parmalim Bale Pasogit</p>
                   <p className="footer-brand-sub">Huta Halasan</p>

@@ -340,52 +340,61 @@
 
 /* Bottom Sections */
 .bottom-sections {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  height: 50vh;
+  display: flex;
+  flex-direction: row;
+  width: 100%;
 }
 
 .bottom-section {
+  flex: 1;
+  min-height: 300px;
   position: relative;
+  overflow: hidden;
+  cursor: pointer;
+
+  /* untuk animasi halus */
+  transition:
+    transform 0.8s ease,
+    filter 0.8s ease;
+}
+
+.bottom-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
   background-size: cover;
   background-position: center;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  background-repeat: no-repeat;
+  z-index: 0;
+
+  /* ambil background dari inline style */
+  background-image: inherit;
+
+  /* animasi halus */
+  transition: transform 0.6s ease;
 }
 
-.news-section {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("/api/placeholder/400/300");
-}
-
-.education-section {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("/api/placeholder/400/300");
-}
-
-.knowledge-section {
-  background-image:
-    linear-gradient(rgba(0, 0, 0, 0.4), rgba(0, 0, 0, 0.4)),
-    url("/api/placeholder/400/300");
+.bottom-section:hover::before {
+  transform: scale(1.1); /* zoom halus */
 }
 
 .section-overlay {
+  position: relative;
+  z-index: 1; /* pastikan overlay di atas gambar */
   width: 100%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
+  transition: background 0.6s ease;
 }
 
 .section-overlay.red {
-  background: linear-gradient(rgba(220, 53, 69, 0.8), rgba(220, 53, 69, 0.8));
+  background: linear-gradient(rgba(220, 53, 69, 0.4), rgba(220, 53, 69, 0.6));
 }
 
 .section-overlay.blue {
-  background: linear-gradient(rgba(0, 123, 255, 0.8), rgba(0, 123, 255, 0.8));
+  background: linear-gradient(rgba(0, 123, 255, 0.4), rgba(0, 123, 255, 0.6));
 }
 
 .bottom-title {
@@ -393,13 +402,48 @@
   font-size: 2rem;
   font-weight: bold;
   text-align: center;
+  transition: transform 0.6s ease;
 }
 
-.home-section-title {
+.bottom-section:hover .bottom-title {
+  transform: scale(1.05); /* judul ikut zoom sedikit */
+}
+
+.text-container {
   text-align: center;
-  margin-bottom: 2rem;
-  font-size: 3rem;
-  font-family: "Arimo-Bold", sans-serif;
+}
+
+.bottom-title {
+  color: white;
+  font-size: 2rem;
+  font-weight: bold;
+  margin: 0;
+  transition: transform 0.6s ease;
+}
+
+.hover-subtext {
+  margin-top: 0.5rem;
+  font-size: 0.9rem;
+  font-weight: 300;
+  color: rgba(255, 255, 255, 0.637); /* hitam tipis */
+  opacity: 0;
+  transform: translateY(10px);
+  transition:
+    opacity 0.6s ease,
+    transform 0.6s ease;
+  pointer-events: none; /* supaya teks tidak mengganggu hover */
+}
+
+/* Saat hover, teks muncul */
+.bottom-section:hover .hover-subtext {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (max-width: 768px) {
+  .hover-subtext {
+    display: none !important;
+  }
 }
 
 @media (max-width: 768px) {

@@ -24,11 +24,10 @@
   gap: 1rem;
 }
 
-.footer-logo-icon {
-  width: 50px;
-  height: 50px;
-  background: #e74c3c;
-  border-radius: 5px;
+.footer-logo-icon img {
+  width: 70px;
+  height: 60px;
+  object-fit: cover;
 }
 
 .footer-brand {
