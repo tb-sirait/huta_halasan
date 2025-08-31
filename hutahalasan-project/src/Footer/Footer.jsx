@@ -20,11 +20,11 @@ function Footer() {
                   <p>
                     Huta Halasan
                     <br />
-                    1005+GH, Sionggang, Tapanuli Utara,
+                    H2G5+82, Sionggang Tengah,
                     <br />
-                    Lumban Julu, Toba, Sumatera Utara
+                    Kec. Lumban Julu, Toba, Sumatera Utara
                     <br />
-                    North Sumatera 22316, Indonesia
+                    Indonesia 22386
                   </p>
                 </div>
               </div>
@@ -62,7 +62,9 @@ function Footer() {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>2023 © Bale Pasogit Huta Halasan | All Rights Reserved</p>
+            <p>
+              2025 © Parmalim Bale Pasogit Huta Halasan | All Rights Reserved
+            </p>
           </div>
         </div>
       </div>

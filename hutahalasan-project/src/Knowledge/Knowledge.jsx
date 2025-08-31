@@ -1,93 +1,97 @@
-import React, { useState } from 'react';
-import Header from '../Navbar/Header.jsx';
-import Footer from '../Footer/Footer.jsx';
-import './Knowledge.css';
-import imgHutaHalasan from '../assets/gambar_huta_halasan.jpg';
+import React, { useState } from "react";
+import Header from "../Navbar/Header.jsx";
+import Footer from "../Footer/Footer.jsx";
+import "./Knowledge.css";
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 
 const Knowledge = () => {
-  const [searchQuery, setSearchQuery] = useState('');
-  const [selectedFilter, setSelectedFilter] = useState('Related');
-  const [sortBy, setSortBy] = useState('Latest');
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedFilter, setSelectedFilter] = useState("Related");
+  const [sortBy, setSortBy] = useState("Latest");
 
   // Sample data for main featured article
   const featuredArticle = {
     id: 1,
-    title: 'Acara Ulaon Sipaha Lima di Huta Halasan',
-    subtitle: 'Ritual tradisional yang masih lestari | Journalist',
-    image: '/api/placeholder/600/400',
-    category: 'Budaya',
+    title: "Acara Ulaon Sipaha Lima di Huta Halasan",
+    subtitle: "Ritual tradisional yang masih lestari | Journalist",
+    image: "/api/placeholder/600/400",
+    category: "Budaya",
     views: 1200,
     comments: 45,
-    isFeatured: true
+    isFeatured: true,
   };
 
   // Sample data for regular articles
   const articles = [
     {
       id: 2,
-      title: 'Festival Gondang Sabangunan 2024',
-      subtitle: 'Perayaan musik tradisional Batak | Journalist',
-      image: '/api/placeholder/400/300',
-      category: 'Budaya',
+      title: "Festival Gondang Sabangunan 2024",
+      subtitle: "Perayaan musik tradisional Batak | Journalist",
+      image: "/api/placeholder/400/300",
+      category: "Budaya",
       views: 856,
       comments: 23,
-      timeAgo: '2 days ago'
+      timeAgo: "2 days ago",
     },
     {
       id: 3,
-      title: 'Sopo Godang: Arsitektur Tradisional Batak',
-      subtitle: 'Rumah adat yang penuh makna | Journalist',
-      image: '/api/placeholder/400/300',
-      category: 'Budaya',
+      title: "Sopo Godang: Arsitektur Tradisional Batak",
+      subtitle: "Rumah adat yang penuh makna | Journalist",
+      image: "/api/placeholder/400/300",
+      category: "Budaya",
       views: 642,
       comments: 18,
-      timeAgo: '3 days ago'
-    }
+      timeAgo: "3 days ago",
+    },
   ];
 
   // Sample trending data
   const trendingNews = [
     {
       id: 1,
-      title: 'Ulos Batak: Kain Suci Penuh Makna',
-      subtitle: 'Filosofi dan kegunaan dalam kehidupan',
-      timeAgo: '1 day ago',
-      author: 'Journalist',
+      title: "Ulos Batak: Kain Suci Penuh Makna",
+      subtitle: "Filosofi dan kegunaan dalam kehidupan",
+      timeAgo: "1 day ago",
+      author: "Journalist",
       views: 1300,
       comments: 67,
-      rank: 1
+      rank: 1,
     },
     {
       id: 2,
-      title: 'Sigale-gale: Boneka Tradisional yang Hidup',
-      subtitle: 'Seni pertunjukan unik dari Samosir',
-      timeAgo: '2 days ago',
-      author: 'Journalist',
+      title: "Sigale-gale: Boneka Tradisional yang Hidup",
+      subtitle: "Seni pertunjukan unik dari Samosir",
+      timeAgo: "2 days ago",
+      author: "Journalist",
       views: 921,
       comments: 43,
-      rank: 2
+      rank: 2,
     },
     {
       id: 3,
-      title: 'Bahasa Batak: Pelestarian Warisan Leluhur',
-      subtitle: 'Upaya menjaga bahasa daerah',
-      timeAgo: '3 days ago',
-      author: 'Journalist',
+      title: "Bahasa Batak: Pelestarian Warisan Leluhur",
+      subtitle: "Upaya menjaga bahasa daerah",
+      timeAgo: "3 days ago",
+      author: "Journalist",
       views: 756,
       comments: 29,
-      rank: 3
-    }
+      rank: 3,
+    },
   ];
 
   return (
     <div className="knowledge-page">
       <Header />
-      
+
       {/* Main Content */}
       {/* Hero Section with Background Image */}
       <div className="news-hero-section">
         <div className="news-hero-overlay">
-        <img src={imgHutaHalasan} alt="Huta Halasan" className="knowledge-hero-background" />
+          <img
+            src={imgHutaHalasan}
+            alt="Huta Halasan"
+            className="knowledge-hero-background"
+          />
           <div className="news-hero-content">
             <h1 className="news-hero-title">Knowledge</h1>
             <p className="news-hero-subtitle">(batak script)</p>
@@ -95,12 +99,10 @@ const Knowledge = () => {
         </div>
       </div>
       <div className="knowledge-container">
-
         {/* Header Section */}
         <div className="knowledge-header">
           <h2 className="knowledge-section-title">Knowledge</h2>
           <div className="knowledge-controls">
-          
             <div className="knowledge-search-wrapper">
               <input
                 type="text"
@@ -138,21 +140,31 @@ const Knowledge = () => {
           <div className="knowledge-news-section">
             {/* NEW Badge and Featured Article */}
             <div className="knowledge-new-badge">NEW</div>
-            
+
             <div className="knowledge-news-featured">
               <div className="knowledge-news-featured-image">
                 <img src={featuredArticle.image} alt={featuredArticle.title} />
                 <div className="knowledge-featured-badge">FEATURED</div>
               </div>
               <div className="knowledge-news-content">
-                <h3 className="knowledge-news-title">{featuredArticle.title}</h3>
-                <p className="knowledge-news-subtitle">{featuredArticle.subtitle}</p>
+                <h3 className="knowledge-news-title">
+                  {featuredArticle.title}
+                </h3>
+                <p className="knowledge-news-subtitle">
+                  {featuredArticle.subtitle}
+                </p>
                 <div className="knowledge-news-meta">
                   <div className="knowledge-meta-icons">
-                    <span className="knowledge-icon">👁️ {featuredArticle.views.toLocaleString()}</span>
-                    <span className="knowledge-icon">💬 {featuredArticle.comments}</span>
+                    <span className="knowledge-icon">
+                      👁️ {featuredArticle.views.toLocaleString()}
+                    </span>
+                    <span className="knowledge-icon">
+                      💬 {featuredArticle.comments}
+                    </span>
                   </div>
-                  <div className="knowledge-category-tag">{featuredArticle.category}</div>
+                  <div className="knowledge-category-tag">
+                    {featuredArticle.category}
+                  </div>
                 </div>
               </div>
             </div>
@@ -165,12 +177,20 @@ const Knowledge = () => {
                     <img src={article.image} alt={article.title} />
                   </div>
                   <div className="knowledge-news-card-content">
-                    <h4 className="knowledge-news-card-title">{article.title}</h4>
-                    <p className="knowledge-news-card-subtitle">{article.subtitle}</p>
+                    <h4 className="knowledge-news-card-title">
+                      {article.title}
+                    </h4>
+                    <p className="knowledge-news-card-subtitle">
+                      {article.subtitle}
+                    </p>
                     <div className="knowledge-news-card-meta">
                       <div className="knowledge-meta-icons">
-                        <span className="knowledge-icon">👁️ {article.views}</span>
-                        <span className="knowledge-icon">💬 {article.comments}</span>
+                        <span className="knowledge-icon">
+                          👁️ {article.views}
+                        </span>
+                        <span className="knowledge-icon">
+                          💬 {article.comments}
+                        </span>
                       </div>
                     </div>
                   </div>
@@ -182,19 +202,27 @@ const Knowledge = () => {
           {/* Trending Section */}
           <div className="knowledge-trending-sidebar">
             <h3 className="knowledge-trending-header">Trending</h3>
-            
+
             <div className="knowledge-trending-list">
               {trendingNews.map((item) => (
                 <div key={item.id} className="knowledge-trending-item">
                   <div className="knowledge-trending-rank">{item.rank}</div>
                   <div className="knowledge-trending-content">
                     <h4 className="knowledge-trending-title">{item.title}</h4>
-                    <p className="knowledge-trending-subtitle">{item.subtitle}</p>
+                    <p className="knowledge-trending-subtitle">
+                      {item.subtitle}
+                    </p>
                     <div className="knowledge-trending-info">
-                      <span className="knowledge-trending-time">{item.timeAgo} | {item.author}</span>
+                      <span className="knowledge-trending-time">
+                        {item.timeAgo} | {item.author}
+                      </span>
                       <div className="knowledge-trending-stats">
-                        <span className="knowledge-icon">👁️ {item.views.toLocaleString()}</span>
-                        <span className="knowledge-icon">💬 {item.comments}</span>
+                        <span className="knowledge-icon">
+                          👁️ {item.views.toLocaleString()}
+                        </span>
+                        <span className="knowledge-icon">
+                          💬 {item.comments}
+                        </span>
                       </div>
                     </div>
                   </div>

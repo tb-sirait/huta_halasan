@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import "./news.css";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
-import imgHutaHalasan from '../assets/gambar_huta_halasan.jpg';
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 
 const NewsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState("Related");
@@ -121,10 +121,14 @@ const NewsPage = () => {
   return (
     <div className="news-page-container">
       <Header />
-      
+
       {/* Hero Section with Background Image */}
       <div className="news-hero-section">
-        <img src={imgHutaHalasan} alt="Huta Halasan" className="news-hero-background" />
+        <img
+          src={imgHutaHalasan}
+          alt="Huta Halasan"
+          className="news-hero-background"
+        />
         <div className="news-hero-overlay">
           <div className="news-hero-content">
             <h1 className="news-hero-title">News</h1>
@@ -181,44 +185,58 @@ const NewsPage = () => {
         <div className="news-main-content">
           {/* New Badge */}
           <div className="news-section-badge">New</div>
-          
-          {/* Featured Article */}
-          {articles.filter(article => article.type === 'featured').map(article => (
-            <div key={article.id} className="news-featured-card">
-              <div className="news-featured-badge">FEATURED</div>
-              <div className="news-featured-image">
-                <img src={article.image} alt={article.title} />
-              </div>
-              <div className="news-featured-content">
-                <h2 className="news-featured-title">{article.title}</h2>
-                <p className="news-featured-meta">{article.subtitle} | {article.author}</p>
-                <div className="news-featured-stats">
-                  <span className="news-stat-item">👁 {article.views}</span>
-                  <span className="news-stat-item">💬 {article.comments}</span>
-                </div>
-                <span className="news-category-tag">{article.category}</span>
-              </div>
-            </div>
-          ))}
 
-          {/* Regular Articles Grid */}
-          <div className="news-articles-grid">
-            {articles.filter(article => article.type !== 'featured').map((article) => (
-              <div key={article.id} className="news-article-card">
-                <div className="news-article-image">
+          {/* Featured Article */}
+          {articles
+            .filter((article) => article.type === "featured")
+            .map((article) => (
+              <div key={article.id} className="news-featured-card">
+                <div className="news-featured-badge">FEATURED</div>
+                <div className="news-featured-image">
                   <img src={article.image} alt={article.title} />
                 </div>
-                <div className="news-article-content">
-                  <h3 className="news-article-title">{article.title}</h3>
-                  <p className="news-article-meta">{article.subtitle} | {article.author}</p>
-                  <div className="news-article-stats">
+                <div className="news-featured-content">
+                  <h2 className="news-featured-title">{article.title}</h2>
+                  <p className="news-featured-meta">
+                    {article.subtitle} | {article.author}
+                  </p>
+                  <div className="news-featured-stats">
                     <span className="news-stat-item">👁 {article.views}</span>
-                    <span className="news-stat-item">💬 {article.comments}</span>
+                    <span className="news-stat-item">
+                      💬 {article.comments}
+                    </span>
                   </div>
                   <span className="news-category-tag">{article.category}</span>
                 </div>
               </div>
             ))}
+
+          {/* Regular Articles Grid */}
+          <div className="news-articles-grid">
+            {articles
+              .filter((article) => article.type !== "featured")
+              .map((article) => (
+                <div key={article.id} className="news-article-card">
+                  <div className="news-article-image">
+                    <img src={article.image} alt={article.title} />
+                  </div>
+                  <div className="news-article-content">
+                    <h3 className="news-article-title">{article.title}</h3>
+                    <p className="news-article-meta">
+                      {article.subtitle} | {article.author}
+                    </p>
+                    <div className="news-article-stats">
+                      <span className="news-stat-item">👁 {article.views}</span>
+                      <span className="news-stat-item">
+                        💬 {article.comments}
+                      </span>
+                    </div>
+                    <span className="news-category-tag">
+                      {article.category}
+                    </span>
+                  </div>
+                </div>
+              ))}
           </div>
         </div>
 
@@ -226,17 +244,21 @@ const NewsPage = () => {
         <div className="news-sidebar">
           <div className="news-trending-section">
             <h2 className="news-trending-title">Trending</h2>
-            
+
             {trendingArticles.map((article, index) => (
               <div key={article.id} className="news-trending-item">
                 <div className="news-trending-number">{index + 1}</div>
                 <div className="news-trending-content">
                   <h4 className="news-trending-item-title">{article.title}</h4>
                   <p className="news-trending-meta">{article.subtitle}</p>
-                  <p className="news-trending-author">{article.date} | {article.author}</p>
+                  <p className="news-trending-author">
+                    {article.date} | {article.author}
+                  </p>
                   <div className="news-trending-stats">
                     <span className="news-stat-item">👁 {article.views}</span>
-                    <span className="news-stat-item">💬 {article.comments}</span>
+                    <span className="news-stat-item">
+                      💬 {article.comments}
+                    </span>
                   </div>
                 </div>
               </div>

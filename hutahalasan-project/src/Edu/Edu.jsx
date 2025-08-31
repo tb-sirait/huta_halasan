@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
 import "./edu.css";
-import imgHutaHalasan from '../assets/gambar_huta_halasan.jpg';
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 
 const Education = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -106,7 +106,11 @@ const Education = () => {
       {/* Hero Section */}
       <section className="education-hero">
         <div className="hero-overlay">
-          <img src={imgHutaHalasan} alt="Huta Halasan" className="education-hero-background" />
+          <img
+            src={imgHutaHalasan}
+            alt="Huta Halasan"
+            className="education-hero-background"
+          />
           <div className="hero-content">
             <h1 className="hero-title">Education</h1>
             <p className="hero-subtitle">(batak script)</p>

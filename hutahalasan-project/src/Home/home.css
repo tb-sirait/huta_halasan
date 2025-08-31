@@ -43,19 +43,28 @@
   line-height: 1.2;
 }
 
-.hero-subtitle {
-  display: block;
-  font-size: 3rem;
+/* khusus untuk batak script */
+.hero-description-subtitle {
+  font-size: 1.8rem;
+  font-family: "Batak", sans-serif;
+  margin-bottom: 0.5rem;
+  opacity: 0.9;
 }
-
-.hero-description {
-  font-size: 1.2rem;
+.hero-description-title {
+  font-size: 2.5rem;
+  font-family: "Batak", sans-serif;
   margin-bottom: 0.5rem;
   opacity: 0.9;
 }
 
+.home-hero-subtitle {
+  font-size: 1.5rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+}
+
 .hero-location {
-  font-size: 1.4rem;
+  font-size: 1.8rem;
   font-weight: bold;
   margin-bottom: 0.3rem;
 }
@@ -111,7 +120,7 @@
 .section-title {
   text-align: center;
   margin-bottom: 2rem;
-  font-family: 'Arimo-Bold', sans-serif;
+  font-family: "Arimo-Bold", sans-serif;
 }
 
 .section-title.white {
@@ -209,62 +218,124 @@
   font-size: 0.9rem;
 }
 
-/* Organization Section */
+/* organisasi section  */
 .organization {
-  padding: 80px 0;
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: #6f6d7b;
+  padding: 40px 20px;
+  text-align: center;
+  color: white;
+}
+
+.title {
+  font-size: 24px;
+  margin-bottom: 40px;
+  font-weight: bold;
 }
 
 .org-chart {
-  max-width: 800px;
-  margin: 0 auto;
-}
-
-.org-level-1,
-.org-level-2,
-.org-level-3 {
   display: flex;
-  justify-content: center;
-  gap: 2rem;
-  margin-bottom: 2rem;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
 }
 
-.org-level-2 {
-  justify-content: space-around;
-}
-
+/* Card */
 .org-card {
-  background: white;
-  padding: 1.5rem;
-  border-radius: 10px;
+  background: #fff;
+  border-radius: 6px;
+  padding: 10px;
+  width: 150px;
   text-align: center;
-  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-  min-width: 150px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);
+  margin: 10px;
 }
 
 .org-card.wide {
-  min-width: 300px;
-  padding: 2rem;
+  width: 380px;
+  font-weight: bold;
+  background: #e0e0e0;
 }
 
 .org-photo {
-  width: 80px;
-  height: 80px;
-  background: #ddd;
-  border-radius: 50%;
-  margin: 0 auto 1rem;
+  width: 100%;
+  height: 100px;
+  background: #d9d9d9;
+  margin-bottom: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 4px;
 }
 
-.org-info h4 {
-  font-size: 0.9rem;
-  color: #666;
-  margin-bottom: 0.5rem;
+.org-photo img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
-.org-info p {
-  font-size: 1.1rem;
+.name {
   font-weight: bold;
-  color: #333;
+  color: #000;
+}
+
+/* Level */
+.org-level {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+}
+
+.level-2 {
+  gap: 40px;
+  margin-top: 20px;
+}
+
+.level-3 {
+  gap: 20px;
+  margin-top: 20px;
+}
+
+/* Connector garis */
+.connector {
+  background: #000;
+}
+
+.connector.vertical {
+  width: 2px;
+  height: 30px;
+}
+
+.connector.horizontal {
+  width: 60%;
+  max-width: 500px;
+  height: 2px;
+}
+
+.connector.down {
+  width: 2px;
+  height: 30px;
+}
+
+@media (max-width: 768px) {
+  .level-2 {
+    flex-direction: column;
+    gap: 20px;
+  }
+
+  .connector.horizontal {
+    display: none; /* Hilangkan garis horizontal kalau mobile */
+  }
+
+  .connector.vertical,
+  .connector.down {
+    height: 20px;
+  }
+
+  .org-card.wide {
+    width: 90%; /* biar muat layar */
+  }
 }
 
 /* Bottom Sections */
@@ -328,15 +399,48 @@
   text-align: center;
   margin-bottom: 2rem;
   font-size: 3rem;
-  font-family: 'Arimo-Bold', sans-serif;
+  font-family: "Arimo-Bold", sans-serif;
 }
 
 @media (max-width: 768px) {
+  .hero {
+    height: 70vh;
+  }
+  .hero-title {
+    font-size: 1.2rem;
+  }
+  .hero-description-title {
+    font-size: 1.2rem;
+  }
+  .home-hero-subtitle {
+    font-size: 1.2rem;
+  }
+  .hero-description-subtitle {
+    font-size: 1.5rem;
+  }
+  .hero-location {
+    font-size: 1.5rem;
+  }
+  .hero-title {
+    font-size: 2.5rem;
+  }
+  .hero-background {
+    filter: brightness(0.7);
+    height: 70vh;
+  }
+  .spirituality {
+    height: 50vh;
+  }
+  .spirituality-title {
+    font-size: 2rem;
+  }
+  .spirituality-subtitle {
+    font-size: 1rem;
+  }
   .about-content {
     grid-template-columns: 1fr;
     text-align: center;
   }
-
   .about-image .building {
     width: 100%;
     height: auto;

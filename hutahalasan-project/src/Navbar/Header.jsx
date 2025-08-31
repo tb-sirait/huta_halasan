@@ -14,22 +14,22 @@ function Header() {
       education: "Edukasi",
       knowledge: "Pengetahuan",
       news: "Berita",
-      langText: "Bahasa Indonesia"
+      langText: "Bahasa Indonesia",
     },
     en: {
       home: "Home",
       education: "Education",
       knowledge: "Knowledge",
       news: "News",
-      langText: "English"
+      langText: "English",
     },
     bt: {
       home: "Bagas",
       education: "Panguruan",
       knowledge: "Habonaran",
       news: "Haroroan",
-      langText: "Batak"
-    }
+      langText: "Batak",
+    },
   };
 
   const t = translations[language]; // teks aktif
@@ -44,7 +44,9 @@ function Header() {
             alt="Logo Huta Halasan"
             className="brand-logo"
           />
-          <span className="brand-text">Parmalim Bale Pasogit <br/> Huta Halasan</span>
+          <span className="brand-text">
+            Parmalim Bale Pasogit <br /> Huta Halasan
+          </span>
         </div>
 
         {/* Navbar links */}
@@ -55,15 +57,23 @@ function Header() {
           <Link to="/edu" className="nav-link" onClick={() => setIsOpen(false)}>
             {t.education}
           </Link>
-          <Link to="/knowledge" className="nav-link" onClick={() => setIsOpen(false)}>
+          <Link
+            to="/knowledge"
+            className="nav-link"
+            onClick={() => setIsOpen(false)}
+          >
             {t.knowledge}
           </Link>
-          <Link to="/news" className="nav-link" onClick={() => setIsOpen(false)}>
+          <Link
+            to="/news"
+            className="nav-link"
+            onClick={() => setIsOpen(false)}
+          >
             {t.news}
           </Link>
         </nav>
 
-         {/* Language selector */}
+        {/* Language selector */}
         <div className="language-selector">
           <select
             className="language-select"
@@ -76,10 +86,7 @@ function Header() {
           </select>
           <span className="language-text">{t.langText}</span>
         </div>
-        <button
-          className="hamburger"
-          onClick={() => setIsOpen(!isOpen)}
-        >
+        <button className="hamburger" onClick={() => setIsOpen(!isOpen)}>
           ☰
         </button>
       </div>

@@ -1,34 +1,33 @@
 @font-face {
-  font-family: 'Arimo-Italic';
-  src: url('/fonts/Arimo/Arimo_italic_variable_wght.ttf') format('truetype');
+  font-family: "Arimo-Italic";
+  src: url("/fonts/Arimo/Arimo_italic_variable_wght.ttf") format("truetype");
   font-weight: italic;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Arimo-Bold';
-  src: url('/fonts/Arimo/Normal_Arimo.ttf') format('truetype'); 
+  font-family: "Arimo-Bold";
+  src: url("/fonts/Arimo/Normal_Arimo.ttf") format("truetype");
   font-weight: bold;
   font-style: normal;
 }
 @font-face {
-  font-family: 'Arimo';
-  src: url('/fonts/Arimo/Normal_Arimo.ttf') format('truetype'); 
+  font-family: "Arimo";
+  src: url("/fonts/Arimo/Normal_Arimo.ttf") format("truetype");
   font-weight: Normal;
   font-style: normal;
 }
 
 @font-face {
-  font-family: 'Batak';
-  src: url('/fonts/batak/NotoSansBatak-Regular.ttf') format('truetype');
+  font-family: "Batak";
+  src: url("/fonts/batak/NotoSansBatak-Regular.ttf") format("truetype");
   font-weight: normal;
   font-style: normal;
 }
 
-
 * {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Arimo', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Arimo", sans-serif;
 }

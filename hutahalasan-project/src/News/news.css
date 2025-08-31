@@ -411,25 +411,25 @@
     flex-direction: column;
     gap: 2rem;
   }
-  
+
   .news-sidebar {
     position: static;
   }
-  
+
   .news-nav-content {
     flex-direction: column;
     align-items: stretch;
     gap: 1rem;
   }
-  
+
   .news-nav-center {
     max-width: none;
   }
-  
+
   .news-filter-controls {
     justify-content: center;
   }
-  
+
   .news-hero-title {
     font-size: 3rem;
   }
@@ -439,36 +439,36 @@
   .news-nav-content {
     padding: 0 1rem;
   }
-  
+
   .news-content-container {
     padding: 0 1rem;
     margin: 1rem auto;
   }
-  
+
   .news-hero-title {
     font-size: 2.5rem;
   }
-  
+
   .news-hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .news-articles-grid {
     grid-template-columns: 1fr;
   }
-  
+
   .news-featured-content {
     padding: 1rem;
   }
-  
+
   .news-featured-title {
     font-size: 1.3rem;
   }
-  
+
   .news-trending-section {
     padding: 1rem;
   }
-  
+
   .news-filter-controls {
     flex-direction: column;
     gap: 0.5rem;
@@ -479,24 +479,24 @@
   .news-hero-title {
     font-size: 2rem;
   }
-  
+
   .news-hero-section {
     height: 300px;
   }
-  
+
   .news-featured-image {
     height: 200px;
   }
-  
+
   .news-article-image {
     height: 150px;
   }
-  
+
   .news-trending-item {
     flex-direction: column;
     gap: 0.5rem;
   }
-  
+
   .news-trending-number {
     width: 1.5rem;
     height: 1.5rem;

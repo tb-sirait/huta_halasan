@@ -30,17 +30,22 @@ const App = () => {
 
       {/* Hero Section */}
       <section className="hero">
-        <img src={imgHutaHalasan} alt="Huta Halasan" className="hero-background" />
+        <img
+          src={imgHutaHalasan}
+          alt="Huta Halasan"
+          className="hero-background"
+        />
         <div className="hero-overlay">
           <div className="hero-content">
             <h1 className="hero-title">
               Bale Pasogit
               <br />
-              <span className="hero-subtitle">Huta Halasan</span>
+              <p className="hero-description-title">ᯅᯞᯩ ᯇᯘᯬᯎᯪᯖ᯲</p>
             </h1>
-            <p className="hero-description">(Batak Script)</p>
+            <span className="home-hero-subtitle">Huta Halasan</span>
+            <p className="hero-description-subtitle">ᯂᯮᯖ ᯂᯞᯘᯉ᯲</p>
             <p className="hero-location">Sionggang</p>
-            <p className="hero-location-sub">(South Sihon)</p>
+            <p className="hero-description-subtitle">ᯘᯪᯀᯬᯰᯎᯰ</p>
           </div>
         </div>
       </section>
@@ -61,7 +66,11 @@ const App = () => {
           <h2 className="home-section-title">About Us</h2>
           <div className="about-content">
             <div className="about-image">
-              <img src={imgHutaHalasan} alt="Bale Pasogit Building" className="building" />
+              <img
+                src={imgHutaHalasan}
+                alt="Bale Pasogit Building"
+                className="building"
+              />
             </div>
             <div className="about-text">
               <p>
@@ -119,45 +128,52 @@ const App = () => {
 
       {/* Organization Structure */}
       <section className="organization">
-        <div className="container">
-          <h2 className="home-section-title white">Organization Structure</h2>
-          <div className="org-chart">
-            <div className="org-level-1">
-              <div className="org-card">
-                <div className="org-photo"></div>
-                <div className="org-info">
-                  <h4>Name</h4>
-                  <p>Raja Hatorongan</p>
-                </div>
+        <h2 className="title">Organization Structure</h2>
+
+        <div className="org-chart">
+          {/* Level 1 */}
+          <div className="org-level level-1">
+            <div className="org-card">
+              <div className="org-photo">
+                <img src="/images/raja-habonoron.png" alt="Raja Habonoron" />
               </div>
+              <p className="name">Raja Habonoron</p>
             </div>
-            <div className="org-level-2">
-              <div className="org-card">
-                <div className="org-photo"></div>
-                <div className="org-info">
-                  <h4>Name</h4>
-                  <p>Raja Namora</p>
-                </div>
+          </div>
+
+          {/* Connector */}
+          <div className="connector vertical"></div>
+          <div className="connector horizontal"></div>
+
+          {/* Level 2 */}
+          <div className="org-level level-2">
+            <div className="org-card">
+              <div className="org-photo">
+                <img src="/images/raja-namora.png" alt="Raja Namora" />
               </div>
-              <div className="org-card">
-                <div className="org-photo"></div>
-                <div className="org-info">
-                  <h4>Name</h4>
-                  <p>Raja Parhuta</p>
-                </div>
-              </div>
-              <div className="org-card">
-                <div className="org-photo"></div>
-                <div className="org-info">
-                  <h4>Name</h4>
-                  <p>Raja Hatorongan</p>
-                </div>
-              </div>
+              <p className="name">Raja Namora</p>
             </div>
-            <div className="org-level-3">
-              <div className="org-card wide">
-                <p>Pamgula & Ulu Pamguna Bale Pasogit</p>
+            <div className="org-card">
+              <div className="org-photo">
+                <img src="/images/raja-huta.png" alt="Raja Huta" />
               </div>
+              <p className="name">Raja Huta</p>
+            </div>
+            <div className="org-card">
+              <div className="org-photo">
+                <img src="/images/raja-hatorongan.png" alt="Raja Hatorongan" />
+              </div>
+              <p className="name">Raja Hatorongan</p>
+            </div>
+          </div>
+
+          {/* Connector */}
+          <div className="connector vertical down"></div>
+
+          {/* Level 3 */}
+          <div className="org-level level-3">
+            <div className="org-card wide">
+              <p>Pangula & Ulu Punguan Bale Pasogit</p>
             </div>
           </div>
         </div>
