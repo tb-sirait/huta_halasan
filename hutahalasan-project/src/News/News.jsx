@@ -2,12 +2,15 @@ import React, { useState } from "react";
 import "./news.css";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
+import NewsDetail from "../News/newsDetail";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 
 const NewsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState("Related");
   const [selectedSort, setSelectedSort] = useState("Latest");
   const [searchQuery, setSearchQuery] = useState("");
+  const [selectedArticle, setSelectedArticle] = useState(null);
+  const [showDetail, setShowDetail] = useState(false);
 
   // Dummy data untuk artikel
   const articles = [
@@ -118,6 +121,58 @@ const NewsPage = () => {
     },
   ];
 
+  // Gabungkan semua artikel untuk pencarian
+  // const allArticles = [...articles, ...trendingArticles];
+
+  // Function untuk handle klik artikel
+  const handleArticleClick = (article) => {
+    setSelectedArticle(article);
+    setShowDetail(true);
+  };
+
+  // Function untuk kembali ke daftar berita
+  const handleBackToNews = () => {
+    setShowDetail(false);
+    setSelectedArticle(null);
+  };
+
+  // Filter dan sort artikel berdasarkan pilihan user
+  const getFilteredAndSortedArticles = () => {
+    let filteredArticles = articles;
+
+    // Filter berdasarkan search query
+    if (searchQuery.trim()) {
+      filteredArticles = filteredArticles.filter(
+        (article) =>
+          article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          article.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
+          article.category.toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+
+    // Sort berdasarkan pilihan
+    switch (selectedSort) {
+      case "Oldest":
+        // Untuk demo, kita reverse array
+        return [...filteredArticles].reverse();
+      case "Most Viewed":
+        return [...filteredArticles].sort((a, b) => {
+          const aViews = parseFloat(a.views.replace('k', '')) * (a.views.includes('k') ? 1000 : 1);
+          const bViews = parseFloat(b.views.replace('k', '')) * (b.views.includes('k') ? 1000 : 1);
+          return bViews - aViews;
+        });
+      default:
+        return filteredArticles;
+    }
+  };
+
+  // Jika sedang menampilkan detail artikel
+  if (showDetail) {
+    return <NewsDetail article={selectedArticle} onBack={handleBackToNews} />;
+  }
+
+  const displayedArticles = getFilteredAndSortedArticles();
+
   return (
     <div className="news-page-container">
       <Header />
@@ -187,10 +242,15 @@ const NewsPage = () => {
           <div className="news-section-badge">New</div>
 
           {/* Featured Article */}
-          {articles
+          {displayedArticles
             .filter((article) => article.type === "featured")
             .map((article) => (
-              <div key={article.id} className="news-featured-card">
+              <div 
+                key={article.id} 
+                className="news-featured-card"
+                onClick={() => handleArticleClick(article)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="news-featured-badge">FEATURED</div>
                 <div className="news-featured-image">
                   <img src={article.image} alt={article.title} />
@@ -213,10 +273,15 @@ const NewsPage = () => {
 
           {/* Regular Articles Grid */}
           <div className="news-articles-grid">
-            {articles
+            {displayedArticles
               .filter((article) => article.type !== "featured")
               .map((article) => (
-                <div key={article.id} className="news-article-card">
+                <div 
+                  key={article.id} 
+                  className="news-article-card"
+                  onClick={() => handleArticleClick(article)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="news-article-image">
                     <img src={article.image} alt={article.title} />
                   </div>
@@ -238,6 +303,14 @@ const NewsPage = () => {
                 </div>
               ))}
           </div>
+
+          {/* No Results Message */}
+          {displayedArticles.length === 0 && (
+            <div className="news-no-results">
+              <h3>Tidak ada artikel yang ditemukan</h3>
+              <p>Coba gunakan kata kunci yang berbeda atau hapus filter pencarian.</p>
+            </div>
+          )}
         </div>
 
         {/* Right Sidebar - Trending */}
@@ -246,7 +319,12 @@ const NewsPage = () => {
             <h2 className="news-trending-title">Trending</h2>
 
             {trendingArticles.map((article, index) => (
-              <div key={article.id} className="news-trending-item">
+              <div 
+                key={article.id} 
+                className="news-trending-item"
+                onClick={() => handleArticleClick(article)}
+                style={{ cursor: 'pointer' }}
+              >
                 <div className="news-trending-number">{index + 1}</div>
                 <div className="news-trending-content">
                   <h4 className="news-trending-item-title">{article.title}</h4>

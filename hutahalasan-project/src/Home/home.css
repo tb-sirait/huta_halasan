@@ -74,6 +74,14 @@
   opacity: 0.8;
 }
 
+.home-section-title {
+  text-align: center;
+  font-size: 2rem;
+  font-weight: bold;
+  margin-bottom: 2rem;
+  font-family: "Arimo-Bold", sans-serif;
+}
+
 /* Spirituality Section */
 .spirituality {
   height: 70vh;

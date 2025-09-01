@@ -243,6 +243,80 @@
   margin-bottom: 1rem;
 }
 
+/* Hover Effects untuk Article Cards */
+.news-featured-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+  transition: all 0.3s ease;
+}
+
+.news-article-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+  transition: all 0.3s ease;
+}
+
+.news-trending-item:hover {
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  padding: 15px;
+  margin: -15px;
+  transition: all 0.3s ease;
+}
+
+/* Active States */
+.news-featured-card:active {
+  transform: translateY(-2px);
+}
+
+.news-article-card:active {
+  transform: translateY(-1px);
+}
+
+/* Focus States untuk Accessibility */
+.news-featured-card:focus,
+.news-article-card:focus,
+.news-trending-item:focus {
+  outline: 2px solid #ff6b35;
+  outline-offset: 2px;
+}
+
+/* No Results Styling */
+.news-no-results {
+  text-align: center;
+  padding: 60px 20px;
+  color: #6c757d;
+}
+
+.news-no-results h3 {
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+  color: #495057;
+}
+
+.news-no-results p {
+  font-size: 14px;
+  margin: 0;
+}
+
+/* Responsive Hover Effects */
+@media (hover: hover) {
+  .news-featured-card,
+  .news-article-card,
+  .news-trending-item {
+    transition: all 0.3s ease;
+  }
+}
+
+/* Mobile Touch States */
+@media (hover: none) {
+  .news-featured-card:active,
+  .news-article-card:active,
+  .news-trending-item:active {
+    background-color: #f8f9fa;
+  }
+}
+
 /* Articles Grid */
 .news-articles-grid {
   display: grid;

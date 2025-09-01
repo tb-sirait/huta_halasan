@@ -1,10 +1,12 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Header from "../Navbar/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
-import "./Knowledge.css";
+import "./knowledge.css";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 
 const Knowledge = () => {
+  const navigate = useNavigate();
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedFilter, setSelectedFilter] = useState("Related");
   const [sortBy, setSortBy] = useState("Latest");
@@ -48,7 +50,7 @@ const Knowledge = () => {
   // Sample trending data
   const trendingNews = [
     {
-      id: 1,
+      id: 4,
       title: "Ulos Batak: Kain Suci Penuh Makna",
       subtitle: "Filosofi dan kegunaan dalam kehidupan",
       timeAgo: "1 day ago",
@@ -58,7 +60,7 @@ const Knowledge = () => {
       rank: 1,
     },
     {
-      id: 2,
+      id: 5,
       title: "Sigale-gale: Boneka Tradisional yang Hidup",
       subtitle: "Seni pertunjukan unik dari Samosir",
       timeAgo: "2 days ago",
@@ -68,7 +70,7 @@ const Knowledge = () => {
       rank: 2,
     },
     {
-      id: 3,
+      id: 6,
       title: "Bahasa Batak: Pelestarian Warisan Leluhur",
       subtitle: "Upaya menjaga bahasa daerah",
       timeAgo: "3 days ago",
@@ -78,6 +80,33 @@ const Knowledge = () => {
       rank: 3,
     },
   ];
+
+  // Navigation handlers
+  const handleArticleClick = (articleId) => {
+    navigate(`/knowledge/${articleId}`);
+  };
+
+  const handleTrendingClick = (trendingId) => {
+    // For trending items, you might want to create detail pages or redirect
+    console.log(`Trending item ${trendingId} clicked`);
+    // navigate(`/knowledge/${trendingId}`); // Uncomment if you want to navigate to detail
+  };
+
+  // Filter and sort functions
+  const handleSearch = (e) => {
+    setSearchQuery(e.target.value);
+    // Implement search logic here
+  };
+
+  const handleFilterChange = (e) => {
+    setSelectedFilter(e.target.value);
+    // Implement filter logic here
+  };
+
+  const handleSortChange = (e) => {
+    setSortBy(e.target.value);
+    // Implement sort logic here
+  };
 
   return (
     <div className="knowledge-page">
@@ -98,6 +127,7 @@ const Knowledge = () => {
           </div>
         </div>
       </div>
+      
       <div className="knowledge-container">
         {/* Header Section */}
         <div className="knowledge-header">
@@ -108,14 +138,14 @@ const Knowledge = () => {
                 type="text"
                 placeholder="Type here..."
                 value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
+                onChange={handleSearch}
                 className="knowledge-search-input"
               />
             </div>
             <div className="knowledge-filter-group">
               <select
                 value={selectedFilter}
-                onChange={(e) => setSelectedFilter(e.target.value)}
+                onChange={handleFilterChange}
                 className="knowledge-filter-select"
               >
                 <option value="Related">📋 Related</option>
@@ -124,7 +154,7 @@ const Knowledge = () => {
               </select>
               <select
                 value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
+                onChange={handleSortChange}
                 className="knowledge-sort-select knowledge-sort-latest"
               >
                 <option value="Latest">❤️ Latest</option>
@@ -141,7 +171,11 @@ const Knowledge = () => {
             {/* NEW Badge and Featured Article */}
             <div className="knowledge-new-badge">NEW</div>
 
-            <div className="knowledge-news-featured">
+            <div 
+              className="knowledge-news-featured"
+              onClick={() => handleArticleClick(featuredArticle.id)}
+              style={{ cursor: 'pointer' }}
+            >
               <div className="knowledge-news-featured-image">
                 <img src={featuredArticle.image} alt={featuredArticle.title} />
                 <div className="knowledge-featured-badge">FEATURED</div>
@@ -172,7 +206,12 @@ const Knowledge = () => {
             {/* Regular Articles */}
             <div className="knowledge-news-grid">
               {articles.map((article) => (
-                <div key={article.id} className="knowledge-news-card">
+                <div 
+                  key={article.id} 
+                  className="knowledge-news-card"
+                  onClick={() => handleArticleClick(article.id)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="knowledge-news-card-image">
                     <img src={article.image} alt={article.title} />
                   </div>
@@ -205,7 +244,12 @@ const Knowledge = () => {
 
             <div className="knowledge-trending-list">
               {trendingNews.map((item) => (
-                <div key={item.id} className="knowledge-trending-item">
+                <div 
+                  key={item.id} 
+                  className="knowledge-trending-item"
+                  onClick={() => handleTrendingClick(item.id)}
+                  style={{ cursor: 'pointer' }}
+                >
                   <div className="knowledge-trending-rank">{item.rank}</div>
                   <div className="knowledge-trending-content">
                     <h4 className="knowledge-trending-title">{item.title}</h4>
