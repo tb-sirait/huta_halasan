@@ -704,6 +704,7 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 30px;
+  width: 30vw;
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
   border: 1px solid #e2e8f0;
 }

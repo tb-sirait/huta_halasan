@@ -24,10 +24,10 @@ function Header() {
       langText: "English",
     },
     bt: {
-      home: "Bagas",
-      education: "Panguruan",
-      knowledge: "Habonaran",
-      news: "Haroroan",
+      home: "Jabu",
+      education: "Parsiajaran",
+      knowledge: "Parbinotoan",
+      news: "Barita",
       langText: "Batak",
     },
   };

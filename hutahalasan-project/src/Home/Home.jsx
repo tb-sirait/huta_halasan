@@ -42,14 +42,15 @@ const App = () => {
         <div className="hero-overlay">
           <div className="hero-content">
             <h1 className="hero-title">
+              Parmalim
+              <br />
+              <p className="hero-description-title"> ᯇᯒ᯲ᯔᯞᯪᯔ᯲</p>
               Bale Pasogit
               <br />
               <p className="hero-description-title">ᯅᯞᯩ ᯇᯘᯬᯎᯪᯖ᯲</p>
             </h1>
             <span className="home-hero-subtitle">Huta Halasan</span>
             <p className="hero-description-subtitle">ᯂᯮᯖ ᯂᯞᯘᯉ᯲</p>
-            <p className="hero-location">Sionggang</p>
-            <p className="hero-description-subtitle">ᯘᯪᯀᯬᯰᯎᯰ</p>
           </div>
         </div>
       </section>
