@@ -6,10 +6,12 @@ import News from "./News/News";
 import Knowledge from "./Knowledge/Knowledge";
 import KnowledgeDetail from "./Knowledge/KnowledgeDetail";
 import EducationDetail from "./Edu/EducationDetail";
+import UseScrollToTop from "./hooks/UseScrollToTop";
 
 function App() {
   return (
     <Router>
+      <UseScrollToTop />
       <div className="App">
         <Routes>
           <Route path="/" element={<Home />} />

@@ -13,8 +13,9 @@ const Education = () => {
 
   const navigate = useNavigate();
 
+
   // Enhanced education content data
-  const educationContent = [
+  const educationContent = useMemo(() => [
     {
       id: 1,
       title: "Traditional Batak Dance Performance",
@@ -119,7 +120,7 @@ const Education = () => {
       isTrending: false,
       description: "Immerse yourself in the rich oral traditions and folklore that have shaped Batak cultural identity for generations."
     }
-  ];
+  ], []);
 
   // Navigation handler for content cards
   const handleContentClick = (id) => {
@@ -161,7 +162,7 @@ const Education = () => {
     }
 
     return filtered;
-  }, [searchTerm, sortBy, filterBy, activeTab]);
+  }, [educationContent, filterBy, searchTerm, activeTab, sortBy]);
 
   const featuredContent = educationContent.find((item) => item.id === 1);
   const trendingContent = educationContent

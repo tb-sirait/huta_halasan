@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from 'react';
 import "./home.css";
 import Footer from "../Footer/Footer";
 import Header from "../Navbar/Header";
@@ -8,7 +8,18 @@ import eduBg from "../assets/2.jpg";
 import knowledgeBg from "../assets/gambar_huta_halasan.jpg";
 import { Link } from "react-router-dom";
 
-const App = () => {
+import img1 from "../assets/1.jpg";
+import img2 from "../assets/2.jpg";
+import img3 from "../assets/3.jpg";
+import img4 from "../assets/4.jpg";
+import img5 from "../assets/5.jpg";
+import img6 from "../assets/6.jpg";
+
+import "./slideshow.css";
+
+import Helmet from "react-helmet"
+
+const Home = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
 
   const documents = [
@@ -27,8 +38,113 @@ const App = () => {
     );
   };
 
+  const [currentSlide, setCurrentSlide] = useState(0);
+  const [nextSlide, setNextSlide] = useState(1);
+  const [isTransitioning, setIsTransitioning] = useState(false);
+  const [isVisible, setIsVisible] = useState(false);
+  const [hasAnimated, setHasAnimated] = useState(false);
+  const [slideSpeed, setSlideSpeed] = useState(600);
+  const sectionRef = useRef(null);
+  const slideCountRef = useRef(0);
+
+  // Array gambar - ganti dengan URL gambar Anda
+  const slides = [
+    img1,
+    img2,
+    img3,
+    img4,
+    img5,
+    img6,
+  ];
+
+  // Intersection Observer untuk deteksi scroll
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach((entry) => {
+          if (entry.isIntersecting && !hasAnimated) {
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, 100);
+          }
+        });
+      },
+      {
+        threshold: 0.2
+      }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => {
+      if (sectionRef.current) {
+        observer.unobserve(sectionRef.current);
+      }
+    };
+  }, [hasAnimated]);
+
+  // Auto slide dengan cross-fade transition
+  useEffect(() => {
+    if (!isVisible) return;
+
+    const interval = setInterval(() => {
+      setIsTransitioning(true);
+      
+      // Set next slide
+      setNextSlide((currentSlide + 1) % slides.length);
+      
+      // Tunggu separuh durasi untuk memulai fade
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+        slideCountRef.current += 1;
+        
+        // Melambatkan kecepatan setelah beberapa slide
+        if (slideCountRef.current === 2) {
+          setSlideSpeed(1200);
+        } else if (slideCountRef.current === 4) {
+          setSlideSpeed(2000);
+        } else if (slideCountRef.current === 6) {
+          setSlideSpeed(3500);
+        }
+      }, slideSpeed / 2);
+      
+      // Reset transition state
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, slideSpeed);
+      
+    }, slideSpeed);
+
+    return () => clearInterval(interval);
+  }, [isVisible, slideSpeed, slides.length, currentSlide]);
+
+  const handleIndicatorClick = (index) => {
+    setIsTransitioning(true);
+    setNextSlide(index);
+    
+    setTimeout(() => {
+      setCurrentSlide(index);
+      setSlideSpeed(3500);
+      slideCountRef.current = 6;
+    }, 400);
+    
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 800);
+  };
+
   return (
     <div className="app">
+      <Helmet>
+        <title>Home - Huta Halasan</title> 
+        <meta name="description" content="Huta Halasan" />
+        <meta name="keywords" content="Huta Halasan" />
+        <meta name="author" content="Huta Halasan" />
+        <link rel="icon" type="image/svg+xml" href="/logo_huta_halasan.jpg" />
+      </Helmet>
       {/* Header */}
       <Header />
 
@@ -56,14 +172,58 @@ const App = () => {
       </section>
 
       {/* Spirituality Section */}
-      <section className="spirituality">
-        <div className="spirituality-overlay">
-          <div className="spirituality-content">
-            <h2 className="spirituality-title">With Spirituality and Ritual</h2>
-            <p className="spirituality-subtitle">to uphold God's teaching</p>
-          </div>
+       <section 
+      ref={sectionRef}
+      className="spirituality"
+    >
+      {/* Slideshow Background dengan cross-fade */}
+      <div className={`spirituality-slideshow ${isVisible ? 'show' : ''}`}>
+        {/* Dark Overlay - tetap stabil, tidak ikut pergantian slide */}
+        <div className="spirituality-slide-overlay"></div>
+        
+        {/* Current Slide */}
+        <div
+          className={`spirituality-slide current ${isVisible ? 'slide-visible' : ''}`}
+          style={{ 
+            backgroundImage: `url(${slides[currentSlide]})`,
+          }}
+        />
+        
+        {/* Next Slide (for cross-fade effect) */}
+        {isTransitioning && (
+          <div
+            className="spirituality-slide next fading-in"
+            style={{ 
+              backgroundImage: `url(${slides[nextSlide]})`,
+            }}
+          />
+        )}
+      </div>
+
+      {/* Dark Overlay - diluar slideshow agar tidak ikut transisi */}
+
+      {/* Content dengan animasi fade-in */}
+      <div className={`spirituality-overlay ${isVisible ? 'show' : ''}`}>
+        <div className="spirituality-content">
+          <h2 className="spirituality-title">With Spirituality and Ritual</h2>
+          <p className="spirituality-subtitle">to uphold God's teaching</p>
         </div>
-      </section>
+      </div>
+
+      {/* Slide Indicators */}
+      {isVisible && (
+        <div className="spirituality-indicators">
+          {slides.map((_, index) => (
+            <button
+              key={index}
+              className={`indicator ${index === currentSlide ? 'active' : ''}`}
+              onClick={() => handleIndicatorClick(index)}
+              aria-label={`Go to slide ${index + 1}`}
+            />
+          ))}
+        </div>
+      )}
+    </section>
 
       {/* About Section */}
       <section className="about">
@@ -79,28 +239,13 @@ const App = () => {
             </div>
             <div className="about-text">
               <p>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                tempor leo elit, nec fringilla ipsum bibendum sed. Nulla
-                iaculisque ligula vel arcu bibendum molestie. Aenec vehica est
-                posuere facilisi mauris. Mauris varius sagittis arcu. Nec
-                convallis. Malesuadta pellentesqu habitant morbi tristique
-                senectus et netus et malesuadta fames ac turpis egestas mauris,
-                ut lorem. Sed et tempor ex. Aliquam leo lectus, blandit vel
-                placerat tempor non, vitae et temos ut et ligula auctor, in
-                aliquet tortor suscipit. Donec ut lorem vel eros consequat
-                laoreet. Donec non orci magna.
+                Maragam-ragam do Ugamo adong di liat Portibion. Sada sian na maragam-ragam i namargoar Ugamo Malim, marojahan di tonga-tonga
+                bangso Batak, hinatindanghon tu Amanta Raja Nasiakbagi.
               </p>
               <br />
               <p>
-                Duis volutpdat sapien ut lorem comvallis, eu phareta risus
-                rhoncus. Aliquam pretium arcu arcu, et consectetur diam aliquam
-                eu. Fuisus ribus massa, pellentesque bibendum dignissim A
-                bibendum imperdiet ut mauris a a bibenddm aliquam urna. Maecenas
-                pellentesque bibendum adipiscing ut lorem. Aliquam arget
-                vulputate. Mauris dictum ipsum ligula, non dignissim massa
-                suscipit eget eu. Maecenas semper ut mauris mauris consequat.
-                Praesent mattis. Etiam porta Cras vitae orci non augue consequat
-                blandit.
+                Ugamo Malim, ima sada dalan pardomuan dompak debata, marhite pelean ingkon ias jala malim, dohot
+                pangihutna pe ingkon ias jala malim. 
               </p>
             </div>
           </div>
@@ -134,54 +279,9 @@ const App = () => {
       {/* Organization Structure */}
       <section className="organization">
         <h2 className="title">Organization Structure</h2>
+        
 
-        <div className="org-chart">
-          {/* Level 1 */}
-          <div className="org-level level-1">
-            <div className="org-card">
-              <div className="org-photo">
-                <img src="/images/raja-habonoron.png" alt="Raja Habonoron" />
-              </div>
-              <p className="name">Raja Habonoron</p>
-            </div>
-          </div>
-
-          {/* Connector */}
-          <div className="connector vertical"></div>
-          <div className="connector horizontal"></div>
-
-          {/* Level 2 */}
-          <div className="org-level level-2">
-            <div className="org-card">
-              <div className="org-photo">
-                <img src="/images/raja-namora.png" alt="Raja Namora" />
-              </div>
-              <p className="name">Raja Namora</p>
-            </div>
-            <div className="org-card">
-              <div className="org-photo">
-                <img src="/images/raja-huta.png" alt="Raja Huta" />
-              </div>
-              <p className="name">Raja Huta</p>
-            </div>
-            <div className="org-card">
-              <div className="org-photo">
-                <img src="/images/raja-hatorongan.png" alt="Raja Hatorongan" />
-              </div>
-              <p className="name">Raja Hatorongan</p>
-            </div>
-          </div>
-
-          {/* Connector */}
-          <div className="connector vertical down"></div>
-
-          {/* Level 3 */}
-          <div className="org-level level-3">
-            <div className="org-card wide">
-              <p>Pangula & Ulu Punguan Bale Pasogit</p>
-            </div>
-          </div>
-        </div>
+        
       </section>
 
       {/* Bottom Sections */}
@@ -246,4 +346,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Home;
