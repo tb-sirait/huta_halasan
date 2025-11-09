@@ -1,6 +1,6 @@
 // 1. Buat komponen ScrollToTop.js
-import { useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import { useEffect } from "react";
+import { useLocation } from "react-router-dom";
 
 const useScrollToTop = () => {
   const { pathname } = useLocation();
@@ -10,7 +10,7 @@ const useScrollToTop = () => {
     window.scrollTo({
       top: 0,
       left: 0,
-      behavior: 'smooth'
+      behavior: "smooth",
     });
   }, [pathname]);
 

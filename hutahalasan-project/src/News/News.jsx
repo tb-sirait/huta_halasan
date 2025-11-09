@@ -146,7 +146,7 @@ const NewsPage = () => {
         (article) =>
           article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
           article.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          article.category.toLowerCase().includes(searchQuery.toLowerCase())
+          article.category.toLowerCase().includes(searchQuery.toLowerCase()),
       );
     }
 
@@ -157,8 +157,12 @@ const NewsPage = () => {
         return [...filteredArticles].reverse();
       case "Most Viewed":
         return [...filteredArticles].sort((a, b) => {
-          const aViews = parseFloat(a.views.replace('k', '')) * (a.views.includes('k') ? 1000 : 1);
-          const bViews = parseFloat(b.views.replace('k', '')) * (b.views.includes('k') ? 1000 : 1);
+          const aViews =
+            parseFloat(a.views.replace("k", "")) *
+            (a.views.includes("k") ? 1000 : 1);
+          const bViews =
+            parseFloat(b.views.replace("k", "")) *
+            (b.views.includes("k") ? 1000 : 1);
           return bViews - aViews;
         });
       default:
@@ -245,11 +249,11 @@ const NewsPage = () => {
           {displayedArticles
             .filter((article) => article.type === "featured")
             .map((article) => (
-              <div 
-                key={article.id} 
+              <div
+                key={article.id}
                 className="news-featured-card"
                 onClick={() => handleArticleClick(article)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               >
                 <div className="news-featured-badge">FEATURED</div>
                 <div className="news-featured-image">
@@ -276,11 +280,11 @@ const NewsPage = () => {
             {displayedArticles
               .filter((article) => article.type !== "featured")
               .map((article) => (
-                <div 
-                  key={article.id} 
+                <div
+                  key={article.id}
                   className="news-article-card"
                   onClick={() => handleArticleClick(article)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="news-article-image">
                     <img src={article.image} alt={article.title} />
@@ -308,7 +312,10 @@ const NewsPage = () => {
           {displayedArticles.length === 0 && (
             <div className="news-no-results">
               <h3>Tidak ada artikel yang ditemukan</h3>
-              <p>Coba gunakan kata kunci yang berbeda atau hapus filter pencarian.</p>
+              <p>
+                Coba gunakan kata kunci yang berbeda atau hapus filter
+                pencarian.
+              </p>
             </div>
           )}
         </div>
@@ -319,11 +326,11 @@ const NewsPage = () => {
             <h2 className="news-trending-title">Trending</h2>
 
             {trendingArticles.map((article, index) => (
-              <div 
-                key={article.id} 
+              <div
+                key={article.id}
                 className="news-trending-item"
                 onClick={() => handleArticleClick(article)}
-                style={{ cursor: 'pointer' }}
+                style={{ cursor: "pointer" }}
               >
                 <div className="news-trending-number">{index + 1}</div>
                 <div className="news-trending-content">

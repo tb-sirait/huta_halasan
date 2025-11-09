@@ -127,7 +127,7 @@ const Knowledge = () => {
           </div>
         </div>
       </div>
-      
+
       <div className="knowledge-container">
         {/* Header Section */}
         <div className="knowledge-header">
@@ -171,10 +171,10 @@ const Knowledge = () => {
             {/* NEW Badge and Featured Article */}
             <div className="knowledge-new-badge">NEW</div>
 
-            <div 
+            <div
               className="knowledge-news-featured"
               onClick={() => handleArticleClick(featuredArticle.id)}
-              style={{ cursor: 'pointer' }}
+              style={{ cursor: "pointer" }}
             >
               <div className="knowledge-news-featured-image">
                 <img src={featuredArticle.image} alt={featuredArticle.title} />
@@ -206,11 +206,11 @@ const Knowledge = () => {
             {/* Regular Articles */}
             <div className="knowledge-news-grid">
               {articles.map((article) => (
-                <div 
-                  key={article.id} 
+                <div
+                  key={article.id}
                   className="knowledge-news-card"
                   onClick={() => handleArticleClick(article.id)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="knowledge-news-card-image">
                     <img src={article.image} alt={article.title} />
@@ -244,11 +244,11 @@ const Knowledge = () => {
 
             <div className="knowledge-trending-list">
               {trendingNews.map((item) => (
-                <div 
-                  key={item.id} 
+                <div
+                  key={item.id}
                   className="knowledge-trending-item"
                   onClick={() => handleTrendingClick(item.id)}
-                  style={{ cursor: 'pointer' }}
+                  style={{ cursor: "pointer" }}
                 >
                   <div className="knowledge-trending-rank">{item.rank}</div>
                   <div className="knowledge-trending-content">

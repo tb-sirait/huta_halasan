@@ -13,114 +13,124 @@ const Education = () => {
 
   const navigate = useNavigate();
 
-
   // Enhanced education content data
-  const educationContent = useMemo(() => [
-    {
-      id: 1,
-      title: "Traditional Batak Dance Performance",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Culture",
-      date: "2024-01-15",
-      views: "1.2k",
-      likes: "89",
-      isNew: true,
-      isTrending: true,
-      description: "Discover the rich cultural heritage of traditional Batak dance performances, showcasing centuries-old traditions and spiritual significance."
-    },
-    {
-      id: 2,
-      title: "Batak Script Learning Workshop",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Language",
-      date: "2024-01-12",
-      views: "856",
-      likes: "67",
-      isNew: true,
-      isTrending: true,
-      description: "Learn the unique Batak script in this hands-on workshop with local experts and master the ancient writing system."
-    },
-    {
-      id: 3,
-      title: "Traditional Music Instruments",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Music",
-      date: "2024-01-10",
-      views: "743",
-      likes: "52",
-      isNew: false,
-      isTrending: false,
-      description: "Explore the fascinating world of traditional Batak musical instruments and their role in cultural ceremonies."
-    },
-    {
-      id: 4,
-      title: "Ceremonial Rituals Explained",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Tradition",
-      date: "2024-01-08",
-      views: "921",
-      likes: "78",
-      isNew: false,
-      isTrending: true,
-      description: "Understanding the deep spiritual meaning behind Batak ceremonial rituals and their importance in community life."
-    },
-    {
-      id: 5,
-      title: "Weaving Traditions of Batak",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Craft",
-      date: "2024-01-05",
-      views: "634",
-      likes: "41",
-      isNew: false,
-      isTrending: false,
-      description: "Master the intricate art of traditional Batak weaving and learn about the cultural stories woven into every fabric."
-    },
-    {
-      id: 6,
-      title: "Architecture of Traditional Houses",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Architecture",
-      date: "2024-01-03",
-      views: "1.1k",
-      likes: "92",
-      isNew: false,
-      isTrending: true,
-      description: "Explore the architectural marvels of traditional Batak houses and their symbolic representation of cosmology."
-    },
-    {
-      id: 7,
-      title: "Culinary Heritage Workshop",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Culinary",
-      date: "2024-01-01",
-      views: "987",
-      likes: "65",
-      isNew: false,
-      isTrending: false,
-      description: "Learn to prepare authentic Batak dishes and understand the cultural significance of traditional cuisine."
-    },
-    {
-      id: 8,
-      title: "Storytelling and Folklore",
-      subtitle: "Sajolo_time_release | Journalist",
-      image: "/api/placeholder/400/250",
-      category: "Literature",
-      date: "2023-12-28",
-      views: "756",
-      likes: "43",
-      isNew: false,
-      isTrending: false,
-      description: "Immerse yourself in the rich oral traditions and folklore that have shaped Batak cultural identity for generations."
-    }
-  ], []);
+  const educationContent = useMemo(
+    () => [
+      {
+        id: 1,
+        title: "Traditional Batak Dance Performance",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Culture",
+        date: "2024-01-15",
+        views: "1.2k",
+        likes: "89",
+        isNew: true,
+        isTrending: true,
+        description:
+          "Discover the rich cultural heritage of traditional Batak dance performances, showcasing centuries-old traditions and spiritual significance.",
+      },
+      {
+        id: 2,
+        title: "Batak Script Learning Workshop",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Language",
+        date: "2024-01-12",
+        views: "856",
+        likes: "67",
+        isNew: true,
+        isTrending: true,
+        description:
+          "Learn the unique Batak script in this hands-on workshop with local experts and master the ancient writing system.",
+      },
+      {
+        id: 3,
+        title: "Traditional Music Instruments",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Music",
+        date: "2024-01-10",
+        views: "743",
+        likes: "52",
+        isNew: false,
+        isTrending: false,
+        description:
+          "Explore the fascinating world of traditional Batak musical instruments and their role in cultural ceremonies.",
+      },
+      {
+        id: 4,
+        title: "Ceremonial Rituals Explained",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Tradition",
+        date: "2024-01-08",
+        views: "921",
+        likes: "78",
+        isNew: false,
+        isTrending: true,
+        description:
+          "Understanding the deep spiritual meaning behind Batak ceremonial rituals and their importance in community life.",
+      },
+      {
+        id: 5,
+        title: "Weaving Traditions of Batak",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Craft",
+        date: "2024-01-05",
+        views: "634",
+        likes: "41",
+        isNew: false,
+        isTrending: false,
+        description:
+          "Master the intricate art of traditional Batak weaving and learn about the cultural stories woven into every fabric.",
+      },
+      {
+        id: 6,
+        title: "Architecture of Traditional Houses",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Architecture",
+        date: "2024-01-03",
+        views: "1.1k",
+        likes: "92",
+        isNew: false,
+        isTrending: true,
+        description:
+          "Explore the architectural marvels of traditional Batak houses and their symbolic representation of cosmology.",
+      },
+      {
+        id: 7,
+        title: "Culinary Heritage Workshop",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Culinary",
+        date: "2024-01-01",
+        views: "987",
+        likes: "65",
+        isNew: false,
+        isTrending: false,
+        description:
+          "Learn to prepare authentic Batak dishes and understand the cultural significance of traditional cuisine.",
+      },
+      {
+        id: 8,
+        title: "Storytelling and Folklore",
+        subtitle: "Sajolo_time_release | Journalist",
+        image: "/api/placeholder/400/250",
+        category: "Literature",
+        date: "2023-12-28",
+        views: "756",
+        likes: "43",
+        isNew: false,
+        isTrending: false,
+        description:
+          "Immerse yourself in the rich oral traditions and folklore that have shaped Batak cultural identity for generations.",
+      },
+    ],
+    [],
+  );
 
   // Navigation handler for content cards
   const handleContentClick = (id) => {
@@ -130,14 +140,13 @@ const Education = () => {
   // Filter and sort content based on user selections
   const filteredAndSortedContent = useMemo(() => {
     let filtered = educationContent.filter((item) => {
-      const matchesSearch = item.title
-        .toLowerCase()
-        .includes(searchTerm.toLowerCase()) ||
+      const matchesSearch =
+        item.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.category.toLowerCase().includes(searchTerm.toLowerCase()) ||
         item.description.toLowerCase().includes(searchTerm.toLowerCase());
-      
+
       const matchesTab = activeTab === "new" ? item.isNew : item.isTrending;
-      
+
       return matchesSearch && matchesTab;
     });
 
@@ -175,7 +184,7 @@ const Education = () => {
   };
 
   const handleKeyboardNavigation = (e, id) => {
-    if (e.key === 'Enter' || e.key === ' ') {
+    if (e.key === "Enter" || e.key === " ") {
       e.preventDefault();
       handleContentClick(id);
     }
@@ -197,7 +206,9 @@ const Education = () => {
         </div>
         <div className="hero-content">
           <h1 className="hero-title">Education</h1>
-          <p className="hero-subtitle">Learn Traditional Batak Culture & Heritage</p>
+          <p className="hero-subtitle">
+            Learn Traditional Batak Culture & Heritage
+          </p>
         </div>
       </section>
 
@@ -208,7 +219,8 @@ const Education = () => {
             <div className="section-header">
               <h2 className="section-title">Educational Resources</h2>
               <p className="section-description">
-                Explore our comprehensive collection of Batak cultural education materials
+                Explore our comprehensive collection of Batak cultural education
+                materials
               </p>
             </div>
 
@@ -223,7 +235,11 @@ const Education = () => {
                     className="search-input"
                     aria-label="Search educational content"
                   />
-                  <button type="submit" className="search-button" aria-label="Submit search">
+                  <button
+                    type="submit"
+                    className="search-button"
+                    aria-label="Submit search"
+                  >
                     <span className="search-icon">🔍</span>
                   </button>
                 </div>
@@ -231,7 +247,9 @@ const Education = () => {
 
               <div className="filter-controls">
                 <div className="filter-group">
-                  <label htmlFor="sort-select" className="filter-label">Sort by:</label>
+                  <label htmlFor="sort-select" className="filter-label">
+                    Sort by:
+                  </label>
                   <select
                     id="sort-select"
                     value={sortBy}
@@ -245,7 +263,9 @@ const Education = () => {
                 </div>
 
                 <div className="filter-group">
-                  <label htmlFor="filter-select" className="filter-label">Filter:</label>
+                  <label htmlFor="filter-select" className="filter-label">
+                    Filter:
+                  </label>
                   <select
                     id="filter-select"
                     value={filterBy}
@@ -296,10 +316,12 @@ const Education = () => {
               {/* Featured Content */}
               {activeTab === "new" && featuredContent && (
                 <section className="featured-section">
-                  <div 
+                  <div
                     className="featured-card"
                     onClick={() => handleContentClick(featuredContent.id)}
-                    onKeyDown={(e) => handleKeyboardNavigation(e, featuredContent.id)}
+                    onKeyDown={(e) =>
+                      handleKeyboardNavigation(e, featuredContent.id)
+                    }
                     role="button"
                     tabIndex={0}
                     aria-label={`Featured: ${featuredContent.title}`}
@@ -319,24 +341,36 @@ const Education = () => {
                     </div>
                     <div className="featured-content">
                       <header className="featured-header">
-                        <h3 className="featured-title">{featuredContent.title}</h3>
-                        <p className="featured-subtitle">{featuredContent.subtitle}</p>
+                        <h3 className="featured-title">
+                          {featuredContent.title}
+                        </h3>
+                        <p className="featured-subtitle">
+                          {featuredContent.subtitle}
+                        </p>
                       </header>
-                      
+
                       <div className="featured-meta">
                         <span className="meta-item">
                           <span className="meta-icon">👁️</span>
-                          <span className="meta-value">{featuredContent.views}</span>
+                          <span className="meta-value">
+                            {featuredContent.views}
+                          </span>
                         </span>
                         <span className="meta-item">
                           <span className="meta-icon">❤️</span>
-                          <span className="meta-value">{featuredContent.likes}</span>
+                          <span className="meta-value">
+                            {featuredContent.likes}
+                          </span>
                         </span>
-                        <span className="category-badge">{featuredContent.category}</span>
+                        <span className="category-badge">
+                          {featuredContent.category}
+                        </span>
                       </div>
-                      
-                      <p className="featured-description">{featuredContent.description}</p>
-                      
+
+                      <p className="featured-description">
+                        {featuredContent.description}
+                      </p>
+
                       <div className="featured-action">
                         <span className="action-text">Click to learn more</span>
                         <span className="action-arrow">→</span>
@@ -350,63 +384,65 @@ const Education = () => {
               <section className="content-grid-section">
                 <div className="content-grid" role="grid">
                   {filteredAndSortedContent
-                    .filter(item => activeTab === "new" ? item.id !== 1 : true)
+                    .filter((item) =>
+                      activeTab === "new" ? item.id !== 1 : true,
+                    )
                     .map((item) => (
-                    <article
-                      key={item.id}
-                      className="content-card"
-                      onClick={() => handleContentClick(item.id)}
-                      onKeyDown={(e) => handleKeyboardNavigation(e, item.id)}
-                      role="button"
-                      tabIndex={0}
-                      aria-label={`${item.title} - ${item.category}`}
-                    >
-                      <div className="card-image-container">
-                        <img 
-                          src={item.image} 
-                          alt={item.title}
-                          className="card-image"
-                        />
-                        <div className="card-overlay">
-                          <div className="play-button">
-                            <span className="play-icon">▶️</span>
+                      <article
+                        key={item.id}
+                        className="content-card"
+                        onClick={() => handleContentClick(item.id)}
+                        onKeyDown={(e) => handleKeyboardNavigation(e, item.id)}
+                        role="button"
+                        tabIndex={0}
+                        aria-label={`${item.title} - ${item.category}`}
+                      >
+                        <div className="card-image-container">
+                          <img
+                            src={item.image}
+                            alt={item.title}
+                            className="card-image"
+                          />
+                          <div className="card-overlay">
+                            <div className="play-button">
+                              <span className="play-icon">▶️</span>
+                            </div>
                           </div>
-                        </div>
-                        {item.isNew && (
-                          <div className="new-badge">New</div>
-                        )}
-                        {item.isTrending && (
-                          <div className="trending-badge">🔥</div>
-                        )}
-                      </div>
-                      
-                      <div className="card-content">
-                        <header className="card-header">
-                          <h4 className="card-title">{item.title}</h4>
-                          <p className="card-subtitle">{item.subtitle}</p>
-                        </header>
-                        
-                        <div className="card-meta">
-                          <span className="meta-item">
-                            <span className="meta-icon">👁️</span>
-                            <span className="meta-value">{item.views}</span>
-                          </span>
-                          <span className="meta-item">
-                            <span className="meta-icon">❤️</span>
-                            <span className="meta-value">{item.likes}</span>
-                          </span>
-                          <span className="category-tag">{item.category}</span>
+                          {item.isNew && <div className="new-badge">New</div>}
+                          {item.isTrending && (
+                            <div className="trending-badge">🔥</div>
+                          )}
                         </div>
 
-                        <p className="card-description">{item.description}</p>
-                        
-                        <div className="card-action">
-                          <span className="learn-more">Learn More</span>
-                          <span className="action-arrow">→</span>
+                        <div className="card-content">
+                          <header className="card-header">
+                            <h4 className="card-title">{item.title}</h4>
+                            <p className="card-subtitle">{item.subtitle}</p>
+                          </header>
+
+                          <div className="card-meta">
+                            <span className="meta-item">
+                              <span className="meta-icon">👁️</span>
+                              <span className="meta-value">{item.views}</span>
+                            </span>
+                            <span className="meta-item">
+                              <span className="meta-icon">❤️</span>
+                              <span className="meta-value">{item.likes}</span>
+                            </span>
+                            <span className="category-tag">
+                              {item.category}
+                            </span>
+                          </div>
+
+                          <p className="card-description">{item.description}</p>
+
+                          <div className="card-action">
+                            <span className="learn-more">Learn More</span>
+                            <span className="action-arrow">→</span>
+                          </div>
                         </div>
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    ))}
                 </div>
 
                 {filteredAndSortedContent.length === 0 && (
@@ -414,9 +450,10 @@ const Education = () => {
                     <div className="no-results-icon">🔍</div>
                     <h3 className="no-results-title">No Content Found</h3>
                     <p className="no-results-description">
-                      Try adjusting your search terms or filters to find educational content.
+                      Try adjusting your search terms or filters to find
+                      educational content.
                     </p>
-                    <button 
+                    <button
                       onClick={() => {
                         setSearchTerm("");
                         setActiveTab("new");
@@ -439,7 +476,7 @@ const Education = () => {
                     <span className="sidebar-text">Trending Now</span>
                   </h3>
                 </header>
-                
+
                 <div className="trending-list">
                   {trendingContent.map((item, index) => (
                     <article
@@ -454,15 +491,15 @@ const Education = () => {
                       <div className="trending-rank">
                         <span className="rank-number">{index + 1}</span>
                       </div>
-                      
+
                       <div className="trending-image-container">
-                        <img 
-                          src={item.image} 
+                        <img
+                          src={item.image}
                           alt={item.title}
                           className="trending-image"
                         />
                       </div>
-                      
+
                       <div className="trending-content">
                         <h4 className="trending-title">{item.title}</h4>
                         <p className="trending-subtitle">{item.subtitle}</p>
@@ -482,7 +519,7 @@ const Education = () => {
                 </div>
 
                 <div className="sidebar-footer">
-                  <button 
+                  <button
                     onClick={() => setActiveTab("trending")}
                     className="view-all-trending"
                   >

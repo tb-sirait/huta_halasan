@@ -82,10 +82,7 @@ const EducationDetail = () => {
         <div className="error-container">
           <h2>Content Not Found</h2>
           <p>The requested educational content could not be found.</p>
-          <button 
-            onClick={() => navigate("/edu")} 
-            className="back-button"
-          >
+          <button onClick={() => navigate("/edu")} className="back-button">
             ← Back to Education
           </button>
         </div>
@@ -130,17 +127,17 @@ const EducationDetail = () => {
             <main className="detail-main">
               <article className="content-article">
                 <div className="article-image-container">
-                  <img 
-                    src={content.image} 
+                  <img
+                    src={content.image}
                     alt={content.title}
                     className="article-image"
                   />
                 </div>
-                
+
                 <header className="article-header">
                   <h2 className="article-title">{content.title}</h2>
                   <p className="article-subtitle">{content.subtitle}</p>
-                  
+
                   <div className="article-meta">
                     <span className="meta-item">
                       <span className="meta-icon">👁️</span>
@@ -157,7 +154,7 @@ const EducationDetail = () => {
                 </header>
 
                 <div className="article-content">
-                  {content.content.split('\n\n').map((paragraph, index) => (
+                  {content.content.split("\n\n").map((paragraph, index) => (
                     <p key={index} className="content-paragraph">
                       {paragraph.trim()}
                     </p>
@@ -181,7 +178,7 @@ const EducationDetail = () => {
             <aside className="detail-sidebar">
               <div className="sidebar-container">
                 <h3 className="sidebar-title">Trending</h3>
-                
+
                 <div className="trending-list">
                   {trendingContent.map((item) => (
                     <article
@@ -191,19 +188,19 @@ const EducationDetail = () => {
                       role="button"
                       tabIndex={0}
                       onKeyDown={(e) => {
-                        if (e.key === 'Enter' || e.key === ' ') {
+                        if (e.key === "Enter" || e.key === " ") {
                           handleTrendingClick(item.id);
                         }
                       }}
                     >
                       <div className="trending-image-container">
-                        <img 
-                          src={item.image} 
+                        <img
+                          src={item.image}
                           alt={item.title}
                           className="trending-image"
                         />
                       </div>
-                      
+
                       <div className="trending-content">
                         <h4 className="trending-title">{item.title}</h4>
                         <p className="trending-subtitle">{item.subtitle}</p>

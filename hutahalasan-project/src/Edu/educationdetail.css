@@ -106,7 +106,7 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 35px;
-  box-shadow: 
+  box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.08),
     0 4px 10px rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -266,7 +266,7 @@
   background: #ffffff;
   border-radius: 20px;
   padding: 30px;
-  box-shadow: 
+  box-shadow:
     0 10px 25px rgba(0, 0, 0, 0.08),
     0 4px 10px rgba(0, 0, 0, 0.03);
   border: 1px solid rgba(255, 255, 255, 0.2);
@@ -399,16 +399,16 @@
     grid-template-columns: 1fr;
     gap: 25px;
   }
-  
+
   .detail-sidebar {
     position: static;
     order: -1;
   }
-  
+
   .sidebar-container {
     padding: 25px;
   }
-  
+
   .trending-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
@@ -421,64 +421,64 @@
   .detail-hero {
     height: 280px;
   }
-  
+
   .hero-content {
     padding: 0 15px;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .detail-section {
     margin-top: -60px;
   }
-  
+
   .container {
     width: 95%;
   }
-  
+
   .detail-main {
     padding: 25px 20px;
   }
-  
+
   .article-image {
     height: 220px;
   }
-  
+
   .article-meta {
     flex-direction: column;
     align-items: flex-start;
     gap: 12px;
   }
-  
+
   .content-paragraph {
     font-size: 1rem;
     text-align: left;
   }
-  
+
   .back-button {
     width: 100%;
     justify-content: center;
     padding: 16px;
   }
-  
+
   .sidebar-container {
     padding: 20px;
   }
-  
+
   .trending-list {
     grid-template-columns: 1fr;
   }
-  
+
   .trending-item {
     padding: 12px;
   }
-  
+
   .trending-image {
     width: 70px;
     height: 55px;
@@ -490,28 +490,28 @@
   .detail-hero {
     height: 250px;
   }
-  
+
   .hero-title {
     font-size: 1.75rem;
   }
-  
+
   .detail-main {
     padding: 20px 15px;
   }
-  
+
   .article-title {
     font-size: 1.5rem;
   }
-  
+
   .trending-item {
     flex-direction: column;
     text-align: center;
   }
-  
+
   .trending-image-container {
     align-self: center;
   }
-  
+
   .trending-image {
     width: 100px;
     height: 75px;
@@ -541,11 +541,11 @@
   .button-icon {
     transition: none;
   }
-  
+
   .trending-item:hover {
     transform: none;
   }
-  
+
   .back-button:hover {
     transform: none;
   }
@@ -556,11 +556,11 @@
   .article-meta {
     border-color: #000000;
   }
-  
+
   .trending-item {
     border-color: #000000;
   }
-  
+
   .meta-category {
     background: #000000;
     color: #ffffff;
@@ -577,20 +577,20 @@
   .article-actions {
     display: none;
   }
-  
+
   .detail-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .detail-main {
     box-shadow: none;
     border: 1px solid #e2e8f0;
   }
-  
+
   .hero-content {
     color: #000000;
   }
-  
+
   .content-paragraph {
     text-align: left;
   }

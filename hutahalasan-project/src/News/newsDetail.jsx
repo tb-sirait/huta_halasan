@@ -46,7 +46,8 @@ const NewsDetail = ({ article, onBack }) => {
           ← Kembali ke News
         </button>
         <div className="news-detail-breadcrumb">
-          <span>News</span> / <span>{article.category}</span> / <span>{article.title}</span>
+          <span>News</span> / <span>{article.category}</span> /{" "}
+          <span>{article.title}</span>
         </div>
       </div>
 
@@ -60,11 +61,15 @@ const NewsDetail = ({ article, onBack }) => {
               <div className="news-detail-meta-left">
                 <span className="news-detail-author">By {article.author}</span>
                 <span className="news-detail-date">{article.date}</span>
-                <span className="news-detail-category-tag">{article.category}</span>
+                <span className="news-detail-category-tag">
+                  {article.category}
+                </span>
               </div>
               <div className="news-detail-meta-right">
                 <span className="news-detail-views">👁 {article.views}</span>
-                <span className="news-detail-comments">💬 {article.comments}</span>
+                <span className="news-detail-comments">
+                  💬 {article.comments}
+                </span>
               </div>
             </div>
           </div>
@@ -72,94 +77,92 @@ const NewsDetail = ({ article, onBack }) => {
           {/* Featured Image */}
           <div className="news-detail-featured-image">
             <img src={article.image} alt={article.title} />
-            <p className="news-detail-image-caption">
-              {article.subtitle}
-            </p>
+            <p className="news-detail-image-caption">{article.subtitle}</p>
           </div>
 
           {/* Article Body */}
           <div className="news-detail-body">
             <p className="news-detail-lead">
-              {article.subtitle} - Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-              sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
-              Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
+              {article.subtitle} - Lorem ipsum dolor sit amet, consectetur
+              adipiscing elit, sed do eiusmod tempor incididunt ut labore et
+              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
+              exercitation ullamco laboris.
             </p>
 
             <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod 
-              tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, 
-              quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo 
-              consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse 
-              cillum dolore eu fugiat nulla pariatur.
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
+              enim ad minim veniam, quis nostrud exercitation ullamco laboris
+              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
+              reprehenderit in voluptate velit esse cillum dolore eu fugiat
+              nulla pariatur.
             </p>
 
             <h3>Sejarah dan Tradisi</h3>
             <p>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia 
-              deserunt mollit anim id est laborum. Sed ut perspiciatis unde omnis iste 
-              natus error sit voluptatem accusantium doloremque laudantium, totam rem 
-              aperiam, eaque ipsa quae ab illo inventore veritatis.
+              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
+              officia deserunt mollit anim id est laborum. Sed ut perspiciatis
+              unde omnis iste natus error sit voluptatem accusantium doloremque
+              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
+              veritatis.
             </p>
 
             <p>
-              Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, 
-              cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod 
-              maxime placeat facere possimus, omnis voluptas assumenda est, omnis dolor 
-              repellendus.
+              Et harum quidem rerum facilis est et expedita distinctio. Nam
+              libero tempore, cum soluta nobis est eligendi optio cumque nihil
+              impedit quo minus id quod maxime placeat facere possimus, omnis
+              voluptas assumenda est, omnis dolor repellendus.
             </p>
 
             <h3>Makna dan Filosofi</h3>
             <p>
-              Temporibus autem quibusdam et aut officiis debitis aut rerum necessitatibus 
-              saepe eveniet ut et voluptates repudiandae sint et molestiae non recusandae. 
-              Itaque earum rerum hic tenetur a sapiente delectus, ut aut reiciendis 
-              voluptatibus maiores alias consequatur aut perferendis doloribus asperiores.
+              Temporibus autem quibusdam et aut officiis debitis aut rerum
+              necessitatibus saepe eveniet ut et voluptates repudiandae sint et
+              molestiae non recusandae. Itaque earum rerum hic tenetur a
+              sapiente delectus, ut aut reiciendis voluptatibus maiores alias
+              consequatur aut perferendis doloribus asperiores.
             </p>
 
             <blockquote className="news-detail-quote">
-              "Budaya Batak adalah warisan leluhur yang harus dijaga dan dilestarikan 
-              untuk generasi mendatang."
+              "Budaya Batak adalah warisan leluhur yang harus dijaga dan
+              dilestarikan untuk generasi mendatang."
             </blockquote>
 
             <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis 
-              praesentium voluptatum deleniti atque corrupti quos dolores et quas molestias 
-              excepturi sint occaecati cupiditate non provident, similique sunt in culpa 
-              qui officia deserunt mollitia animi, id est laborum et dolorum fuga.
+              At vero eos et accusamus et iusto odio dignissimos ducimus qui
+              blanditiis praesentium voluptatum deleniti atque corrupti quos
+              dolores et quas molestias excepturi sint occaecati cupiditate non
+              provident, similique sunt in culpa qui officia deserunt mollitia
+              animi, id est laborum et dolorum fuga.
             </p>
 
             <h3>Pelestarian untuk Masa Depan</h3>
             <p>
-              Et harum quidem rerum facilis est et expedita distinctio. Nam libero tempore, 
-              cum soluta nobis est eligendi optio cumque nihil impedit quo minus id quod 
-              maxime placeat facere possimus, omnis voluptas assumenda est.
+              Et harum quidem rerum facilis est et expedita distinctio. Nam
+              libero tempore, cum soluta nobis est eligendi optio cumque nihil
+              impedit quo minus id quod maxime placeat facere possimus, omnis
+              voluptas assumenda est.
             </p>
           </div>
 
           {/* Share and Actions */}
           <div className="news-detail-actions">
-            <button className="news-action-btn share-btn">
-              📤 Share
-            </button>
-            <button className="news-action-btn save-btn">
-              🔖 Save
-            </button>
-            <button className="news-action-btn like-btn">
-              👍 Like
-            </button>
+            <button className="news-action-btn share-btn">📤 Share</button>
+            <button className="news-action-btn save-btn">🔖 Save</button>
+            <button className="news-action-btn like-btn">👍 Like</button>
           </div>
 
           {/* Comments Section */}
           <div className="news-detail-comments">
             <h3>Komentar ({article.comments})</h3>
             <div className="news-comment-form">
-              <textarea 
+              <textarea
                 placeholder="Tulis komentar Anda..."
                 className="news-comment-textarea"
               ></textarea>
               <button className="news-comment-submit">Kirim Komentar</button>
             </div>
-            
+
             {/* Sample Comments */}
             <div className="news-comments-list">
               <div className="news-comment-item">
@@ -169,10 +172,13 @@ const NewsDetail = ({ article, onBack }) => {
                     <strong>User123</strong>
                     <span className="news-comment-time">2 jam yang lalu</span>
                   </div>
-                  <p>Artikel yang sangat menarik tentang budaya Batak! Terima kasih telah berbagi.</p>
+                  <p>
+                    Artikel yang sangat menarik tentang budaya Batak! Terima
+                    kasih telah berbagi.
+                  </p>
                 </div>
               </div>
-              
+
               <div className="news-comment-item">
                 <div className="news-comment-avatar">B</div>
                 <div className="news-comment-content">
@@ -180,7 +186,10 @@ const NewsDetail = ({ article, onBack }) => {
                     <strong>BatakPride</strong>
                     <span className="news-comment-time">5 jam yang lalu</span>
                   </div>
-                  <p>Sebagai orang Batak, saya sangat bangga membaca artikel ini. Horas!</p>
+                  <p>
+                    Sebagai orang Batak, saya sangat bangga membaca artikel ini.
+                    Horas!
+                  </p>
                 </div>
               </div>
             </div>
@@ -199,7 +208,7 @@ const NewsDetail = ({ article, onBack }) => {
                   <span className="news-related-date">1 hari yang lalu</span>
                 </div>
               </div>
-              
+
               <div className="news-related-item">
                 <img src="/api/placeholder/100/80" alt="Related article" />
                 <div className="news-related-content">
@@ -207,7 +216,7 @@ const NewsDetail = ({ article, onBack }) => {
                   <span className="news-related-date">2 hari yang lalu</span>
                 </div>
               </div>
-              
+
               <div className="news-related-item">
                 <img src="/api/placeholder/100/80" alt="Related article" />
                 <div className="news-related-content">

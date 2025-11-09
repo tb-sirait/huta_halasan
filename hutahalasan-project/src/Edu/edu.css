@@ -931,27 +931,27 @@
     grid-template-columns: 1fr;
     gap: 30px;
   }
-  
+
   .trending-sidebar {
     position: static;
     order: -1;
   }
-  
+
   .sidebar-container {
     padding: 25px;
   }
-  
+
   .trending-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 15px;
   }
-  
+
   .featured-card {
     grid-template-columns: 1fr;
     gap: 25px;
   }
-  
+
   .featured-image {
     height: 220px;
   }
@@ -962,59 +962,59 @@
   .education-hero {
     height: 300px;
   }
-  
+
   .hero-title {
     font-size: 2.5rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1.2rem;
   }
-  
+
   .search-filter-section {
     padding: 30px 0;
   }
-  
+
   .section-title {
     font-size: 2rem;
   }
-  
+
   .controls-container {
     gap: 15px;
   }
-  
+
   .filter-controls {
     flex-direction: column;
     gap: 15px;
     width: 100%;
     max-width: 300px;
   }
-  
+
   .filter-group {
     width: 100%;
   }
-  
+
   .filter-select {
     width: 100%;
   }
-  
+
   .content-grid {
     grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     gap: 20px;
   }
-  
+
   .featured-card {
     padding: 25px 20px;
   }
-  
+
   .featured-title {
     font-size: 1.5rem;
   }
-  
+
   .card-content {
     padding: 20px;
   }
-  
+
   .trending-list {
     grid-template-columns: 1fr;
   }
@@ -1026,83 +1026,83 @@
     width: 95%;
     padding: 0 10px;
   }
-  
+
   .education-hero {
     height: 250px;
   }
-  
+
   .hero-title {
     font-size: 2rem;
   }
-  
+
   .hero-subtitle {
     font-size: 1rem;
   }
-  
+
   .search-filter-section {
     padding: 25px 0;
   }
-  
+
   .section-title {
     font-size: 1.8rem;
   }
-  
+
   .search-input {
     padding: 14px 18px 14px 45px;
     font-size: 0.95rem;
   }
-  
+
   .content-grid {
     grid-template-columns: 1fr;
     gap: 15px;
   }
-  
+
   .featured-card {
     padding: 20px 15px;
     gap: 20px;
   }
-  
+
   .featured-image {
     height: 180px;
   }
-  
+
   .featured-title {
     font-size: 1.3rem;
   }
-  
+
   .card-content {
     padding: 18px 15px;
   }
-  
+
   .card-title {
     font-size: 1.1rem;
   }
-  
+
   .tab-navigation {
     padding: 6px;
   }
-  
+
   .tab-button {
     padding: 10px 16px;
     font-size: 0.9rem;
   }
-  
+
   .trending-item {
     padding: 12px;
     flex-direction: column;
     text-align: center;
     gap: 10px;
   }
-  
+
   .trending-image-container {
     align-self: center;
   }
-  
+
   .trending-image {
     width: 100px;
     height: 75px;
   }
-  
+
   .trending-rank {
     position: static;
     margin-bottom: 10px;
@@ -1139,13 +1139,13 @@
   .action-arrow {
     transition: none;
   }
-  
+
   .content-card:hover,
   .trending-item:hover,
   .featured-card:hover {
     transform: none;
   }
-  
+
   .trending-badge {
     animation: none;
   }
@@ -1158,7 +1158,7 @@
   .trending-item {
     border-color: #000000;
   }
-  
+
   .category-badge,
   .category-tag {
     background: #000000;
@@ -1174,18 +1174,18 @@
   .featured-overlay {
     display: none;
   }
-  
+
   .content-layout {
     grid-template-columns: 1fr;
   }
-  
+
   .content-card,
   .featured-card {
     box-shadow: none;
     border: 1px solid #e2e8f0;
     break-inside: avoid;
   }
-  
+
   .hero-content {
     color: #000000;
   }

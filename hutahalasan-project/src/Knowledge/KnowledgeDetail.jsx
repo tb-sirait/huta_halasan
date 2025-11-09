@@ -42,7 +42,7 @@ const KnowledgeDetail = () => {
         
         <p>Pemerintah daerah juga turut mendukung pelestarian ritual ini dengan memberikan bantuan dan pengakuan resmi sebagai warisan budaya takbenda yang perlu dijaga kelestariannya.</p>
       `,
-      tags: ["budaya", "ritual", "tradisional", "batak", "huta halasan"]
+      tags: ["budaya", "ritual", "tradisional", "batak", "huta halasan"],
     },
     2: {
       id: 2,
@@ -63,7 +63,7 @@ const KnowledgeDetail = () => {
         
         <p>Festival ini menghadirkan puluhan grup gondang dari berbagai daerah di Sumatera Utara, menciptakan harmoni musik yang memukau ribuan pengunjung yang hadir.</p>
       `,
-      tags: ["musik", "gondang", "festival", "batak", "samosir"]
+      tags: ["musik", "gondang", "festival", "batak", "samosir"],
     },
     3: {
       id: 3,
@@ -84,8 +84,8 @@ const KnowledgeDetail = () => {
         
         <p>Setiap elemen bangunan memiliki makna simbolis yang mendalam, mulai dari bentuk atap yang menyerupai perahu terbalik hingga ukiran-ukiran yang menghiasi dinding dan tiang-tiang rumah.</p>
       `,
-      tags: ["arsitektur", "rumah adat", "batak", "sopo godang", "filosofi"]
-    }
+      tags: ["arsitektur", "rumah adat", "batak", "sopo godang", "filosofi"],
+    },
   };
 
   const trendingData = [
@@ -128,7 +128,7 @@ const KnowledgeDetail = () => {
 
     // Get related articles (exclude current article)
     const related = Object.values(allArticles)
-      .filter(art => art.id !== parseInt(id))
+      .filter((art) => art.id !== parseInt(id))
       .slice(0, 2);
     setRelatedArticles(related);
 
@@ -137,7 +137,7 @@ const KnowledgeDetail = () => {
   }, [id]);
 
   const handleBackToKnowledge = () => {
-    navigate('/knowledge');
+    navigate("/knowledge");
   };
 
   const handleArticleClick = (articleId) => {
@@ -156,7 +156,7 @@ const KnowledgeDetail = () => {
         <div className="knowledge-detail-container">
           <div className="knowledge-detail-loading">
             <p>Artikel tidak ditemukan</p>
-            <button 
+            <button
               onClick={handleBackToKnowledge}
               className="knowledge-back-button"
             >
@@ -172,10 +172,10 @@ const KnowledgeDetail = () => {
   return (
     <div className="knowledge-detail-page">
       <Header />
-      
+
       <div className="knowledge-detail-container">
         {/* Back Button */}
-        <button 
+        <button
           onClick={handleBackToKnowledge}
           className="knowledge-back-button"
         >
@@ -191,13 +191,9 @@ const KnowledgeDetail = () => {
                 <div className="knowledge-detail-category">
                   {article.category}
                 </div>
-                <h1 className="knowledge-detail-title">
-                  {article.title}
-                </h1>
-                <p className="knowledge-detail-subtitle">
-                  {article.subtitle}
-                </p>
-                
+                <h1 className="knowledge-detail-title">{article.title}</h1>
+                <p className="knowledge-detail-subtitle">{article.subtitle}</p>
+
                 {/* Article Meta */}
                 <div className="knowledge-detail-meta">
                   <div className="knowledge-detail-author-info">
@@ -225,7 +221,7 @@ const KnowledgeDetail = () => {
               </div>
 
               {/* Article Content */}
-              <div 
+              <div
                 className="knowledge-detail-body"
                 dangerouslySetInnerHTML={{ __html: article.content }}
               />
@@ -245,55 +241,60 @@ const KnowledgeDetail = () => {
               {/* Comments Section */}
               <div className="knowledge-detail-comments">
                 <h3>Komentar ({article.comments})</h3>
-                
+
                 {/* Comment Form */}
                 <div className="knowledge-detail-comment-form">
                   <h4>Tinggalkan Komentar</h4>
-                  <form onSubmit={(e) => {
-                    e.preventDefault();
-                    const formData = new FormData(e.target);
-                    const comment = {
-                      name: formData.get('name'),
-                      email: formData.get('email'),
-                      message: formData.get('message')
-                    };
-                    console.log('New comment:', comment);
-                    // Handle comment submission here
-                    e.target.reset();
-                  }}>
+                  <form
+                    onSubmit={(e) => {
+                      e.preventDefault();
+                      const formData = new FormData(e.target);
+                      const comment = {
+                        name: formData.get("name"),
+                        email: formData.get("email"),
+                        message: formData.get("message"),
+                      };
+                      console.log("New comment:", comment);
+                      // Handle comment submission here
+                      e.target.reset();
+                    }}
+                  >
                     <div className="knowledge-detail-form-row">
                       <div className="knowledge-detail-form-group">
                         <label htmlFor="name">Nama *</label>
-                        <input 
-                          type="text" 
-                          id="name" 
-                          name="name" 
-                          required 
+                        <input
+                          type="text"
+                          id="name"
+                          name="name"
+                          required
                           placeholder="Masukkan nama Anda"
                         />
                       </div>
                       <div className="knowledge-detail-form-group">
                         <label htmlFor="email">Email *</label>
-                        <input 
-                          type="email" 
-                          id="email" 
-                          name="email" 
-                          required 
+                        <input
+                          type="email"
+                          id="email"
+                          name="email"
+                          required
                           placeholder="Masukkan email Anda"
                         />
                       </div>
                     </div>
                     <div className="knowledge-detail-form-group">
                       <label htmlFor="message">Komentar *</label>
-                      <textarea 
-                        id="message" 
-                        name="message" 
-                        required 
+                      <textarea
+                        id="message"
+                        name="message"
+                        required
                         rows="4"
                         placeholder="Tulis komentar Anda di sini..."
                       ></textarea>
                     </div>
-                    <button type="submit" className="knowledge-detail-submit-btn">
+                    <button
+                      type="submit"
+                      className="knowledge-detail-submit-btn"
+                    >
                       Kirim Komentar
                     </button>
                   </form>
@@ -303,19 +304,22 @@ const KnowledgeDetail = () => {
                 <div className="knowledge-detail-comments-list">
                   <div className="knowledge-detail-comment">
                     <div className="knowledge-detail-comment-avatar">
-                      <div className="knowledge-detail-avatar-circle">
-                        JD
-                      </div>
+                      <div className="knowledge-detail-avatar-circle">JD</div>
                     </div>
                     <div className="knowledge-detail-comment-content">
                       <div className="knowledge-detail-comment-header">
-                        <h5 className="knowledge-detail-comment-author">John Doe</h5>
-                        <span className="knowledge-detail-comment-time">2 hari yang lalu</span>
+                        <h5 className="knowledge-detail-comment-author">
+                          John Doe
+                        </h5>
+                        <span className="knowledge-detail-comment-time">
+                          2 hari yang lalu
+                        </span>
                       </div>
                       <p className="knowledge-detail-comment-text">
-                        Artikel yang sangat menarik! Saya baru mengetahui tentang ritual Ulaon Sipaha Lima ini. 
-                        Terima kasih telah membagikan informasi budaya yang begitu berharga. Semoga tradisi 
-                        seperti ini tetap lestari di masa depan.
+                        Artikel yang sangat menarik! Saya baru mengetahui
+                        tentang ritual Ulaon Sipaha Lima ini. Terima kasih telah
+                        membagikan informasi budaya yang begitu berharga. Semoga
+                        tradisi seperti ini tetap lestari di masa depan.
                       </p>
                       <div className="knowledge-detail-comment-actions">
                         <button className="knowledge-detail-comment-action">
@@ -330,19 +334,23 @@ const KnowledgeDetail = () => {
 
                   <div className="knowledge-detail-comment">
                     <div className="knowledge-detail-comment-avatar">
-                      <div className="knowledge-detail-avatar-circle">
-                        MS
-                      </div>
+                      <div className="knowledge-detail-avatar-circle">MS</div>
                     </div>
                     <div className="knowledge-detail-comment-content">
                       <div className="knowledge-detail-comment-header">
-                        <h5 className="knowledge-detail-comment-author">Maria Sitompul</h5>
-                        <span className="knowledge-detail-comment-time">1 hari yang lalu</span>
+                        <h5 className="knowledge-detail-comment-author">
+                          Maria Sitompul
+                        </h5>
+                        <span className="knowledge-detail-comment-time">
+                          1 hari yang lalu
+                        </span>
                       </div>
                       <p className="knowledge-detail-comment-text">
-                        Sebagai orang Batak, saya sangat bangga dengan pelestarian budaya seperti ini. 
-                        Ritual Ulaon Sipaha Lima memang masih dilaksanakan di kampung halaman saya. 
-                        Artikel ini menjelaskan dengan sangat baik makna dan prosesinya.
+                        Sebagai orang Batak, saya sangat bangga dengan
+                        pelestarian budaya seperti ini. Ritual Ulaon Sipaha Lima
+                        memang masih dilaksanakan di kampung halaman saya.
+                        Artikel ini menjelaskan dengan sangat baik makna dan
+                        prosesinya.
                       </p>
                       <div className="knowledge-detail-comment-actions">
                         <button className="knowledge-detail-comment-action">
@@ -357,18 +365,21 @@ const KnowledgeDetail = () => {
 
                   <div className="knowledge-detail-comment">
                     <div className="knowledge-detail-comment-avatar">
-                      <div className="knowledge-detail-avatar-circle">
-                        RP
-                      </div>
+                      <div className="knowledge-detail-avatar-circle">RP</div>
                     </div>
                     <div className="knowledge-detail-comment-content">
                       <div className="knowledge-detail-comment-header">
-                        <h5 className="knowledge-detail-comment-author">Rudi Pangaribuan</h5>
-                        <span className="knowledge-detail-comment-time">18 jam yang lalu</span>
+                        <h5 className="knowledge-detail-comment-author">
+                          Rudi Pangaribuan
+                        </h5>
+                        <span className="knowledge-detail-comment-time">
+                          18 jam yang lalu
+                        </span>
                       </div>
                       <p className="knowledge-detail-comment-text">
-                        Apakah ada jadwal khusus untuk ritual ini? Saya ingin mengajak keluarga untuk 
-                        menyaksikan langsung tradisi yang luar biasa ini.
+                        Apakah ada jadwal khusus untuk ritual ini? Saya ingin
+                        mengajak keluarga untuk menyaksikan langsung tradisi
+                        yang luar biasa ini.
                       </p>
                       <div className="knowledge-detail-comment-actions">
                         <button className="knowledge-detail-comment-action">
@@ -378,7 +389,7 @@ const KnowledgeDetail = () => {
                           💬 Balas
                         </button>
                       </div>
-                      
+
                       {/* Reply to comment */}
                       <div className="knowledge-detail-comment-reply">
                         <div className="knowledge-detail-comment-avatar">
@@ -388,12 +399,17 @@ const KnowledgeDetail = () => {
                         </div>
                         <div className="knowledge-detail-comment-content">
                           <div className="knowledge-detail-comment-header">
-                            <h5 className="knowledge-detail-comment-author">Admin</h5>
-                            <span className="knowledge-detail-comment-time">10 jam yang lalu</span>
+                            <h5 className="knowledge-detail-comment-author">
+                              Admin
+                            </h5>
+                            <span className="knowledge-detail-comment-time">
+                              10 jam yang lalu
+                            </span>
                           </div>
                           <p className="knowledge-detail-comment-text">
-                            Biasanya ritual ini dilaksanakan setiap bulan ke-7 dan ke-12 menurut 
-                            kalender Batak. Untuk informasi lebih detail, bisa menghubungi tokoh adat setempat.
+                            Biasanya ritual ini dilaksanakan setiap bulan ke-7
+                            dan ke-12 menurut kalender Batak. Untuk informasi
+                            lebih detail, bisa menghubungi tokoh adat setempat.
                           </p>
                           <div className="knowledge-detail-comment-actions">
                             <button className="knowledge-detail-comment-action">
@@ -419,13 +435,16 @@ const KnowledgeDetail = () => {
                 <h3>Artikel Terkait</h3>
                 <div className="knowledge-detail-related-grid">
                   {relatedArticles.map((relatedArticle) => (
-                    <div 
-                      key={relatedArticle.id} 
+                    <div
+                      key={relatedArticle.id}
                       className="knowledge-detail-related-card"
                       onClick={() => handleArticleClick(relatedArticle.id)}
                     >
                       <div className="knowledge-detail-related-image">
-                        <img src={relatedArticle.image} alt={relatedArticle.title} />
+                        <img
+                          src={relatedArticle.image}
+                          alt={relatedArticle.title}
+                        />
                       </div>
                       <div className="knowledge-detail-related-content">
                         <h4>{relatedArticle.title}</h4>
@@ -449,11 +468,11 @@ const KnowledgeDetail = () => {
               <h3 className="knowledge-detail-trending-title">
                 Konten Trending
               </h3>
-              
+
               <div className="knowledge-detail-trending-list">
                 {trendingArticles.map((item) => (
-                  <div 
-                    key={item.id} 
+                  <div
+                    key={item.id}
                     className="knowledge-detail-trending-item"
                     onClick={() => handleTrendingClick(item.id)}
                   >
@@ -484,32 +503,36 @@ const KnowledgeDetail = () => {
 
             {/* Latest Updates */}
             <div className="knowledge-detail-latest">
-              <h3 className="knowledge-detail-latest-title">
-                Konten Terbaru
-              </h3>
-              
+              <h3 className="knowledge-detail-latest-title">Konten Terbaru</h3>
+
               <div className="knowledge-detail-latest-list">
                 <div className="knowledge-detail-latest-item">
                   <div className="knowledge-detail-latest-content">
                     <h4>Tradisi Mangongkal Holi di Batak Toba</h4>
                     <p>Ritual pemindahan tulang leluhur</p>
-                    <span className="knowledge-detail-latest-time">5 jam yang lalu</span>
+                    <span className="knowledge-detail-latest-time">
+                      5 jam yang lalu
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="knowledge-detail-latest-item">
                   <div className="knowledge-detail-latest-content">
                     <h4>Horja Bius: Upacara Pernikahan Adat</h4>
                     <p>Prosesi pernikahan tradisional Batak</p>
-                    <span className="knowledge-detail-latest-time">1 hari yang lalu</span>
+                    <span className="knowledge-detail-latest-time">
+                      1 hari yang lalu
+                    </span>
                   </div>
                 </div>
-                
+
                 <div className="knowledge-detail-latest-item">
                   <div className="knowledge-detail-latest-content">
                     <h4>Makanan Tradisional: Arsik dan Naniura</h4>
                     <p>Kuliner khas yang mendunia</p>
-                    <span className="knowledge-detail-latest-time">2 hari yang lalu</span>
+                    <span className="knowledge-detail-latest-time">
+                      2 hari yang lalu
+                    </span>
                   </div>
                 </div>
               </div>

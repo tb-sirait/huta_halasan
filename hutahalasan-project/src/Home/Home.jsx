@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef } from "react";
 import "./home.css";
 import Footer from "../Footer/Footer";
 import Header from "../Navbar/Header";
@@ -17,7 +17,7 @@ import img6 from "../assets/6.jpg";
 
 import "./slideshow.css";
 
-import Helmet from "react-helmet"
+import Helmet from "react-helmet";
 
 const Home = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
@@ -48,14 +48,7 @@ const Home = () => {
   const slideCountRef = useRef(0);
 
   // Array gambar - ganti dengan URL gambar Anda
-  const slides = [
-    img1,
-    img2,
-    img3,
-    img4,
-    img5,
-    img6,
-  ];
+  const slides = [img1, img2, img3, img4, img5, img6];
 
   // Intersection Observer untuk deteksi scroll
   useEffect(() => {
@@ -71,8 +64,8 @@ const Home = () => {
         });
       },
       {
-        threshold: 0.2
-      }
+        threshold: 0.2,
+      },
     );
 
     if (sectionRef.current) {
@@ -92,15 +85,15 @@ const Home = () => {
 
     const interval = setInterval(() => {
       setIsTransitioning(true);
-      
+
       // Set next slide
       setNextSlide((currentSlide + 1) % slides.length);
-      
+
       // Tunggu separuh durasi untuk memulai fade
       setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
         slideCountRef.current += 1;
-        
+
         // Melambatkan kecepatan setelah beberapa slide
         if (slideCountRef.current === 2) {
           setSlideSpeed(1200);
@@ -110,12 +103,11 @@ const Home = () => {
           setSlideSpeed(3500);
         }
       }, slideSpeed / 2);
-      
+
       // Reset transition state
       setTimeout(() => {
         setIsTransitioning(false);
       }, slideSpeed);
-      
     }, slideSpeed);
 
     return () => clearInterval(interval);
@@ -124,13 +116,13 @@ const Home = () => {
   const handleIndicatorClick = (index) => {
     setIsTransitioning(true);
     setNextSlide(index);
-    
+
     setTimeout(() => {
       setCurrentSlide(index);
       setSlideSpeed(3500);
       slideCountRef.current = 6;
     }, 400);
-    
+
     setTimeout(() => {
       setIsTransitioning(false);
     }, 800);
@@ -139,7 +131,7 @@ const Home = () => {
   return (
     <div className="app">
       <Helmet>
-        <title>Home - Huta Halasan</title> 
+        <title>Home - Huta Halasan</title>
         <meta name="description" content="Huta Halasan" />
         <meta name="keywords" content="Huta Halasan" />
         <meta name="author" content="Huta Halasan" />
@@ -172,58 +164,55 @@ const Home = () => {
       </section>
 
       {/* Spirituality Section */}
-       <section 
-      ref={sectionRef}
-      className="spirituality"
-    >
-      {/* Slideshow Background dengan cross-fade */}
-      <div className={`spirituality-slideshow ${isVisible ? 'show' : ''}`}>
-        {/* Dark Overlay - tetap stabil, tidak ikut pergantian slide */}
-        <div className="spirituality-slide-overlay"></div>
-        
-        {/* Current Slide */}
-        <div
-          className={`spirituality-slide current ${isVisible ? 'slide-visible' : ''}`}
-          style={{ 
-            backgroundImage: `url(${slides[currentSlide]})`,
-          }}
-        />
-        
-        {/* Next Slide (for cross-fade effect) */}
-        {isTransitioning && (
+      <section ref={sectionRef} className="spirituality">
+        {/* Slideshow Background dengan cross-fade */}
+        <div className={`spirituality-slideshow ${isVisible ? "show" : ""}`}>
+          {/* Dark Overlay - tetap stabil, tidak ikut pergantian slide */}
+          <div className="spirituality-slide-overlay"></div>
+
+          {/* Current Slide */}
           <div
-            className="spirituality-slide next fading-in"
-            style={{ 
-              backgroundImage: `url(${slides[nextSlide]})`,
+            className={`spirituality-slide current ${isVisible ? "slide-visible" : ""}`}
+            style={{
+              backgroundImage: `url(${slides[currentSlide]})`,
             }}
           />
-        )}
-      </div>
 
-      {/* Dark Overlay - diluar slideshow agar tidak ikut transisi */}
-
-      {/* Content dengan animasi fade-in */}
-      <div className={`spirituality-overlay ${isVisible ? 'show' : ''}`}>
-        <div className="spirituality-content">
-          <h2 className="spirituality-title">With Spirituality and Ritual</h2>
-          <p className="spirituality-subtitle">to uphold God's teaching</p>
-        </div>
-      </div>
-
-      {/* Slide Indicators */}
-      {isVisible && (
-        <div className="spirituality-indicators">
-          {slides.map((_, index) => (
-            <button
-              key={index}
-              className={`indicator ${index === currentSlide ? 'active' : ''}`}
-              onClick={() => handleIndicatorClick(index)}
-              aria-label={`Go to slide ${index + 1}`}
+          {/* Next Slide (for cross-fade effect) */}
+          {isTransitioning && (
+            <div
+              className="spirituality-slide next fading-in"
+              style={{
+                backgroundImage: `url(${slides[nextSlide]})`,
+              }}
             />
-          ))}
+          )}
         </div>
-      )}
-    </section>
+
+        {/* Dark Overlay - diluar slideshow agar tidak ikut transisi */}
+
+        {/* Content dengan animasi fade-in */}
+        <div className={`spirituality-overlay ${isVisible ? "show" : ""}`}>
+          <div className="spirituality-content">
+            <h2 className="spirituality-title">With Spirituality and Ritual</h2>
+            <p className="spirituality-subtitle">to uphold God's teaching</p>
+          </div>
+        </div>
+
+        {/* Slide Indicators */}
+        {isVisible && (
+          <div className="spirituality-indicators">
+            {slides.map((_, index) => (
+              <button
+                key={index}
+                className={`indicator ${index === currentSlide ? "active" : ""}`}
+                onClick={() => handleIndicatorClick(index)}
+                aria-label={`Go to slide ${index + 1}`}
+              />
+            ))}
+          </div>
+        )}
+      </section>
 
       {/* About Section */}
       <section className="about">
@@ -239,13 +228,15 @@ const Home = () => {
             </div>
             <div className="about-text">
               <p>
-                Maragam-ragam do Ugamo adong di liat Portibion. Sada sian na maragam-ragam i namargoar Ugamo Malim, marojahan di tonga-tonga
+                Maragam-ragam do Ugamo adong di liat Portibion. Sada sian na
+                maragam-ragam i namargoar Ugamo Malim, marojahan di tonga-tonga
                 bangso Batak, hinatindanghon tu Amanta Raja Nasiakbagi.
               </p>
               <br />
               <p>
-                Ugamo Malim, ima sada dalan pardomuan dompak debata, marhite pelean ingkon ias jala malim, dohot
-                pangihutna pe ingkon ias jala malim. 
+                Ugamo Malim, ima sada dalan pardomuan dompak debata, marhite
+                pelean ingkon ias jala malim, dohot pangihutna pe ingkon ias
+                jala malim.
               </p>
             </div>
           </div>
@@ -279,9 +270,6 @@ const Home = () => {
       {/* Organization Structure */}
       <section className="organization">
         <h2 className="title">Organization Structure</h2>
-        
-
-        
       </section>
 
       {/* Bottom Sections */}
