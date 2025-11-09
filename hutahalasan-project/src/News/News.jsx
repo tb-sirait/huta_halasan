@@ -4,6 +4,7 @@ import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
 import NewsDetail from "../News/newsDetail";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import { Helmet } from "react-helmet";
 
 const NewsPage = () => {
   const [selectedFilter, setSelectedFilter] = useState("Related");
@@ -179,6 +180,7 @@ const NewsPage = () => {
 
   return (
     <div className="news-page-container">
+      <Helmet></Helmet>
       <Header />
 
       {/* Hero Section with Background Image */}

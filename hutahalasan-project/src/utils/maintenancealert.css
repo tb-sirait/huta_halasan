@@ -1,0 +1,225 @@
+/* Overlay */
+.maintenance-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.75);
+  z-index: 9998;
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Modal Container */
+.maintenance-modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  border-radius: 16px;
+  padding: 40px;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  z-index: 9999;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  animation: fadeInScale 0.4s ease-out;
+}
+
+/* Close Button */
+.maintenance-close {
+  position: absolute;
+  top: 16px;
+  right: 16px;
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  color: #64748b;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  transition: all 0.2s ease;
+}
+
+.maintenance-close:hover {
+  background-color: #f1f5f9;
+  color: #334155;
+}
+
+/* Icon */
+.maintenance-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 24px;
+  color: #f59e0b;
+}
+
+/* Title */
+.maintenance-title {
+  font-size: 24px;
+  font-weight: 700;
+  color: #1e293b;
+  text-align: center;
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+
+/* Description */
+.maintenance-description {
+  font-size: 16px;
+  color: #475569;
+  text-align: center;
+  line-height: 1.6;
+  margin-bottom: 24px;
+}
+
+/* Language Switcher */
+.maintenance-language-switcher {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin-bottom: 24px;
+}
+
+.lang-btn {
+  padding: 8px 16px;
+  border: 2px solid #e2e8f0;
+  background: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 14px;
+  font-weight: 600;
+  color: #64748b;
+  transition: all 0.2s ease;
+}
+
+.lang-btn:hover {
+  border-color: #cbd5e1;
+  background-color: #f8fafc;
+}
+
+.lang-btn.active {
+  background-color: #3b82f6;
+  border-color: #3b82f6;
+  color: white;
+}
+
+/* Main Button */
+.maintenance-button {
+  width: 100%;
+  padding: 14px 24px;
+  background-color: #3b82f6;
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  margin-bottom: 20px;
+}
+
+.maintenance-button:hover {
+  background-color: #2563eb;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+}
+
+.maintenance-button:active {
+  transform: translateY(0);
+}
+
+/* Feedback Section */
+.maintenance-feedback {
+  text-align: center;
+  padding-top: 20px;
+  border-top: 1px solid #e2e8f0;
+}
+
+.maintenance-feedback p {
+  font-size: 14px;
+  color: #64748b;
+  margin-bottom: 8px;
+}
+
+.feedback-link {
+  font-size: 14px;
+  color: #3b82f6;
+  text-decoration: none;
+  font-weight: 600;
+  transition: color 0.2s ease;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.feedback-link:hover {
+  color: #2563eb;
+  text-decoration: underline;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInScale {
+  from {
+    opacity: 0;
+    transform: translate(-50%, -50%) scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 640px) {
+  .maintenance-modal {
+    padding: 32px 24px;
+    width: 95%;
+  }
+
+  .maintenance-title {
+    font-size: 20px;
+  }
+
+  .maintenance-description {
+    font-size: 14px;
+  }
+
+  .maintenance-icon svg {
+    width: 48px;
+    height: 48px;
+  }
+}
+
+/* Smooth scrollbar for modal */
+.maintenance-modal::-webkit-scrollbar {
+  width: 8px;
+}
+
+.maintenance-modal::-webkit-scrollbar-track {
+  background: #f1f5f9;
+  border-radius: 4px;
+}
+
+.maintenance-modal::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 4px;
+}
+
+.maintenance-modal::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}

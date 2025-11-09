@@ -7,6 +7,7 @@ import newsBg from "../assets/1.jpg";
 import eduBg from "../assets/2.jpg";
 import knowledgeBg from "../assets/gambar_huta_halasan.jpg";
 import { Link } from "react-router-dom";
+import MaintenanceAlert from "../utils/MaintenanceAlert";
 
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
@@ -130,10 +131,17 @@ const Home = () => {
 
   return (
     <div className="app">
+      <MaintenanceAlert />
       <Helmet>
-        <title>Home - Huta Halasan</title>
-        <meta name="description" content="Huta Halasan" />
-        <meta name="keywords" content="Huta Halasan" />
+        <title>Horas | Parmalim Bale Pasogit Huta Halasan</title>
+        <meta
+          name="description"
+          content="Website resmi Parmalim Bale Pasogit Huta Halasan — menjunjung nilai spiritualitas, ritual, dan ajaran Tuhan."
+        />
+        <meta
+          name="keywords"
+          content="Parmalim, Bale Pasogit, Huta Halasan, Parmalim Huta Halasan, Parmalim Bale Pasogit Huta Halasan"
+        />
         <meta name="author" content="Huta Halasan" />
         <link rel="icon" type="image/svg+xml" href="/logo_huta_halasan.jpg" />
       </Helmet>

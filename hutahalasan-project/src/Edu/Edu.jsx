@@ -4,6 +4,7 @@ import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
 import "./edu.css";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import { Helmet } from "react-helmet";
 
 const Education = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -192,6 +193,19 @@ const Education = () => {
 
   return (
     <div className="education-page">
+      <Helmet>
+        <title>Parsiajaran | Parmalim Bale Pasogit Huta Halasan</title>
+        <meta
+          name="description"
+          content="Perdalam pengetahuan dengan belajar tentang moralitas dan nilai-nilai kehidupan yang diajarkan dalam Ugamo Malim."
+        />
+        <meta
+          name="keywords"
+          content="Edukasi Batak, Edukasi Parmalim, Marsiajar Parmalim, Budaya Batak, Tradisi Batak, Huta Halasan, Parmalim Huta Halasan, Parmalim Bale Pasogit Huta Halasan"
+        />
+        <meta name="author" content="Huta Halasan" />
+        <link rel="icon" type="image/svg+xml" href="/logo_huta_halasan.jpg" />
+      </Helmet>
       <Header />
 
       {/* Hero Section */}

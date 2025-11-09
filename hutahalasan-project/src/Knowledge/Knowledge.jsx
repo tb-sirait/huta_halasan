@@ -4,6 +4,7 @@ import Header from "../Navbar/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import "./knowledge.css";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import { Helmet } from "react-helmet";
 
 const Knowledge = () => {
   const navigate = useNavigate();
@@ -110,6 +111,18 @@ const Knowledge = () => {
 
   return (
     <div className="knowledge-page">
+      <Helmet></Helmet>
+      <title>Parbinotoan | Parmalim Bale Pasogit Huta Halasan</title>
+      <meta
+        name="description"
+        content="Explore articles and knowledge about the culture, traditions, and heritage of Parmalim Bale Pasogit Huta Halasan."
+      />
+      <meta
+        name="keywords"
+        content="Parmalim, Huta Halasan, Parbinotoan, Parmalim bale pasogit Huta Halasan, Parmalim knowledge"
+      />
+      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+      <meta name="author" content="Huta Halasan" />
       <Header />
 
       {/* Main Content */}
