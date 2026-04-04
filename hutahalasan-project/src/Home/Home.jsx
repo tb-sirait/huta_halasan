@@ -8,6 +8,7 @@ import eduBg from "../assets/2.jpg";
 import knowledgeBg from "../assets/gambar_huta_halasan.jpg";
 import { Link } from "react-router-dom";
 import MaintenanceAlert from "../utils/MaintenanceAlert";
+import Calendar from "../utils/Calendar";
 
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
@@ -44,14 +45,13 @@ const Home = () => {
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [slideSpeed, setSlideSpeed] = useState(600);
+  const [slideSpeed, setSlideSpeed] = useState(3000);
   const sectionRef = useRef(null);
   const slideCountRef = useRef(0);
 
   // Array gambar - ganti dengan URL gambar Anda
   const slides = [img1, img2, img3, img4, img5, img6];
 
-  // Intersection Observer untuk deteksi scroll
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
@@ -69,13 +69,16 @@ const Home = () => {
       },
     );
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current);
+    const currentRef = sectionRef.current; // ✅ copy ke variable lokal
+
+    if (currentRef) {
+      observer.observe(currentRef);
     }
 
     return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current);
+      if (currentRef) {
+        // ✅ pakai variable lokal
+        observer.unobserve(currentRef);
       }
     };
   }, [hasAnimated]);
@@ -90,19 +93,12 @@ const Home = () => {
       // Set next slide
       setNextSlide((currentSlide + 1) % slides.length);
 
-      // Tunggu separuh durasi untuk memulai fade
       setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
         slideCountRef.current += 1;
 
-        // Melambatkan kecepatan setelah beberapa slide
-        if (slideCountRef.current === 2) {
-          setSlideSpeed(1200);
-        } else if (slideCountRef.current === 4) {
-          setSlideSpeed(2000);
-        } else if (slideCountRef.current === 6) {
-          setSlideSpeed(3500);
-        }
+        // Hapus semua logika slideSpeed yang berubah-ubah
+        // Biarkan tetap di 3000ms
       }, slideSpeed / 2);
 
       // Reset transition state
@@ -120,7 +116,7 @@ const Home = () => {
 
     setTimeout(() => {
       setCurrentSlide(index);
-      setSlideSpeed(3500);
+      setSlideSpeed(6000); // Ubah dari 3500 → 6000
       slideCountRef.current = 6;
     }, 400);
 
@@ -278,6 +274,12 @@ const Home = () => {
       {/* Organization Structure */}
       <section className="organization">
         <h2 className="title">Organization Structure</h2>
+      </section>
+
+      {/* Calendar Section */}
+      <section className="calendar-section">
+        <h2 className="calendar-title">Calendar</h2>
+        <Calendar />
       </section>
 
       {/* Bottom Sections */}

@@ -1,0 +1,528 @@
+/* ============================================================
+   CALENDAR — Main Container
+   ============================================================ */
+
+.calendar-container {
+  font-family: "Segoe UI", system-ui, sans-serif;
+  max-width: 800px;
+  width: 100%;
+  margin: 0 auto;
+  padding: 1.5rem;
+  background: #ffffff;
+  border: 1px solid #e0e0e0;
+  border-radius: 12px;
+  box-sizing: border-box;
+  position: relative;
+  user-select: none;
+}
+
+/* ============================================================
+   HEADER — Navigasi bulan
+   ============================================================ */
+
+.calendar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.25rem;
+}
+
+.calendar-nav-btn {
+  background: none;
+  border: 1px solid #d0d0d0;
+  border-radius: 8px;
+  padding: 7px 18px;
+  cursor: pointer;
+  font-size: 16px;
+  color: #333;
+  transition:
+    background 0.15s,
+    border-color 0.15s;
+  line-height: 1;
+}
+.calendar-nav-btn:hover {
+  background: #f5f5f5;
+  border-color: #bbb;
+}
+
+.calendar-title-block {
+  text-align: center;
+  flex: 1;
+}
+
+.calendar-month-title {
+  font-size: 20px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0;
+}
+
+.calendar-batak-sub {
+  font-size: 12px;
+  color: #6c3fc5;
+  margin: 4px 0 0;
+  font-weight: 500;
+}
+
+.calendar-lamadu-badge {
+  background: #f0eb9a;
+  color: #7a6200;
+  border-radius: 4px;
+  padding: 1px 7px;
+  font-weight: 700;
+  font-size: 11px;
+}
+
+/* ============================================================
+   WEEKDAY ROW — Header nama hari
+   ============================================================ */
+
+.calendar-weekdays {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+  margin-bottom: 4px;
+}
+
+.calendar-weekday-header {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: #888;
+  padding: 6px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: #f9f9f9;
+  border-radius: 6px;
+}
+.calendar-weekday-header.sunday {
+  color: #c0392b;
+  background: #fff5f5;
+}
+.calendar-weekday-header.saturday {
+  color: #2471a3;
+  background: #f0f6ff;
+}
+
+/* ============================================================
+   CALENDAR GRID
+   ============================================================ */
+
+.calendar-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 4px;
+}
+
+/* ============================================================
+   CALENDAR DAY — Kotak tanggal
+   ============================================================ */
+
+.calendar-day.empty {
+  border: none;
+  background: transparent;
+  pointer-events: none;
+  min-height: 90px;
+}
+
+.calendar-day {
+  border: 1px solid #e4e4e4;
+  border-radius: 8px;
+  padding: 7px 8px 6px;
+  min-height: 90px;
+  cursor: pointer;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  background: #ffffff;
+  transition:
+    background 0.12s,
+    border-color 0.12s;
+  box-sizing: border-box;
+  overflow: hidden;
+}
+.calendar-day:hover:not(.empty) {
+  background: #f4f0ff;
+  border-color: #b09de0;
+}
+
+/* Weekend */
+.calendar-day.sunday {
+  background: #fff8f8;
+}
+.calendar-day.saturday {
+  background: #f6faff;
+}
+
+/* Parmalim — hijau cerah, border hijau */
+.calendar-day.parmalim {
+  background: #eafaf1;
+  border-color: #4cbb7f;
+  border-width: 1.5px;
+}
+.calendar-day.parmalim:hover {
+  background: #d4f5e4;
+  border-color: #27ae60;
+}
+
+/* ============================================================
+   TODAY — Desain menonjol, kontras tinggi
+   Override semua state lain (sunday, saturday, parmalim)
+   ============================================================ */
+
+.calendar-day.today {
+  background: #1a56db !important;
+  border: 2px solid #1a56db !important;
+  box-shadow: 0 2px 10px rgba(26, 86, 219, 0.35);
+}
+.calendar-day.today:hover {
+  background: #1648c0 !important;
+  border-color: #1648c0 !important;
+}
+
+/* Today + Parmalim */
+.calendar-day.today.parmalim {
+  background: #1a7a4a !important;
+  border: 2px solid #148040 !important;
+  box-shadow: 0 2px 10px rgba(26, 122, 74, 0.35);
+}
+.calendar-day.today.parmalim:hover {
+  background: #156038 !important;
+  border-color: #0f4f2e !important;
+}
+
+/* ============================================================
+   DOTS — indikator hari penting (pojok kanan atas)
+   ============================================================ */
+
+.day-dots {
+  position: absolute;
+  top: 7px;
+  right: 7px;
+  display: flex;
+  gap: 3px;
+  align-items: center;
+}
+
+.dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  display: block;
+  flex-shrink: 0;
+}
+
+.parmalim-dot {
+  background: #27ae60;
+}
+.national-dot {
+  background: #c0392b;
+}
+
+.national-dot.nudge {
+  width: 5px;
+  height: 5px;
+}
+
+/* Dot di atas today — putih agar kontras */
+.calendar-day.today .parmalim-dot {
+  background: rgba(255, 255, 255, 0.85);
+}
+.calendar-day.today .national-dot {
+  background: rgba(255, 255, 255, 0.85);
+}
+
+/* ============================================================
+   KONTEN SEL HARI
+   ============================================================ */
+
+/* --- Nomor Masehi (angka besar) --- */
+.day-masehi-num {
+  font-size: 16px;
+  font-weight: 700;
+  color: #1a1a1a;
+  line-height: 1;
+  margin-top: 2px;
+}
+.calendar-day.sunday .day-masehi-num {
+  color: #c0392b;
+}
+.calendar-day.saturday .day-masehi-num {
+  color: #2471a3;
+}
+.calendar-day.parmalim .day-masehi-num {
+  color: #145c30;
+}
+
+/* TODAY — semua varian pakai putih tebal */
+.calendar-day.today .day-masehi-num,
+.calendar-day.today.sunday .day-masehi-num,
+.calendar-day.today.saturday .day-masehi-num,
+.calendar-day.today.parmalim .day-masehi-num {
+  color: #ffffff !important;
+  font-size: 18px;
+  text-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+}
+
+/* --- Tanggal Batak (angka merah kecil) --- */
+.day-batak-tanggal {
+  font-size: 11px;
+  font-weight: 700;
+  color: #c0392b;
+  line-height: 1;
+}
+.calendar-day.parmalim .day-batak-tanggal {
+  color: #c0392b;
+}
+
+/* TODAY — krem/kuning muda agar terlihat di biru */
+.calendar-day.today .day-batak-tanggal,
+.calendar-day.today.sunday .day-batak-tanggal,
+.calendar-day.today.saturday .day-batak-tanggal,
+.calendar-day.today.parmalim .day-batak-tanggal {
+  color: #ffd080 !important;
+  font-weight: 800;
+}
+
+/* --- Nama hari Batak --- */
+.day-batak-hari {
+  font-size: 10px;
+  font-weight: 500;
+  color: #6c3fc5;
+  line-height: 1.3;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  margin-top: 1px;
+}
+.calendar-day.parmalim .day-batak-hari {
+  color: #1a6b3a;
+}
+
+/* TODAY — putih semi-transparan */
+.calendar-day.today .day-batak-hari,
+.calendar-day.today.sunday .day-batak-hari,
+.calendar-day.today.saturday .day-batak-hari,
+.calendar-day.today.parmalim .day-batak-hari {
+  color: rgba(255, 255, 255, 0.9) !important;
+}
+
+/* --- Label Parmalim singkat --- */
+.day-parmalim-label {
+  display: block;
+  font-size: 8.5px;
+  font-weight: 700;
+  color: #145c30;
+  background: #b2f0d0;
+  border-radius: 3px;
+  padding: 1px 4px;
+  margin-top: 3px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 100%;
+  line-height: 1.5;
+}
+.calendar-day.today .day-parmalim-label {
+  background: rgba(255, 255, 255, 0.2);
+  color: #a8ffd4;
+}
+
+/* ============================================================
+   LEGENDA
+   ============================================================ */
+
+.calendar-legend {
+  display: flex;
+  gap: 20px;
+  margin-top: 12px;
+  margin-bottom: 2px;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.calendar-legend-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.legend-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 3px;
+  flex-shrink: 0;
+}
+.legend-swatch.red {
+  background: #c0392b;
+}
+.legend-swatch.green {
+  background: #4cbb7f;
+  border: 1.5px solid #27ae60;
+}
+
+.legend-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.national-legend-dot {
+  background: #c0392b;
+}
+.parmalim-legend-dot {
+  background: #27ae60;
+}
+
+.legend-text {
+  font-size: 11px;
+  color: #999;
+}
+
+/* ============================================================
+   FOOTER — Hari penting
+   ============================================================ */
+
+.calendar-footer {
+  margin-top: 16px;
+  border-top: 1px solid #eeeeee;
+  padding-top: 14px;
+}
+
+.calendar-footer-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: #1a1a1a;
+  margin: 0 0 10px;
+}
+
+.footer-section {
+  margin-top: 8px;
+}
+.footer-section:first-of-type {
+  margin-top: 0;
+}
+
+.footer-section-label {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin: 0 0 6px;
+}
+.parmalim-section-label {
+  color: #1a8048;
+}
+.national-section-label {
+  color: #a93226;
+}
+
+.footer-section-dot {
+  display: inline-block;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.parmalim-section-dot {
+  background: #27ae60;
+}
+.national-section-dot {
+  background: #c0392b;
+}
+
+.calendar-no-events {
+  font-size: 13px;
+  color: #aaa;
+  font-style: italic;
+  margin: 0;
+}
+
+.calendar-events-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 4px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.calendar-event-item {
+  font-size: 13px;
+  color: #444;
+  display: flex;
+  align-items: baseline;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.event-date {
+  font-weight: 700;
+  color: #1a1a1a;
+  min-width: 100px;
+  flex-shrink: 0;
+}
+.parmalim-event-date {
+  color: #145c30;
+}
+.parmalim-event-name {
+  color: #1a8048;
+  font-weight: 600;
+}
+
+.event-name {
+  color: #444;
+}
+
+.event-batak-info {
+  font-size: 11px;
+  color: #6c3fc5;
+  font-style: italic;
+}
+
+/* ============================================================
+   TOOLTIP
+   ============================================================ */
+
+.calendar-tooltip {
+  position: fixed;
+  background: #ffffff;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  padding: 9px 13px;
+  font-size: 12px;
+  pointer-events: none;
+  z-index: 9999;
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  min-width: 190px;
+  transform: translate(-50%, -100%);
+}
+
+.tooltip-bulan {
+  font-weight: 700;
+  color: #6c3fc5;
+  font-size: 13px;
+  margin-bottom: 4px;
+}
+.tooltip-line {
+  color: #555;
+  line-height: 1.6;
+}
+.tooltip-parmalim {
+  color: #1a8048;
+  font-weight: 700;
+  margin-top: 5px;
+  padding-top: 5px;
+  border-top: 1px solid #d4f5e4;
+}
+.tooltip-national {
+  color: #c0392b;
+  font-weight: 700;
+  margin-top: 4px;
+}

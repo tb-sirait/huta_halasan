@@ -1,5 +1,5 @@
 .spirituality {
-  min-height: 70vh;
+  min-height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -228,7 +228,7 @@
 /* Mobile Responsive */
 @media (max-width: 768px) {
   .spirituality {
-    min-height: 60vh;
+    min-height: 85vh;
     height: auto;
     padding: 3rem 0;
   }
@@ -267,7 +267,7 @@
 
 @media (max-width: 480px) {
   .spirituality {
-    min-height: 50vh;
+    min-height: 75vh;
     padding: 2rem 0;
   }
 
