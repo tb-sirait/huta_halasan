@@ -9,6 +9,7 @@ import knowledgeBg from "../assets/gambar_huta_halasan.jpg";
 import { Link } from "react-router-dom";
 import MaintenanceAlert from "../utils/MaintenanceAlert";
 import Calendar from "../utils/Calendar";
+import BatakCalendarSEO from "../utils/SEOProject/BatakCalendarSEO";
 
 import img1 from "../assets/1.jpg";
 import img2 from "../assets/2.jpg";
@@ -23,6 +24,10 @@ import Helmet from "react-helmet";
 
 const Home = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
+
+  // ✅ Tambahkan di sini
+  const currentYear = new Date().getFullYear();
+  const currentMonth = new Date().getMonth() + 1;
 
   const documents = [
     { title: "Akta_title", description: "Akta_description" },
@@ -278,6 +283,7 @@ const Home = () => {
 
       {/* Calendar Section */}
       <section className="calendar-section">
+        <BatakCalendarSEO year={currentYear} month={currentMonth} />
         <h2 className="calendar-title">Calendar</h2>
         <Calendar />
       </section>
