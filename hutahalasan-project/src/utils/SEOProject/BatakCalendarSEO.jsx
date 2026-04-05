@@ -5,14 +5,18 @@
  * Cara pakai — letakkan di dalam <section className="calendar-section">:
  *
  *   <section className="calendar-section">
- *     <BatakCalendarSEO year={2026} month={4} />   ← taruh SEBELUM <Calendar />
+ *     <BatakCalendarSEO year={2026} month={4} showTitle={false} />   ← di Home, showTitle=false
  *     <h2 className="calendar-title">Calendar</h2>
  *     <Calendar />
  *   </section>
  *
+ *   Di halaman kalender standalone:
+ *   <BatakCalendarSEO year={2026} month={4} />   ← showTitle default true
+ *
  * Props:
- *   year  — tahun Masehi yang sedang ditampilkan (number)
- *   month — bulan Masehi 1–12 (number)
+ *   year      — tahun Masehi yang sedang ditampilkan (number)
+ *   month     — bulan Masehi 1–12 (number)
+ *   showTitle — jika false, tidak override <title> & meta halaman (default: true)
  */
 
 import React, { useMemo } from "react";
@@ -32,7 +36,7 @@ import {
 // KOMPONEN UTAMA
 // ============================================================
 
-export default function BatakCalendarSEO({ year, month }) {
+export default function BatakCalendarSEO({ year, month, showTitle = true }) {
   // month: 1–12
   const monthIdx = month - 1;
   const monthLabel = MONTH_NAMES[monthIdx];
@@ -64,6 +68,11 @@ export default function BatakCalendarSEO({ year, month }) {
   const [mn1, mn2] = getManganNapaetTanggal(year);
   const isTahunLamaduFlag = isTahunLamadu(year);
 
+  // Nama hari Batak untuk Mangan Napaet (untuk penjelasan SEO)
+  const mnHari1 =
+    panjangBulanTerakhir === 30 ? "Hurung" : "Samisara Bulan Mate";
+  const mnHari2 = panjangBulanTerakhir === 30 ? "Ringkar" : "Hurung";
+
   // ── JSON-LD: EventSeries (hari penting Parmalim) ───────────────────────
   const jsonLdEvents = parmalimDays.map((d) => ({
     "@type": "Event",
@@ -73,8 +82,8 @@ export default function BatakCalendarSEO({ year, month }) {
     endDate: d.date.toISOString().split("T")[0],
     organizer: {
       "@type": "Organization",
-      name: "Parmalim Bale Pasogit Huta Halasan",
-      url: "https://hutahalasan.com",
+      name: "Parmalim Huta Halasan",
+      url: "https://parmalimhutahalasan.com",
     },
     eventStatus: "https://schema.org/EventScheduled",
     eventAttendanceMode: "https://schema.org/OfflineEventAttendanceMode",
@@ -88,14 +97,18 @@ export default function BatakCalendarSEO({ year, month }) {
     description: [
       `Data konversi tanggal Masehi ke Kalender Batak Parmalim untuk bulan ${monthLabel} ${year}.`,
       `Mencakup bulan Batak: ${bulanBatakList}.`,
-      `Tahun ${year} ${isTahunLamaduFlag ? "adalah tahun Lamadu (bulan ke-13 Lamadu hadir setelah Hurung)." : "bukan tahun Lamadu."}`,
+      `Tahun ${year} ${
+        isTahunLamaduFlag
+          ? "adalah tahun Lamadu (bulan ke-13 Lamadu hadir setelah Hurung)."
+          : "bukan tahun Lamadu (kalender Batak terdiri dari 12 bulan)."
+      }`,
       `Bulan terakhir tahun Batak ${year}: ${bulanTerakhir} (${panjangBulanTerakhir} hari).`,
-      `Mangan Napaet ${year} jatuh pada tanggal ${mn1} & ${mn2} bulan ${bulanTerakhir}.`,
+      `Mangan Napaet ${year} jatuh pada tanggal ${mn1} (${mnHari1}) dan ${mn2} (${mnHari2}) bulan ${bulanTerakhir}.`,
     ].join(" "),
-    url: `https://hutahalasan.com/kalender/${year}/${month}`,
+    url: `https://parmalimhutahalasan.com/kalender/${year}/${month}`,
     creator: {
       "@type": "Organization",
-      name: "Parmalim Bale Pasogit Huta Halasan",
+      name: "Parmalim Huta Halasan",
     },
     license: "https://creativecommons.org/licenses/by/4.0/",
     inLanguage: ["id", "bbc"],
@@ -129,18 +142,21 @@ export default function BatakCalendarSEO({ year, month }) {
         "@type": "WebPage",
         name: `Kalender Batak ${monthLabel} ${year} | Parmalim Huta Halasan`,
         description: `Kalender Batak bulan ${monthLabel} ${year} lengkap: nama hari Batak, tanggal Batak, bulan Batak, dan hari penting Parmalim.`,
-        url: `https://hutahalasan.com/kalender/${year}/${month}`,
+        url: `https://parmalimhutahalasan.com/kalender/${year}/${month}`,
         inLanguage: "id",
         about: {
           "@type": "Thing",
           name: "Kalender Batak",
           description:
-            "Sistem penanggalan tradisional suku Batak yang digunakan dalam kepercayaan Parmalim. Terdiri dari 12 bulan (atau 13 bulan di tahun Lamadu: 2025, 2028, 2031, …).",
+            "Sistem penanggalan tradisional suku Batak yang digunakan dalam kepercayaan Parmalim. " +
+            "Terdiri dari 12 bulan (atau 13 bulan di tahun Lamadu: 2025, 2028, 2031, …). " +
+            "Setiap bulan terdiri dari 29 atau 30 hari dengan 30 nama hari berulang. " +
+            "Nama hari dimulai dari Artia (tgl 1) hingga Ringkar (tgl 30).",
         },
         publisher: {
           "@type": "Organization",
-          name: "Parmalim Bale Pasogit Huta Halasan",
-          url: "https://hutahalasan.com",
+          name: "Parmalim Huta Halasan",
+          url: "https://parmalimhutahalasan.com",
         },
       },
       jsonLdDataset,
@@ -157,7 +173,7 @@ export default function BatakCalendarSEO({ year, month }) {
     ],
   };
 
-  // ── Meta tags ──────────────────────────────────────────────────────────
+  // ── Meta tags (hanya dipakai jika showTitle=true) ──────────────────────
   const metaDesc = `Kalender Batak ${monthLabel} ${year} — mencakup bulan ${bulanBatakList}. Lihat nama hari Batak, tanggal Batak, dan hari penting Parmalim setiap harinya.`;
   const metaKeywords = [
     `Kalender Batak ${year}`,
@@ -172,35 +188,53 @@ export default function BatakCalendarSEO({ year, month }) {
     "Robu",
     "Ari Pameleon Bolon",
     "Ari Hatutubu ni Tuhan Simarimbulubosi",
+    "Artia",
+    "Suma",
+    "Anggara",
+    "Muda",
+    "Boraspati",
+    "Singkora",
+    "Samisara",
+    "Hurung",
+    "Ringkar",
+    "Samisara Bulan Mate",
   ].join(", ");
 
   return (
     <>
       {/* ── Helmet: <head> tags ──────────────────────────────────────────── */}
       <Helmet>
-        <title>{`Kalender Batak ${monthLabel} ${year} | Parmalim Huta Halasan`}</title>
-        <meta name="description" content={metaDesc} />
-        <meta name="keywords" content={metaKeywords} />
-        <link
-          rel="canonical"
-          href={`https://hutahalasan.com/kalender/${year}/${month}`}
-        />
+        {/* Title & meta hanya di-render jika showTitle=true (halaman kalender standalone) */}
+        {showTitle && (
+          <title>{`Kalender Batak ${monthLabel} ${year} | Parmalim Huta Halasan`}</title>
+        )}
+        {showTitle && <meta name="description" content={metaDesc} />}
+        {showTitle && <meta name="keywords" content={metaKeywords} />}
+        {showTitle && (
+          <link
+            rel="canonical"
+            href={`https://parmalimhutahalasan.com/kalender/${year}/${month}`}
+          />
+        )}
+        {showTitle && <meta property="og:type" content="website" />}
+        {showTitle && (
+          <meta
+            property="og:title"
+            content={`Kalender Batak ${monthLabel} ${year}`}
+          />
+        )}
+        {showTitle && <meta property="og:description" content={metaDesc} />}
+        {showTitle && (
+          <meta
+            property="og:url"
+            content={`https://parmalimhutahalasan.com/kalender/${year}/${month}`}
+          />
+        )}
+        {showTitle && (
+          <meta property="og:site_name" content="Parmalim Huta Halasan" />
+        )}
 
-        <meta property="og:type" content="website" />
-        <meta
-          property="og:title"
-          content={`Kalender Batak ${monthLabel} ${year}`}
-        />
-        <meta property="og:description" content={metaDesc} />
-        <meta
-          property="og:url"
-          content={`https://hutahalasan.com/kalender/${year}/${month}`}
-        />
-        <meta
-          property="og:site_name"
-          content="Parmalim Bale Pasogit Huta Halasan"
-        />
-
+        {/* JSON-LD selalu dirender di mana pun komponen ini dipakai */}
         <script type="application/ld+json">
           {JSON.stringify(jsonLdPage, null, 0)}
         </script>
@@ -229,12 +263,25 @@ export default function BatakCalendarSEO({ year, month }) {
         <p>
           Tahun {year}{" "}
           {isTahunLamaduFlag
-            ? `adalah tahun Lamadu — bulan Lamadu hadir sebagai bulan ke-13 setelah bulan Hurung.`
-            : `bukan tahun Lamadu — kalender Batak terdiri dari 12 bulan.`}{" "}
+            ? "adalah tahun Lamadu — bulan Lamadu hadir sebagai bulan ke-13 setelah bulan Hurung."
+            : "bukan tahun Lamadu — kalender Batak terdiri dari 12 bulan."}{" "}
           Bulan terakhir tahun ini ({bulanTerakhir}) memiliki{" "}
-          {panjangBulanTerakhir} hari. Mangan Napaet jatuh pada tanggal {mn1}{" "}
-          dan {mn2} bulan {bulanTerakhir}.
+          {panjangBulanTerakhir} hari. Mangan Napaet jatuh pada tanggal {mn1} (
+          {mnHari1}) dan {mn2} ({mnHari2}) bulan {bulanTerakhir}.
         </p>
+
+        {/* Penjelasan sistem penanggalan */}
+        <section aria-label="Penjelasan Kalender Batak">
+          <h2>Tentang Kalender Batak</h2>
+          <p>
+            Kalender Batak adalah sistem penanggalan lunar tradisional suku
+            Batak yang digunakan dalam kepercayaan Parmalim. Setiap bulan
+            terdiri dari 29 atau 30 hari. Nama hari berulang setiap 30 hari,
+            dimulai dari Artia (tanggal 1) hingga Ringkar (tanggal 30). Tahun
+            Lamadu terjadi setiap 3 tahun (2025, 2028, 2031, …) dan menambahkan
+            bulan Lamadu sebagai bulan ke-13 setelah bulan Hurung.
+          </p>
+        </section>
 
         {/* Tabel konversi lengkap */}
         <table
@@ -285,11 +332,53 @@ export default function BatakCalendarSEO({ year, month }) {
         <section aria-label="Aturan Mangan Napaet tahun ini">
           <h2>Mangan Napaet {year}</h2>
           <p>
+            Mangan Napaet adalah perayaan yang dilaksanakan pada dua hari
+            terakhir bulan terakhir tahun Batak (Ari Hurung dan Ringkar). Jika
+            bulan terakhir hanya 29 hari, Mangan Napaet dimajukan 1 hari menjadi
+            Ari Samisara Bulan Mate dan Hurung.
+          </p>
+          <p>
             Pada tahun {year}, bulan terakhir kalender Batak adalah{" "}
             <strong>{bulanTerakhir}</strong> dengan panjang{" "}
             <strong>{panjangBulanTerakhir} hari</strong>. Oleh karena itu,
-            Mangan Napaet jatuh pada tanggal <strong>{mn1}</strong> dan{" "}
-            <strong>{mn2}</strong> bulan {bulanTerakhir}.
+            Mangan Napaet jatuh pada tanggal{" "}
+            <strong>
+              {mn1} ({mnHari1})
+            </strong>{" "}
+            dan{" "}
+            <strong>
+              {mn2} ({mnHari2})
+            </strong>{" "}
+            bulan {bulanTerakhir}.
+          </p>
+        </section>
+
+        {/* Penjelasan Robu */}
+        <section aria-label="Penjelasan Robu">
+          <h2>Robu — Tahun Baru Batak</h2>
+          <p>
+            Robu adalah Tahun Baru Batak yang dirayakan pada tanggal 1 bulan
+            Sipaha Sada (Ari Artia). Setelah Mangan Napaet, kalender Batak
+            memasuki tahun baru dimulai dengan bulan Sipaha Sada.
+          </p>
+        </section>
+
+        {/* Penjelasan Ari Hatutubu */}
+        <section aria-label="Penjelasan Ari Hatutubu ni Tuhan Simarimbulubosi">
+          <h2>Ari Hatutubu ni Tuhan Simarimbulubosi</h2>
+          <p>
+            Hari perayaan kelahiran Tuhan Simarimbulubosi, dilaksanakan pada
+            tanggal 2 (Ari Suma) dan tanggal 3 (Ari Anggara) bulan Sipaha Sada.
+          </p>
+        </section>
+
+        {/* Penjelasan Ari Pameleon Bolon */}
+        <section aria-label="Penjelasan Ari Pameleon Bolon">
+          <h2>Ari Pameleon Bolon</h2>
+          <p>
+            Pesta besar Parmalim yang dilaksanakan selama tiga hari pada tanggal
+            12 (Ari Boraspati Ni Tangkup), 13 (Ari Singkora Purasa), dan 14 (Ari
+            Samisara Purasa) bulan Sipaha Lima.
           </p>
         </section>
 

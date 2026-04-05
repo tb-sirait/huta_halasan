@@ -25,7 +25,6 @@ import Helmet from "react-helmet";
 const Home = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
 
-  // ✅ Tambahkan di sini
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
 
@@ -54,7 +53,6 @@ const Home = () => {
   const sectionRef = useRef(null);
   const slideCountRef = useRef(0);
 
-  // Array gambar - ganti dengan URL gambar Anda
   const slides = [img1, img2, img3, img4, img5, img6];
 
   useEffect(() => {
@@ -74,7 +72,7 @@ const Home = () => {
       },
     );
 
-    const currentRef = sectionRef.current; // ✅ copy ke variable lokal
+    const currentRef = sectionRef.current;
 
     if (currentRef) {
       observer.observe(currentRef);
@@ -82,31 +80,23 @@ const Home = () => {
 
     return () => {
       if (currentRef) {
-        // ✅ pakai variable lokal
         observer.unobserve(currentRef);
       }
     };
   }, [hasAnimated]);
 
-  // Auto slide dengan cross-fade transition
   useEffect(() => {
     if (!isVisible) return;
 
     const interval = setInterval(() => {
       setIsTransitioning(true);
-
-      // Set next slide
       setNextSlide((currentSlide + 1) % slides.length);
 
       setTimeout(() => {
         setCurrentSlide((prev) => (prev + 1) % slides.length);
         slideCountRef.current += 1;
-
-        // Hapus semua logika slideSpeed yang berubah-ubah
-        // Biarkan tetap di 3000ms
       }, slideSpeed / 2);
 
-      // Reset transition state
       setTimeout(() => {
         setIsTransitioning(false);
       }, slideSpeed);
@@ -121,7 +111,7 @@ const Home = () => {
 
     setTimeout(() => {
       setCurrentSlide(index);
-      setSlideSpeed(6000); // Ubah dari 3500 → 6000
+      setSlideSpeed(6000);
       slideCountRef.current = 6;
     }, 400);
 
@@ -133,11 +123,13 @@ const Home = () => {
   return (
     <div className="app">
       <MaintenanceAlert />
+
+      {/* ── Helmet Home — ini yang akan tampil sebagai title tab browser ── */}
       <Helmet>
-        <title>Horas | Parmalim Bale Pasogit Huta Halasan</title>
+        <title>Horas | Kelompok Bale Pasogit Huta Halasan</title>
         <meta
           name="description"
-          content="Website resmi Parmalim Bale Pasogit Huta Halasan — menjunjung nilai spiritualitas, ritual, dan ajaran Tuhan."
+          content="Website Resmi Kelompok Bale Pasogit Huta Halasan, menampilkan informasi tentang Ugamo Malim di Bale Pasogit Huta Halasan, kalender Batak, dan Informasi terupdate tentang Bale Pasogit Huta Halasan."
         />
         <meta
           name="keywords"
@@ -146,6 +138,7 @@ const Home = () => {
         <meta name="author" content="Huta Halasan" />
         <link rel="icon" type="image/svg+xml" href="/logo_huta_halasan.jpg" />
       </Helmet>
+
       {/* Header */}
       <Header />
 
@@ -174,12 +167,9 @@ const Home = () => {
 
       {/* Spirituality Section */}
       <section ref={sectionRef} className="spirituality">
-        {/* Slideshow Background dengan cross-fade */}
         <div className={`spirituality-slideshow ${isVisible ? "show" : ""}`}>
-          {/* Dark Overlay - tetap stabil, tidak ikut pergantian slide */}
           <div className="spirituality-slide-overlay"></div>
 
-          {/* Current Slide */}
           <div
             className={`spirituality-slide current ${isVisible ? "slide-visible" : ""}`}
             style={{
@@ -187,7 +177,6 @@ const Home = () => {
             }}
           />
 
-          {/* Next Slide (for cross-fade effect) */}
           {isTransitioning && (
             <div
               className="spirituality-slide next fading-in"
@@ -198,9 +187,6 @@ const Home = () => {
           )}
         </div>
 
-        {/* Dark Overlay - diluar slideshow agar tidak ikut transisi */}
-
-        {/* Content dengan animasi fade-in */}
         <div className={`spirituality-overlay ${isVisible ? "show" : ""}`}>
           <div className="spirituality-content">
             <h2 className="spirituality-title">With Spirituality and Ritual</h2>
@@ -208,7 +194,6 @@ const Home = () => {
           </div>
         </div>
 
-        {/* Slide Indicators */}
         {isVisible && (
           <div className="spirituality-indicators">
             {slides.map((_, index) => (
@@ -282,8 +267,13 @@ const Home = () => {
       </section>
 
       {/* Calendar Section */}
+      {/* ✅ showTitle={false} — title & meta tidak di-override, JSON-LD tetap aktif */}
       <section className="calendar-section">
-        <BatakCalendarSEO year={currentYear} month={currentMonth} />
+        <BatakCalendarSEO
+          year={currentYear}
+          month={currentMonth}
+          showTitle={false}
+        />
         <h2 className="calendar-title">Calendar</h2>
         <Calendar />
       </section>
@@ -344,6 +334,7 @@ const Home = () => {
           </div>
         </Link>
       </section>
+
       {/* Footer */}
       <Footer />
     </div>
