@@ -3,17 +3,16 @@
 // Manajemen user — khusus Admin Pengembang & Manajer
 // ============================================================
 
-import { api } from '../api.config.js';
+import { api } from "../api.config.js";
 
 const UserService = {
-
   // ── List semua user (Pengembang / Manajer) ───────────────────────────────
   getAll: async (params = {}) => {
     const query = new URLSearchParams();
-    if (params.page)    query.set('page', params.page);
-    if (params.limit)   query.set('limit', params.limit);
-    if (params.role)    query.set('role', params.role);
-    if (params.subrole) query.set('subrole', params.subrole);
+    if (params.page) query.set("page", params.page);
+    if (params.limit) query.set("limit", params.limit);
+    if (params.role) query.set("role", params.role);
+    if (params.subrole) query.set("subrole", params.subrole);
 
     return await api.get(`/users?${query.toString()}`);
     // Response: { success: true, data: [...], total, page, limit }
@@ -31,10 +30,10 @@ const UserService = {
   update: async (id_user, { nama_user, email, password, role, subrole }) => {
     const body = {};
     if (nama_user) body.nama_user = nama_user;
-    if (email)     body.email     = email;
-    if (password)  body.password  = password;
-    if (role)      body.role      = role;
-    if (subrole)   body.subrole   = subrole;
+    if (email) body.email = email;
+    if (password) body.password = password;
+    if (role) body.role = role;
+    if (subrole) body.subrole = subrole;
 
     return await api.put(`/users/${id_user}`, body);
     // Response: { success: true, message: 'User berhasil diperbarui.' }

@@ -3,13 +3,12 @@
 // Import dari file ini untuk kemudahan penggunaan
 // ============================================================
 
-export { default as AuthService }        from './services/auth.service.js';
-export { default as KontenService }      from './services/konten.service.js';
-export { default as PengetahuanService } from './services/pengetahuan.service.js';
-export { default as InteraksiService }   from './services/interaksi.service.js';
-export { default as UserService }        from './services/user.service.js';
-export { TokenService, ApiError }        from './api.config.js';
-
+export { default as AuthService } from "./services/auth.service.js";
+export { default as KontenService } from "./services/konten.service.js";
+export { default as PengetahuanService } from "./services/pengetahuan.service.js";
+export { default as InteraksiService } from "./services/interaksi.service.js";
+export { default as UserService } from "./services/user.service.js";
+export { TokenService, ApiError } from "./api.config.js";
 
 // ============================================================
 // CONTOH PENGGUNAAN LENGKAP

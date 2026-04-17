@@ -3,23 +3,22 @@
 // Autentikasi: register, login, profil, logout
 // ============================================================
 
-import { api, TokenService } from '../api.config.js';
+import { api, TokenService } from "../api.config.js";
 
 const AuthService = {
-
   // ── Register akun baru ───────────────────────────────────────────────────
   // role: 'User' | 'Admin'
   // subrole (jika Admin): 'Validator' | 'Jurnalis' | 'Pengembang' | 'Manajer'
-  register: async ({ nama_user, email, password, role = 'User', subrole }) => {
+  register: async ({ nama_user, email, password, role = "User", subrole }) => {
     const body = { nama_user, email, password, role };
-    if (role === 'Admin' && subrole) body.subrole = subrole;
-    return await api.post('/auth/register', body);
+    if (role === "Admin" && subrole) body.subrole = subrole;
+    return await api.post("/auth/register", body);
     // Response: { success: true, message: 'Registrasi berhasil.' }
   },
 
   // ── Login ─────────────────────────────────────────────────────────────────
   login: async ({ email, password }) => {
-    const data = await api.post('/auth/login', { email, password });
+    const data = await api.post("/auth/login", { email, password });
     // Response: { success: true, token: '...', user: { id_user, nama_user, email, role, subrole } }
 
     if (data.token) {
@@ -37,7 +36,7 @@ const AuthService = {
 
   // ── Ambil profil user yang sedang login ───────────────────────────────────
   getProfile: async () => {
-    return await api.get('/auth/profile');
+    return await api.get("/auth/profile");
     // Response: { success: true, user: { id_user, nama_user, email, role, subrole, ... } }
   },
 
@@ -45,8 +44,8 @@ const AuthService = {
   updateProfile: async ({ nama_user, password }) => {
     const body = {};
     if (nama_user) body.nama_user = nama_user;
-    if (password)  body.password  = password;
-    return await api.put('/auth/profile', body);
+    if (password) body.password = password;
+    return await api.put("/auth/profile", body);
     // Response: { success: true, message: 'Profil berhasil diperbarui.' }
   },
 
@@ -65,11 +64,19 @@ const AuthService = {
 
   // ── Cek apakah user punya akses tertentu ─────────────────────────────────
   can: {
-    uploadKonten:      () => TokenService.isAdmin() && ['Jurnalis', 'Pengembang'].includes(TokenService.getUser()?.subrole),
-    validateKonten:    () => TokenService.isAdmin() && TokenService.isSubrole('Validator'),
-    deleteKomentar:    () => TokenService.isAdmin() && ['Manajer', 'Pengembang'].includes(TokenService.getUser()?.subrole),
-    viewInsight:       () => TokenService.isAdmin() && ['Manajer', 'Pengembang'].includes(TokenService.getUser()?.subrole),
-    manageUsers:       () => TokenService.isAdmin() && TokenService.isSubrole('Pengembang'),
+    uploadKonten: () =>
+      TokenService.isAdmin() &&
+      ["Jurnalis", "Pengembang"].includes(TokenService.getUser()?.subrole),
+    validateKonten: () =>
+      TokenService.isAdmin() && TokenService.isSubrole("Validator"),
+    deleteKomentar: () =>
+      TokenService.isAdmin() &&
+      ["Manajer", "Pengembang"].includes(TokenService.getUser()?.subrole),
+    viewInsight: () =>
+      TokenService.isAdmin() &&
+      ["Manajer", "Pengembang"].includes(TokenService.getUser()?.subrole),
+    manageUsers: () =>
+      TokenService.isAdmin() && TokenService.isSubrole("Pengembang"),
   },
 };
 
