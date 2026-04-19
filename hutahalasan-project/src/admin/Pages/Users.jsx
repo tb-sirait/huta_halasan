@@ -584,4 +584,5 @@ const UserEditModal = ({ user, onClose, onSuccess, toast }) => {
   );
 };
 
-const SUBROLES_ADMIN = ["Validator", "Jurnalis", "Pengembang", "Manajer"];
+
+

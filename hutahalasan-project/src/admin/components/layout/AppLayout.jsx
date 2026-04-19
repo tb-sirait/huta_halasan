@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { Outlet, useNavigate, useLocation } from "react-router-dom";
 import { Sidebar } from "./Sidebar";
 import { Topbar } from "./Topbar";
-import { ToastContainer } from "../ui/Toast";
+import { ToastContainer } from "./ui/Toast";
 import { useAuth } from "../../hooks/useAuth";
 import { useToast } from "../../hooks/useToast";
 import "../../styles/layout.css";

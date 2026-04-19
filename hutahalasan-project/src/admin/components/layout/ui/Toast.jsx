@@ -1,5 +1,6 @@
 // src/components/ui/Toast.jsx
-import "../../../src/styles/user.css";
+import "../../../styles/ui/toast.css";
+
 
 const ICONS = { success: "✓", error: "✕", warning: "⚠", info: "ℹ" };
 

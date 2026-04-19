@@ -23,13 +23,13 @@ import EducationDetail from "./Edu/EducationDetail";
 import UseScrollToTop from "./hooks/UseScrollToTop";
 
 // ── Admin dashboard pages ─────────────────────────────────────
-import { Login } from "./admin/pages/Login";
-import { Dashboard } from "./admin/pages/Dashboard";
-import { Konten } from "./admin/pages/Konten";
-import { Pengetahuan } from "./admin/pages/Pengetahuan";
-import { Komentar } from "./admin/pages/Komentar";
-import { Validasi } from "./admin/pages/Validasi";
-import { Users } from "./admin/pages/Users";
+import { Login } from "./admin/Pages/Login";
+import { Dashboard } from "./admin/Pages/Dashboard";
+import { Konten } from "./admin/Pages/Konten";
+import { Pengetahuan } from "./admin/Pages/Pengetahuan";
+import { Komentar } from "./admin/Pages/Komentar";
+import { Validasi } from "./admin/Pages/Validasi";
+import { Users } from "./admin/Pages/Users";
 
 // ── Admin layout & guard ──────────────────────────────────────
 import { AppLayout } from "./admin/components/layout/AppLayout";
