@@ -1,218 +1,293 @@
-import React from "react";
+// src/Edu/EducationDetail.jsx
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
-import "./EducationDetail.css";
-
-const educationContent = [
-  {
-    id: 1,
-    title: "Traditional Batak Dance Performance",
-    subtitle: "2024-01-15 | Journalist",
-    image: "/api/placeholder/400/250",
-    category: "Culture",
-    views: "1.2k",
-    likes: "89",
-    content: `Traditional Batak dance is a mesmerizing cultural expression that has been passed down through generations in North Sumatra. These performances are not merely entertainment but serve as a bridge connecting the present with ancestral wisdom and spiritual beliefs.
-
-    The intricate movements tell stories of daily life, mythology, and important social events. Each gesture carries meaning, from the graceful hand movements that mimic the flow of Lake Toba's waters to the powerful foot stomps that honor the earth spirits.
-
-    In this comprehensive workshop, participants will learn about the different types of Batak dances, including the ceremonial Tor-tor dance performed during important rituals and celebrations. Local master dancers will guide you through the basic movements and explain the cultural significance behind each performance.
-
-    The workshop also covers traditional costumes, music accompaniment using gondang instruments, and the role of dance in Batak society. This is an excellent opportunity to immerse yourself in authentic Batak culture and gain a deeper appreciation for this beautiful art form.`,
-    isTrending: true,
-  },
-  {
-    id: 2,
-    title: "Batak Script Learning Workshop",
-    subtitle: "2024-01-12 | Journalist",
-    image: "/api/placeholder/400/250",
-    category: "Language",
-    views: "856",
-    likes: "67",
-    content: `The Batak script, known as Surat Batak or Aksara Batak, is an ancient writing system that has been used by the Batak people for centuries. This unique script is not just a means of communication but a repository of cultural knowledge and spiritual wisdom.
-
-    In this intensive workshop, participants will discover the fascinating history of Batak script, learn the basic characters and their pronunciation, and understand how this writing system has evolved over time. Expert linguists and cultural scholars will guide you through hands-on exercises.
-
-    The workshop covers practical applications of Batak script in modern contexts, including its use in traditional ceremonies, ancient manuscripts called pustaha, and contemporary cultural preservation efforts. You'll also learn about the different regional variations of the script across Batak territories.
-
-    By the end of this workshop, participants will be able to read simple Batak texts and write basic words in this beautiful script. This knowledge opens doors to understanding traditional Batak literature, folklore, and cultural documents that are otherwise inaccessible to those unfamiliar with the script.`,
-    isTrending: true,
-  },
-  {
-    id: 3,
-    title: "Batak Architecture Heritage Tour",
-    subtitle: "2024-01-10 | Journalist",
-    image: "/api/placeholder/400/250",
-    category: "Architecture",
-    views: "742",
-    likes: "54",
-    content: `Batak traditional architecture represents one of Indonesia's most distinctive and sophisticated building traditions. The iconic boat-shaped roofs and intricate wood carvings tell stories of cosmology, social hierarchy, and environmental adaptation.
-
-    This heritage tour takes you through authentic Batak villages where traditional houses (Rumah Bolon) still stand as living monuments to ancestral wisdom. You'll explore the symbolic meanings behind architectural elements and understand how these structures reflect Batak worldview.`,
-    isTrending: false,
-  },
-  {
-    id: 4,
-    title: "Batak Culinary Masterclass",
-    subtitle: "2024-01-08 | Journalist",
-    image: "/api/placeholder/400/250",
-    category: "Culinary",
-    views: "923",
-    likes: "78",
-    content: `Experience the rich flavors of Batak cuisine in this hands-on culinary masterclass. Learn to prepare traditional dishes like Arsik (spiced fish), Saksang (pork curry), and Panggang (grilled specialties) using authentic recipes and techniques.
-
-    Our expert chefs will guide you through the use of traditional spices and cooking methods that have been perfected over generations. Understand the cultural significance of food in Batak society and how meals bring communities together.`,
-    isTrending: false,
-  },
-];
+import {
+  useKontenDetail, useKontenList,
+  parseParagraphs, parseGambar,
+  fmtNum, timeAgo, fmtDate,
+} from "../hooks/useKonten.js";
+import "../styles/konten-shared.css";
 
 const EducationDetail = () => {
-  const { id } = useParams();
+  const { id }   = useParams();
   const navigate = useNavigate();
 
-  const content = educationContent.find((item) => item.id === parseInt(id));
-  const trendingContent = educationContent.filter((item) => item.isTrending);
+  const {
+    konten, komentar, likeCount, liked,
+    loading, loadKomen, error, submitting,
+    handleLike, handleKomentar,
+  } = useKontenDetail(id);
 
-  if (!content) {
-    return (
-      <div>
-        <Header />
-        <div className="error-container">
-          <h2>Content Not Found</h2>
-          <p>The requested educational content could not be found.</p>
-          <button onClick={() => navigate("/edu")} className="back-button">
-            ← Back to Education
-          </button>
-        </div>
-        <Footer />
+  const { data: allEdu } = useKontenList({ jenis_konten: "Edukasi", limit: 20 });
+  const trending = [...allEdu]
+    .filter((k) => k.id_konten !== id)
+    .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
+    .slice(0, 4);
+  const related = allEdu.filter((k) => k.id_konten !== id).slice(0, 4);
+
+  const [komentarText, setKomentarText] = useState("");
+  const [komentarSent, setKomentarSent] = useState(false);
+
+  const getImg = (k) => {
+    const imgs = parseGambar(k?.id_gambar);
+    return imgs?.[0] || null;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const ok = await handleKomentar(komentarText);
+    if (ok) { setKomentarText(""); setKomentarSent(true); }
+  };
+
+  const share = (platform) => {
+    const url  = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(konten?.judul || "");
+    const map  = {
+      Facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      Twitter:  `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
+      WhatsApp: `https://wa.me/?text=${text}%20${url}`,
+    };
+    window.open(map[platform]);
+  };
+
+  /* ── Loading ── */
+  if (loading) return (
+    <div style={{ background: "var(--k-bg)", fontFamily: "var(--k-font)" }}>
+      <Header />
+      <div className="k-detail-hero" style={{ background: "#e5e7eb" }}>
+        <div className="k-skeleton" style={{ width: "100%", height: "100%", borderRadius: 0 }} />
       </div>
-    );
-  }
+      <div className="k-container" style={{ padding: "32px 20px", textAlign: "center", color: "var(--k-text-muted)" }}>
+        Memuat materi…
+      </div>
+      <Footer />
+    </div>
+  );
 
-  const handleTrendingClick = (itemId) => {
-    navigate(`/education/${itemId}`);
-  };
+  /* ── Error ── */
+  if (error || !konten) return (
+    <div style={{ background: "var(--k-bg)", fontFamily: "var(--k-font)" }}>
+      <Header />
+      <div className="k-container" style={{ padding: "60px 20px" }}>
+        <div className="k-empty">
+          <div className="k-empty-icon">📚</div>
+          <h3>{error || "Materi tidak ditemukan"}</h3>
+          <p>Materi yang Anda cari tidak tersedia.</p>
+          <button className="k-empty-btn" onClick={() => navigate("/edu")}>← Kembali ke Edukasi</button>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
 
-  const handleBackClick = () => {
-    navigate("/edu");
-  };
+  const paragraphs = parseParagraphs(konten.isi_konten);
+  const images     = parseGambar(konten.id_gambar);
+  const heroImg    = getImg(konten) || imgHutaHalasan;
 
   return (
-    <div className="education-detail-page">
+    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
       <Header />
 
-      {/* Hero Section */}
-      <section className="detail-hero">
-        <div className="hero-background">
-          <img
-            src={imgHutaHalasan}
-            alt="Huta Halasan"
-            className="hero-background-image"
-          />
-          <div className="hero-overlay"></div>
+      {/* ── Hero image di atas ── */}
+      <div className="k-detail-hero">
+        <img src={heroImg} alt={konten.judul} className="k-detail-hero-img" />
+        <div className="k-detail-hero-overlay" />
+        <div className="k-detail-hero-content">
+          <div style={{ maxWidth: "var(--k-container)", width: "100%", margin: "0 auto" }}>
+            <span className="k-detail-hero-cat">{konten.jenis_konten}</span>
+            <h1 className="k-detail-hero-title">{konten.judul}</h1>
+            <div className="k-detail-hero-meta">
+              <span>✍ {konten.penulis}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>📅 {fmtDate(konten.tanggal_dibuat)}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>👁 {fmtNum(konten.total_interaksi || 0)}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>💬 {komentar.length}</span>
+            </div>
+          </div>
         </div>
-        <div className="hero-content">
-          <h1 className="hero-title">{content.title}</h1>
-          <p className="hero-subtitle">{content.subtitle}</p>
+      </div>
+
+      {/* ── Breadcrumb ── */}
+      <div className="k-breadcrumb">
+        <div className="k-breadcrumb-inner">
+          <button className="k-breadcrumb-link" onClick={() => navigate("/")}>Beranda</button>
+          <span className="k-breadcrumb-sep">/</span>
+          <button className="k-breadcrumb-link" onClick={() => navigate("/edu")}>Edukasi</button>
+          <span className="k-breadcrumb-sep">/</span>
+          <span className="k-breadcrumb-curr"
+            style={{ maxWidth: 240, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {konten.judul}
+          </span>
         </div>
-      </section>
+      </div>
 
-      {/* Main Content Section */}
-      <section className="detail-section">
-        <div className="container">
-          <div className="detail-layout">
-            {/* Main Content */}
-            <main className="detail-main">
-              <article className="content-article">
-                <div className="article-image-container">
-                  <img
-                    src={content.image}
-                    alt={content.title}
-                    className="article-image"
-                  />
-                </div>
+      {/* ── Layout ── */}
+      <div className="k-container">
+        <div className="k-detail-layout">
 
-                <header className="article-header">
-                  <h2 className="article-title">{content.title}</h2>
-                  <p className="article-subtitle">{content.subtitle}</p>
+          {/* Artikel */}
+          <div>
+            <div className="k-article">
 
-                  <div className="article-meta">
-                    <span className="meta-item">
-                      <span className="meta-icon">👁️</span>
-                      <span className="meta-text">{content.views}</span>
-                    </span>
-                    <span className="meta-item">
-                      <span className="meta-icon">❤️</span>
-                      <span className="meta-text">{content.likes}</span>
-                    </span>
-                    <span className="meta-item">
-                      <span className="meta-category">{content.category}</span>
-                    </span>
-                  </div>
-                </header>
+              {/* Meta bar */}
+              <div className="k-article-meta-bar">
+                <span className="k-tag">{konten.jenis_konten}</span>
+                {konten.tagline && <span className="k-tag k-tag-purple">{konten.tagline}</span>}
+                <span className="k-article-meta-sep">·</span>
+                <span className="k-article-meta-item">✍ {konten.penulis}</span>
+                <span className="k-article-meta-sep">·</span>
+                <span className="k-article-meta-item">📅 {fmtDate(konten.tanggal_dibuat)}</span>
+              </div>
 
-                <div className="article-content">
-                  {content.content.split("\n\n").map((paragraph, index) => (
-                    <p key={index} className="content-paragraph">
-                      {paragraph.trim()}
-                    </p>
+              {/* Gambar tambahan */}
+              {images && images.length > 1 && (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                  gap: 8, padding: "16px 24px 0"
+                }}>
+                  {images.slice(1).map((img, i) => (
+                    <img key={i} src={img} alt={`${konten.judul} ${i + 2}`}
+                      style={{ width: "100%", borderRadius: 10, objectFit: "cover", aspectRatio: "16/9" }} />
                   ))}
                 </div>
+              )}
 
-                <div className="article-actions">
-                  <button
-                    onClick={handleBackClick}
-                    className="back-button"
-                    type="button"
-                  >
-                    <span className="button-icon">←</span>
-                    <span className="button-text">Back to Education</span>
-                  </button>
+              {/* Isi */}
+              <div className="k-article-body">
+                {konten.nama_validator && (
+                  <span className="k-validator-chip">✓ Divalidasi oleh {konten.nama_validator}</span>
+                )}
+                <div className="k-article-content">
+                  {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
                 </div>
-              </article>
-            </main>
 
-            {/* Trending Sidebar */}
-            <aside className="detail-sidebar">
-              <div className="sidebar-container">
-                <h3 className="sidebar-title">Trending</h3>
+                {/* Komentar */}
+                <div className="k-komentar-section">
+                  <h3 className="k-komentar-title">💬 Komentar ({komentar.length})</h3>
 
-                <div className="trending-list">
-                  {trendingContent.map((item) => (
-                    <article
-                      key={item.id}
-                      className="trending-item"
-                      onClick={() => handleTrendingClick(item.id)}
-                      role="button"
-                      tabIndex={0}
-                      onKeyDown={(e) => {
-                        if (e.key === "Enter" || e.key === " ") {
-                          handleTrendingClick(item.id);
-                        }
-                      }}
-                    >
-                      <div className="trending-image-container">
-                        <img
-                          src={item.image}
-                          alt={item.title}
-                          className="trending-image"
-                        />
+                  <div className="k-komentar-form">
+                    <p className="k-komentar-form-title">Tinggalkan Komentar</p>
+                    {komentarSent && (
+                      <div className="k-komentar-success">✓ Komentar berhasil dikirim!</div>
+                    )}
+                    <form onSubmit={handleSubmit}>
+                      <textarea
+                        className="k-komentar-textarea"
+                        placeholder="Tulis komentar Anda di sini…"
+                        value={komentarText}
+                        onChange={(e) => { setKomentarText(e.target.value); setKomentarSent(false); }}
+                        disabled={submitting}
+                      />
+                      <button
+                        type="submit"
+                        className="k-komentar-submit"
+                        disabled={submitting || !komentarText.trim()}
+                      >
+                        {submitting ? "Mengirim…" : "✉ Kirim Komentar"}
+                      </button>
+                    </form>
+                  </div>
+
+                  {loadKomen ? (
+                    <div style={{ color: "var(--k-text-muted)", fontSize: 13 }}>Memuat komentar…</div>
+                  ) : komentar.length === 0 ? (
+                    <div style={{ color: "var(--k-text-dim)", fontSize: 13, padding: "12px 0" }}>
+                      Belum ada komentar. Jadilah yang pertama!
+                    </div>
+                  ) : komentar.map((k) => (
+                    <div key={k.id_interaksi} className="k-komentar-item">
+                      <div className="k-komentar-avatar">
+                        {(k.nama_user || "A").slice(0, 2).toUpperCase()}
                       </div>
-
-                      <div className="trending-content">
-                        <h4 className="trending-title">{item.title}</h4>
-                        <p className="trending-subtitle">{item.subtitle}</p>
+                      <div className="k-komentar-body">
+                        <p className="k-komentar-name">{k.nama_user || "Anonim"}</p>
+                        <p className="k-komentar-text">{k.isi_komentar}</p>
+                        <p className="k-komentar-time">{timeAgo(k.waktu_interaksi)}</p>
                       </div>
-                    </article>
+                    </div>
                   ))}
                 </div>
               </div>
-            </aside>
+
+              {/* Actions */}
+              <div className="k-article-actions">
+                <button
+                  className={`k-action-btn k-action-btn-like${liked ? " liked" : ""}`}
+                  onClick={handleLike}
+                >
+                  {liked ? "❤️" : "🤍"} {liked ? "Disukai" : "Suka"} ({fmtNum(likeCount)})
+                </button>
+                <button className="k-action-btn k-action-btn-share" onClick={() => share("WhatsApp")}>📤 Bagikan</button>
+                <button className="k-action-btn k-action-btn-back" onClick={() => navigate("/edu")}>← Kembali ke Edukasi</button>
+              </div>
+            </div>
           </div>
+
+          {/* Sidebar */}
+          <div className="k-sidebar">
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">🔥</span>
+                <h3 className="k-sidebar-head-title">Trending Edukasi</h3>
+              </div>
+              {trending.map((item, i) => (
+                <div key={item.id_konten} className="k-trending-item"
+                  onClick={() => navigate(`/education/${item.id_konten}`)}>
+                  <span className="k-trending-rank">{i + 1}</span>
+                  <div className="k-trending-body">
+                    <p className="k-trending-title">{item.judul}</p>
+                    <div className="k-trending-meta">
+                      <span>{timeAgo(item.tanggal_dibuat)}</span>
+                      <span>👁 {fmtNum(item.total_interaksi || 0)}</span>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">📚</span>
+                <h3 className="k-sidebar-head-title">Materi Terkait</h3>
+              </div>
+              {related.map((item) => (
+                <div key={item.id_konten} className="k-related-item"
+                  onClick={() => navigate(`/education/${item.id_konten}`)}>
+                  {getImg(item)
+                    ? <img className="k-related-img" src={getImg(item)} alt={item.judul} />
+                    : <div className="k-related-img-placeholder">📚</div>
+                  }
+                  <div className="k-related-body">
+                    <p className="k-related-title">{item.judul}</p>
+                    <p className="k-related-date">{timeAgo(item.tanggal_dibuat)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">📤</span>
+                <h3 className="k-sidebar-head-title">Bagikan</h3>
+              </div>
+              <div style={{ padding: "14px 18px" }}>
+                <div className="k-share-wrap">
+                  <button className="k-share-btn k-share-facebook" onClick={() => share("Facebook")}>Facebook</button>
+                  <button className="k-share-btn k-share-twitter"  onClick={() => share("Twitter")}>Twitter</button>
+                  <button className="k-share-btn k-share-whatsapp" onClick={() => share("WhatsApp")}>WhatsApp</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
         </div>
-      </section>
+      </div>
 
       <Footer />
     </div>

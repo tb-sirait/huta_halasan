@@ -1,74 +1,46 @@
-// ============================================================
-// services/pengetahuan.service.js
-// CRUD file pengetahuan / E-Book
-// ============================================================
+// ApiService/services/pengetahuan.service.js
+// Digunakan oleh halaman Knowledge
+import { publicApi, getSessionId } from '../api.config.js';
 
-import { api } from "../api.config.js";
+export const PengetahuanService = {
 
-const PengetahuanService = {
-  // ── List file pengetahuan (publik) ───────────────────────────────────────
-  getAll: async (params = {}) => {
-    const query = new URLSearchParams();
-    if (params.page) query.set("page", params.page);
-    if (params.limit) query.set("limit", params.limit);
-    if (params.search) query.set("search", params.search);
-    if (params.status_validasi)
-      query.set("status_validasi", params.status_validasi);
-    if (params.id_user) query.set("id_user", params.id_user);
-
-    return await api.get(`/pengetahuan?${query.toString()}`);
-    // Response: { success: true, data: [...], total: 50, page: 1, limit: 10 }
+  // ── List file pengetahuan (hanya sudah divalidasi) ────────────────────────
+  getAll: (params = {}) => {
+    const q = new URLSearchParams({ status_validasi: 'sudah' });
+    if (params.page)  q.set('page', params.page);
+    if (params.limit) q.set('limit', params.limit);
+    if (params.search) q.set('search', params.search);
+    return publicApi.get(`/pengetahuan?${q}`);
+    // Response: { success: true, data: [...], total, page, limit }
   },
 
-  // ── Detail file pengetahuan ──────────────────────────────────────────────
-  getById: async (id_file) => {
-    return await api.get(`/pengetahuan/${id_file}`);
-    // Response: { success: true, pengetahuan: { id_file, nama_file, path_file, deskripsi, tagline, ... } }
-  },
+  // ── Detail file by ID ─────────────────────────────────────────────────────
+  getById: (id_file) => publicApi.get(`/pengetahuan/${id_file}`),
+  // Response: { success: true, pengetahuan: { id_file, nama_file, path_file,
+  //   deskripsi, tagline, status_validasi, tanggal_upload,
+  //   nama_uploader, nama_validator } }
 
-  // ── Upload file pengetahuan baru (Admin: Jurnalis / Pengembang) ───────────
-  // tagline: array string maks 5, contoh: ['AI', 'Kesehatan']
-  upload: async ({ nama_file, deskripsi, tagline = [], file }) => {
-    const formData = new FormData();
-    formData.append("nama_file", nama_file);
-    formData.append("deskripsi", deskripsi);
-    formData.append("tagline", JSON.stringify(tagline));
-    formData.append("file", file); // input type="file" (PDF, EPUB, DOCX, dll)
+  // ── Catat view ────────────────────────────────────────────────────────────
+  recordView: (id_file) =>
+    publicApi.post('/interaksi/view', { id_file, session_id: getSessionId() }),
 
-    return await api.post("/pengetahuan", formData);
-    // Response: { success: true, message: 'File pengetahuan berhasil diupload.' }
-  },
+  // ── Toggle like ───────────────────────────────────────────────────────────
+  toggleLike: (id_file) =>
+    publicApi.post('/interaksi/like', { id_file, session_id: getSessionId() }),
 
-  // ── Update metadata file (pemilik atau Pengembang) ────────────────────────
-  update: async (id_file, { nama_file, deskripsi, tagline }) => {
-    const body = {};
-    if (nama_file) body.nama_file = nama_file;
-    if (deskripsi) body.deskripsi = deskripsi;
-    if (tagline !== undefined) body.tagline = JSON.stringify(tagline);
+  // ── Jumlah like ───────────────────────────────────────────────────────────
+  getLikeCount: (id_file) =>
+    publicApi.get(`/interaksi/like?id_file=${id_file}`),
 
-    return await api.put(`/pengetahuan/${id_file}`, body);
-    // Response: { success: true, message: 'File pengetahuan berhasil diperbarui.' }
-  },
+  // ── Komentar aktif ────────────────────────────────────────────────────────
+  getKomentar: (id_file, page = 1, limit = 20) =>
+    publicApi.get(`/interaksi/komentar?id_file=${id_file}&page=${page}&limit=${limit}`),
 
-  // ── Ubah status validasi (Admin: Validator) ───────────────────────────────
-  updateValidasi: async (id_file, status_validasi) => {
-    return await api.patch(`/pengetahuan/${id_file}/validasi`, {
-      status_validasi,
-    });
-    // Response: { success: true, message: 'Status validasi diubah...' }
-  },
-
-  // ── Hapus file (pemilik / Pengembang / Manajer) ───────────────────────────
-  delete: async (id_file) => {
-    return await api.delete(`/pengetahuan/${id_file}`);
-    // Response: { success: true, message: 'File pengetahuan berhasil dihapus.' }
-  },
-
-  // ── Lihat perancang file (Pengembang / Manajer) ───────────────────────────
-  getRancang: async (id_file) => {
-    return await api.get(`/pengetahuan/${id_file}/rancang`);
-    // Response: { success: true, data: [{ id_rancang, nama_user, email, tanggal }] }
-  },
+  // ── Kirim komentar ────────────────────────────────────────────────────────
+  addKomentar: (id_file, isi_komentar) =>
+    publicApi.post('/interaksi/komentar', {
+      id_file,
+      isi_komentar,
+      session_id: getSessionId(),
+    }),
 };
-
-export default PengetahuanService;

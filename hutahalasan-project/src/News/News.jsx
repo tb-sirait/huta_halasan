@@ -1,356 +1,233 @@
+// src/News/News.jsx
 import React, { useState } from "react";
-import "./news.css";
+import { useNavigate } from "react-router-dom";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
-import NewsDetail from "../News/newsDetail";
-import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 import { Helmet } from "react-helmet";
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import { useKontenList, fmtNum, timeAgo, parseGambar } from "../hooks/useKonten.js";
+import "../styles/konten-shared.css";
 
 const NewsPage = () => {
-  const [selectedFilter, setSelectedFilter] = useState("Related");
-  const [selectedSort, setSelectedSort] = useState("Latest");
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedArticle, setSelectedArticle] = useState(null);
-  const [showDetail, setShowDetail] = useState(false);
+  const navigate = useNavigate();
+  const [selectedFilter, setSelectedFilter] = useState("Latest");
+  const [selectedSort,   setSelectedSort]   = useState("Latest");
 
-  // Dummy data untuk artikel
-  const articles = [
-    {
-      id: 1,
-      title: "Upacara Adat Batak Toba di Samosir",
-      subtitle: "Ritual tradisional yang masih lestari",
-      category: "Budaya",
-      author: "Journalist",
-      date: "2 days ago",
-      image: "/api/placeholder/300/200",
-      views: "1.2k",
-      comments: "45",
-      type: "featured",
-    },
-    {
-      id: 2,
-      title: "Festival Gondang Sabangunan 2024",
-      subtitle: "Musik tradisional Batak yang memukau",
-      category: "Festival",
-      author: "Journalist",
-      date: "3 days ago",
-      image: "/api/placeholder/300/200",
-      views: "856",
-      comments: "32",
-      type: "new",
-    },
-    {
-      id: 3,
-      title: "Sopo Godang: Arsitektur Tradisional Batak",
-      subtitle: "Keindahan rumah adat yang memukau",
-      category: "Arsitektur",
-      author: "Journalist",
-      date: "1 week ago",
-      image: "/api/placeholder/300/200",
-      views: "674",
-      comments: "21",
-      type: "regular",
-    },
-    {
-      id: 4,
-      title: "Tortor Batak: Tarian Sakral Leluhur",
-      subtitle: "Makna filosofis dalam setiap gerakan",
-      category: "Tarian",
-      author: "Journalist",
-      date: "1 week ago",
-      image: "/api/placeholder/300/200",
-      views: "523",
-      comments: "18",
-      type: "regular",
-    },
-    {
-      id: 5,
-      title: "Kuliner Khas Batak: Arsik dan Saksang",
-      subtitle: "Cita rasa autentik dari Tanah Batak",
-      category: "Kuliner",
-      author: "Journalist",
-      date: "2 weeks ago",
-      image: "/api/placeholder/300/200",
-      views: "789",
-      comments: "28",
-      type: "regular",
-    },
-    {
-      id: 6,
-      title: "Danau Toba: Warisan Alam dan Budaya",
-      subtitle: "Keajaiban alam yang penuh sejarah",
-      category: "Pariwisata",
-      author: "Journalist",
-      date: "2 weeks ago",
-      image: "/api/placeholder/300/200",
-      views: "912",
-      comments: "35",
-      type: "regular",
-    },
-  ];
+  const {
+    data, total, loading, error,
+    search: searchQuery, setSearch: setSearchQuery,
+  } = useKontenList({ jenis_konten: "Berita", limit: 50 });
 
-  const trendingArticles = [
-    {
-      id: 7,
-      title: "Ulos Batak: Kain Suci Penuh Makna",
-      subtitle: "Filosofi dan kegunaan dalam kehidupan",
-      category: "Budaya",
-      author: "Journalist",
-      date: "1 day ago",
-      views: "1.3k",
-      comments: "67",
-    },
-    {
-      id: 8,
-      title: "Sigale-gale: Boneka Tradisional yang Hidup",
-      subtitle: "Seni pertunjukan unik dari Samosir",
-      category: "Seni",
-      author: "Journalist",
-      date: "2 days ago",
-      views: "921",
-      comments: "43",
-    },
-    {
-      id: 9,
-      title: "Bahasa Batak: Pelestarian Warisan Leluhur",
-      subtitle: "Upaya menjaga bahasa daerah",
-      category: "Bahasa",
-      author: "Journalist",
-      date: "3 days ago",
-      views: "756",
-      comments: "29",
-    },
-  ];
-
-  // Gabungkan semua artikel untuk pencarian
-  // const allArticles = [...articles, ...trendingArticles];
-
-  // Function untuk handle klik artikel
-  const handleArticleClick = (article) => {
-    setSelectedArticle(article);
-    setShowDetail(true);
+  const getSorted = () => {
+    let s = [...data];
+    if (selectedSort === "Oldest")
+      s.sort((a, b) => new Date(a.tanggal_dibuat) - new Date(b.tanggal_dibuat));
+    else if (selectedSort === "Most Viewed" || selectedFilter === "Popular")
+      s.sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0));
+    else
+      s.sort((a, b) => new Date(b.tanggal_dibuat) - new Date(a.tanggal_dibuat));
+    return s;
   };
 
-  // Function untuk kembali ke daftar berita
-  const handleBackToNews = () => {
-    setShowDetail(false);
-    setSelectedArticle(null);
+  const sorted   = getSorted();
+  const featured = sorted[0] || null;
+  const regular  = sorted.slice(1);
+  const trending = [...data]
+    .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
+    .slice(0, 5);
+
+  const getImg = (item) => {
+    const imgs = parseGambar(item?.id_gambar);
+    return imgs?.[0] || null;
   };
-
-  // Filter dan sort artikel berdasarkan pilihan user
-  const getFilteredAndSortedArticles = () => {
-    let filteredArticles = articles;
-
-    // Filter berdasarkan search query
-    if (searchQuery.trim()) {
-      filteredArticles = filteredArticles.filter(
-        (article) =>
-          article.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          article.subtitle.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          article.category.toLowerCase().includes(searchQuery.toLowerCase()),
-      );
-    }
-
-    // Sort berdasarkan pilihan
-    switch (selectedSort) {
-      case "Oldest":
-        // Untuk demo, kita reverse array
-        return [...filteredArticles].reverse();
-      case "Most Viewed":
-        return [...filteredArticles].sort((a, b) => {
-          const aViews =
-            parseFloat(a.views.replace("k", "")) *
-            (a.views.includes("k") ? 1000 : 1);
-          const bViews =
-            parseFloat(b.views.replace("k", "")) *
-            (b.views.includes("k") ? 1000 : 1);
-          return bViews - aViews;
-        });
-      default:
-        return filteredArticles;
-    }
-  };
-
-  // Jika sedang menampilkan detail artikel
-  if (showDetail) {
-    return <NewsDetail article={selectedArticle} onBack={handleBackToNews} />;
-  }
-
-  const displayedArticles = getFilteredAndSortedArticles();
 
   return (
-    <div className="news-page-container">
-      <Helmet></Helmet>
+    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
+      <Helmet>
+        <title>Berita | Parmalim Bale Pasogit Huta Halasan</title>
+        <meta name="description" content="Berita terbaru dari komunitas Parmalim Bale Pasogit Huta Halasan." />
+      </Helmet>
       <Header />
 
-      {/* Hero Section with Background Image */}
-      <div className="news-hero-section">
-        <img
-          src={imgHutaHalasan}
-          alt="Huta Halasan"
-          className="news-hero-background"
-        />
-        <div className="news-hero-overlay">
-          <div className="news-hero-content">
-            <h1 className="news-hero-title">News</h1>
-            <p className="news-hero-subtitle">(batak script)</p>
-          </div>
+      {/* ── Hero ── */}
+      <div className="k-hero">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="k-hero-img" />
+        <div className="k-hero-overlay" />
+        <div className="k-hero-content">
+          <span className="k-hero-label">📰 Kabar Terkini</span>
+          <h1 className="k-hero-title">Berita</h1>
+          <p className="k-hero-sub">
+            {loading ? "Memuat…" : `${total} artikel berita tersedia`}
+          </p>
         </div>
       </div>
 
-      {/* News Navigation and Search */}
-      <div className="news-navigation-bar">
-        <div className="news-nav-content">
-          <div className="news-nav-left">
-            <span className="news-nav-title">News</span>
+      {/* ── Toolbar ── */}
+      <div className="k-toolbar">
+        <div className="k-toolbar-inner">
+          <div className="k-search-wrap">
+            <span className="k-search-icon">🔍</span>
+            <input
+              className="k-search-input"
+              placeholder="Cari berita…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
-          <div className="news-nav-center">
-            <div className="news-search-container">
-              <input
-                type="text"
-                placeholder="Type here..."
-                className="news-search-input"
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-              />
-            </div>
-          </div>
-          <div className="news-nav-right">
-            <div className="news-filter-controls">
-              <select
-                className="news-filter-select"
-                value={selectedFilter}
-                onChange={(e) => setSelectedFilter(e.target.value)}
-              >
-                <option value="Related">📋 Related</option>
-                <option value="Popular">🔥 Popular</option>
-                <option value="Recent">🕒 Recent</option>
-              </select>
-              <select
-                className="news-sort-select"
-                value={selectedSort}
-                onChange={(e) => setSelectedSort(e.target.value)}
-              >
-                <option value="Latest">🧡 Latest</option>
-                <option value="Oldest">📅 Oldest</option>
-                <option value="Most Viewed">👀 Most Viewed</option>
-              </select>
-            </div>
-          </div>
+          <select className="k-select" value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
+            <option value="Latest">Terbaru</option>
+            <option value="Popular">Terpopuler</option>
+          </select>
+          <select className="k-select" value={selectedSort} onChange={(e) => setSelectedSort(e.target.value)}>
+            <option value="Latest">⬆ Latest</option>
+            <option value="Oldest">⬇ Oldest</option>
+            <option value="Most Viewed">👁 Most Viewed</option>
+          </select>
         </div>
       </div>
 
-      {/* News Content Container */}
-      <div className="news-content-container">
-        {/* Left Content - Main Articles */}
-        <div className="news-main-content">
-          {/* New Badge */}
-          <div className="news-section-badge">New</div>
+      {/* ── Konten ── */}
+      <div className="k-container">
+        <div className="k-layout">
 
-          {/* Featured Article */}
-          {displayedArticles
-            .filter((article) => article.type === "featured")
-            .map((article) => (
-              <div
-                key={article.id}
-                className="news-featured-card"
-                onClick={() => handleArticleClick(article)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="news-featured-badge">FEATURED</div>
-                <div className="news-featured-image">
-                  <img src={article.image} alt={article.title} />
-                </div>
-                <div className="news-featured-content">
-                  <h2 className="news-featured-title">{article.title}</h2>
-                  <p className="news-featured-meta">
-                    {article.subtitle} | {article.author}
-                  </p>
-                  <div className="news-featured-stats">
-                    <span className="news-stat-item">👁 {article.views}</span>
-                    <span className="news-stat-item">
-                      💬 {article.comments}
-                    </span>
-                  </div>
-                  <span className="news-category-tag">{article.category}</span>
-                </div>
-              </div>
-            ))}
+          {/* Main */}
+          <div>
+            {error && <div className="k-error">⚠️ {error}</div>}
 
-          {/* Regular Articles Grid */}
-          <div className="news-articles-grid">
-            {displayedArticles
-              .filter((article) => article.type !== "featured")
-              .map((article) => (
+            {/* Featured */}
+            {loading ? (
+              <div className="k-skeleton" style={{ height: 280, borderRadius: 20, marginBottom: 24 }} />
+            ) : featured ? (
+              <>
+                <div className="k-section-label">✦ Featured</div>
                 <div
-                  key={article.id}
-                  className="news-article-card"
-                  onClick={() => handleArticleClick(article)}
-                  style={{ cursor: "pointer" }}
+                  className="k-featured"
+                  onClick={() => navigate(`/news/${featured.id_konten}`)}
+                  role="button" tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && navigate(`/news/${featured.id_konten}`)}
                 >
-                  <div className="news-article-image">
-                    <img src={article.image} alt={article.title} />
+                  <div className="k-featured-img">
+                    {getImg(featured)
+                      ? <img src={getImg(featured)} alt={featured.judul} />
+                      : <div className="k-featured-img-placeholder">📰</div>
+                    }
+                    <span className="k-featured-badge">FEATURED</span>
                   </div>
-                  <div className="news-article-content">
-                    <h3 className="news-article-title">{article.title}</h3>
-                    <p className="news-article-meta">
-                      {article.subtitle} | {article.author}
-                    </p>
-                    <div className="news-article-stats">
-                      <span className="news-stat-item">👁 {article.views}</span>
-                      <span className="news-stat-item">
-                        💬 {article.comments}
-                      </span>
+                  <div className="k-featured-body">
+                    <span className="k-featured-cat">{featured.jenis_konten}</span>
+                    <h2 className="k-featured-title">{featured.judul}</h2>
+                    {featured.tagline && (
+                      <p className="k-featured-sub">{featured.tagline}</p>
+                    )}
+                    <div className="k-featured-meta">
+                      <span>✍ {featured.penulis}</span>
+                      <span>·</span>
+                      <span>🕐 {timeAgo(featured.tanggal_dibuat)}</span>
+                      <span>·</span>
+                      <span>👁 {fmtNum(featured.total_interaksi || 0)}</span>
                     </div>
-                    <span className="news-category-tag">
-                      {article.category}
-                    </span>
+                    <span className="k-featured-cta">Baca Selengkapnya →</span>
                   </div>
                 </div>
-              ))}
-          </div>
+              </>
+            ) : null}
 
-          {/* No Results Message */}
-          {displayedArticles.length === 0 && (
-            <div className="news-no-results">
-              <h3>Tidak ada artikel yang ditemukan</h3>
-              <p>
-                Coba gunakan kata kunci yang berbeda atau hapus filter
-                pencarian.
-              </p>
-            </div>
-          )}
-        </div>
-
-        {/* Right Sidebar - Trending */}
-        <div className="news-sidebar">
-          <div className="news-trending-section">
-            <h2 className="news-trending-title">Trending</h2>
-
-            {trendingArticles.map((article, index) => (
-              <div
-                key={article.id}
-                className="news-trending-item"
-                onClick={() => handleArticleClick(article)}
-                style={{ cursor: "pointer" }}
-              >
-                <div className="news-trending-number">{index + 1}</div>
-                <div className="news-trending-content">
-                  <h4 className="news-trending-item-title">{article.title}</h4>
-                  <p className="news-trending-meta">{article.subtitle}</p>
-                  <p className="news-trending-author">
-                    {article.date} | {article.author}
-                  </p>
-                  <div className="news-trending-stats">
-                    <span className="news-stat-item">👁 {article.views}</span>
-                    <span className="news-stat-item">
-                      💬 {article.comments}
-                    </span>
-                  </div>
+            {/* Grid artikel */}
+            {regular.length > 0 && (
+              <>
+                <div className="k-section-label" style={{ marginTop: 28 }}>📋 Semua Berita</div>
+                <div className="k-card-grid">
+                  {loading
+                    ? Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i}>
+                          <div className="k-skeleton" style={{ height: 180, borderRadius: 12 }} />
+                          <div className="k-skeleton" style={{ height: 16, borderRadius: 4, marginTop: 12, width: "80%" }} />
+                          <div className="k-skeleton" style={{ height: 12, borderRadius: 4, marginTop: 8, width: "50%" }} />
+                        </div>
+                      ))
+                    : regular.map((item) => (
+                        <div
+                          key={item.id_konten}
+                          className="k-card"
+                          onClick={() => navigate(`/news/${item.id_konten}`)}
+                          role="button" tabIndex={0}
+                          onKeyDown={(e) => e.key === "Enter" && navigate(`/news/${item.id_konten}`)}
+                        >
+                          <div className="k-card-img-wrap">
+                            {getImg(item)
+                              ? <img src={getImg(item)} alt={item.judul} />
+                              : <div className="k-card-img-placeholder">📰</div>
+                            }
+                            <span className="k-card-badge">{item.jenis_konten}</span>
+                          </div>
+                          <div className="k-card-body">
+                            <span className="k-card-cat">{item.jenis_konten}</span>
+                            <h3 className="k-card-title">{item.judul}</h3>
+                            {item.tagline && (
+                              <p style={{ fontSize: 12, color: "var(--k-text-muted)", margin: 0 }}>
+                                {item.tagline}
+                              </p>
+                            )}
+                            <div className="k-card-meta">
+                              <span className="k-card-meta-item">✍ {item.penulis}</span>
+                              <span className="k-card-meta-item">🕐 {timeAgo(item.tanggal_dibuat)}</span>
+                              <span className="k-card-meta-item">👁 {fmtNum(item.total_interaksi || 0)}</span>
+                            </div>
+                            <div className="k-card-footer">
+                              <span className="k-card-read">Baca →</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                  }
                 </div>
+              </>
+            )}
+
+            {!loading && !error && sorted.length === 0 && (
+              <div className="k-empty">
+                <div className="k-empty-icon">🔍</div>
+                <h3>Tidak ada berita ditemukan</h3>
+                <p>Coba kata kunci yang berbeda atau hapus filter.</p>
+                <button className="k-empty-btn" onClick={() => setSearchQuery("")}>Reset Pencarian</button>
               </div>
-            ))}
+            )}
           </div>
+
+          {/* Sidebar */}
+          <div className="k-sidebar">
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">🔥</span>
+                <h3 className="k-sidebar-head-title">Trending</h3>
+              </div>
+              {loading
+                ? Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} style={{ padding: "14px 18px", borderBottom: "1px solid var(--k-border)" }}>
+                      <div className="k-skeleton" style={{ height: 14, borderRadius: 4, marginBottom: 6 }} />
+                      <div className="k-skeleton" style={{ height: 11, borderRadius: 4, width: "60%" }} />
+                    </div>
+                  ))
+                : trending.map((item, i) => (
+                    <div
+                      key={item.id_konten}
+                      className="k-trending-item"
+                      onClick={() => navigate(`/news/${item.id_konten}`)}
+                    >
+                      <span className="k-trending-rank">{i + 1}</span>
+                      <div className="k-trending-body">
+                        <p className="k-trending-title">{item.judul}</p>
+                        <div className="k-trending-meta">
+                          <span>✍ {item.penulis}</span>
+                          <span>👁 {fmtNum(item.total_interaksi || 0)}</span>
+                        </div>
+                      </div>
+                    </div>
+                  ))
+              }
+            </div>
+          </div>
+
         </div>
       </div>
 

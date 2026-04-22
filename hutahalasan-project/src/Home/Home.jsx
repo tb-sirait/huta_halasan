@@ -18,13 +18,10 @@ import img4 from "../assets/4.jpg";
 import img5 from "../assets/5.jpg";
 import img6 from "../assets/6.jpg";
 
-import "./slideshow.css";
-
 import Helmet from "react-helmet";
 
 const Home = () => {
   const [currentDocIndex, setCurrentDocIndex] = useState(0);
-
   const currentYear = new Date().getFullYear();
   const currentMonth = new Date().getMonth() + 1;
 
@@ -34,308 +31,239 @@ const Home = () => {
     { title: "Other_title", description: "Other_description" },
   ];
 
-  const nextDoc = () => {
-    setCurrentDocIndex((prev) => (prev + 1) % documents.length);
-  };
-
-  const prevDoc = () => {
-    setCurrentDocIndex(
-      (prev) => (prev - 1 + documents.length) % documents.length,
-    );
-  };
+  const nextDoc = () => setCurrentDocIndex((prev) => (prev + 1) % documents.length);
+  const prevDoc = () => setCurrentDocIndex((prev) => (prev - 1 + documents.length) % documents.length);
 
   const [currentSlide, setCurrentSlide] = useState(0);
-  const [nextSlide, setNextSlide] = useState(1);
+  const [nextSlideIdx, setNextSlideIdx] = useState(1);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [isVisible, setIsVisible] = useState(false);
   const [hasAnimated, setHasAnimated] = useState(false);
-  const [slideSpeed, setSlideSpeed] = useState(3000);
   const sectionRef = useRef(null);
-  const slideCountRef = useRef(0);
 
   const slides = [img1, img2, img3, img4, img5, img6];
+  const SLIDE_SPEED = 4000;
 
   useEffect(() => {
     const observer = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
-            setTimeout(() => {
-              setIsVisible(true);
-              setHasAnimated(true);
-            }, 100);
+            setTimeout(() => { setIsVisible(true); setHasAnimated(true); }, 100);
           }
         });
       },
-      {
-        threshold: 0.2,
-      },
+      { threshold: 0.2 }
     );
-
-    const currentRef = sectionRef.current;
-
-    if (currentRef) {
-      observer.observe(currentRef);
-    }
-
-    return () => {
-      if (currentRef) {
-        observer.unobserve(currentRef);
-      }
-    };
+    const ref = sectionRef.current;
+    if (ref) observer.observe(ref);
+    return () => { if (ref) observer.unobserve(ref); };
   }, [hasAnimated]);
 
   useEffect(() => {
     if (!isVisible) return;
-
     const interval = setInterval(() => {
       setIsTransitioning(true);
-      setNextSlide((currentSlide + 1) % slides.length);
-
-      setTimeout(() => {
-        setCurrentSlide((prev) => (prev + 1) % slides.length);
-        slideCountRef.current += 1;
-      }, slideSpeed / 2);
-
-      setTimeout(() => {
-        setIsTransitioning(false);
-      }, slideSpeed);
-    }, slideSpeed);
-
+      setNextSlideIdx((currentSlide + 1) % slides.length);
+      setTimeout(() => { setCurrentSlide((prev) => (prev + 1) % slides.length); }, SLIDE_SPEED / 2);
+      setTimeout(() => { setIsTransitioning(false); }, SLIDE_SPEED);
+    }, SLIDE_SPEED);
     return () => clearInterval(interval);
-  }, [isVisible, slideSpeed, slides.length, currentSlide]);
+  }, [isVisible, slides.length, currentSlide]);
 
   const handleIndicatorClick = (index) => {
     setIsTransitioning(true);
-    setNextSlide(index);
-
-    setTimeout(() => {
-      setCurrentSlide(index);
-      setSlideSpeed(6000);
-      slideCountRef.current = 6;
-    }, 400);
-
-    setTimeout(() => {
-      setIsTransitioning(false);
-    }, 800);
+    setNextSlideIdx(index);
+    setTimeout(() => { setCurrentSlide(index); }, 400);
+    setTimeout(() => { setIsTransitioning(false); }, 800);
   };
 
   return (
-    <div className="app">
+    <div className="hm-app">
       <MaintenanceAlert />
 
-      {/* ── Helmet Home — ini yang akan tampil sebagai title tab browser ── */}
       <Helmet>
         <title>Horas | Kelompok Bale Pasogit Huta Halasan</title>
-        <meta
-          name="description"
-          content="Website Resmi Kelompok Bale Pasogit Huta Halasan, menampilkan informasi tentang Ugamo Malim di Bale Pasogit Huta Halasan, kalender Batak, dan Informasi terupdate tentang Bale Pasogit Huta Halasan."
-        />
-        <meta
-          name="keywords"
-          content="Parmalim, Bale Pasogit, Huta Halasan, Parmalim Huta Halasan, Parmalim Bale Pasogit Huta Halasan"
-        />
+        <meta name="description" content="Website Resmi Kelompok Bale Pasogit Huta Halasan, menampilkan informasi tentang Ugamo Malim di Bale Pasogit Huta Halasan, kalender Batak, dan Informasi terupdate tentang Bale Pasogit Huta Halasan." />
+        <meta name="keywords" content="Parmalim, Bale Pasogit, Huta Halasan, Parmalim Huta Halasan" />
         <meta name="author" content="Huta Halasan" />
         <link rel="icon" type="image/svg+xml" href="/logo_huta_halasan.jpg" />
       </Helmet>
 
-      {/* Header */}
       <Header />
 
-      {/* Hero Section */}
-      <section className="hero">
-        <img
-          src={imgHutaHalasan}
-          alt="Huta Halasan"
-          className="hero-background"
-        />
-        <div className="hero-overlay">
-          <div className="hero-content">
-            <h1 className="hero-title">
-              Parmalim
-              <br />
-              <p className="hero-description-title"> ᯇᯒ᯲ᯔᯞᯪᯔ᯲</p>
-              Bale Pasogit
-              <br />
-              <p className="hero-description-title">ᯅᯞᯩ ᯇᯘᯬᯎᯪᯖ᯲</p>
-            </h1>
-            <span className="home-hero-subtitle">Huta Halasan</span>
-            <p className="hero-description-subtitle">ᯂᯮᯖ ᯂᯞᯘᯉ᯲</p>
-          </div>
+      {/* ── HERO ── */}
+      <section className="hm-hero">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="hm-hero__bg" />
+        <div className="hm-hero__veil" />
+        <div className="hm-hero__content">
+          <span className="hm-hero__eyebrow">Ugamo Malim</span>
+          <h1 className="hm-hero__title">
+            Parmalim
+            <span className="hm-hero__batak"> ᯇᯒ᯲ᯔᯞᯪᯔ᯲</span>
+          </h1>
+          <div className="hm-hero__divider" />
+          <h2 className="hm-hero__subtitle">
+            Bale Pasogit
+            <span className="hm-hero__batak"> ᯅᯞᯩ ᯇᯘᯬᯎᯪᯖ᯲</span>
+          </h2>
+          <p className="hm-hero__location">
+            Huta Halasan <span className="hm-hero__batak-sm">ᯂᯮᯖ ᯂᯞᯘᯉ᯲</span>
+          </p>
+          <a href="#about" className="hm-hero__cta">Kenali Kami</a>
+        </div>
+        <div className="hm-hero__scroll-hint">
+          <span />
         </div>
       </section>
 
-      {/* Spirituality Section */}
-      <section ref={sectionRef} className="spirituality">
-        <div className={`spirituality-slideshow ${isVisible ? "show" : ""}`}>
-          <div className="spirituality-slide-overlay"></div>
-
+      {/* ── SLIDESHOW / SPIRITUALITY ── */}
+      <section ref={sectionRef} className="hm-sction-spirit">
+        <div className={`hm-sction-spirit__slides ${isVisible ? "is-visible" : ""}`}>
           <div
-            className={`spirituality-slide current ${isVisible ? "slide-visible" : ""}`}
-            style={{
-              backgroundImage: `url(${slides[currentSlide]})`,
-            }}
+            className={`hm-sction-spirit__slide hm-sction-spirit__slide--current ${isVisible ? "is-loaded" : ""}`}
+            style={{ backgroundImage: `url(${slides[currentSlide]})` }}
           />
-
           {isTransitioning && (
             <div
-              className="spirituality-slide next fading-in"
-              style={{
-                backgroundImage: `url(${slides[nextSlide]})`,
-              }}
+              className="hm-sction-spirit__slide hm-sction-spirit__slide--next"
+              style={{ backgroundImage: `url(${slides[nextSlideIdx]})` }}
             />
           )}
+          <div className="hm-sction-spirit__overlay" />
         </div>
 
-        <div className={`spirituality-overlay ${isVisible ? "show" : ""}`}>
-          <div className="spirituality-content">
-            <h2 className="spirituality-title">With Spirituality and Ritual</h2>
-            <p className="spirituality-subtitle">to uphold God's teaching</p>
-          </div>
+        <div className={`hm-sction-spirit__body ${isVisible ? "is-visible" : ""}`}>
+          <p className="hm-sction-spirit__label">Hakikat Parmalim</p>
+          <h2 className="hm-sction-spirit__heading">With Spirituality<br />and Ritual</h2>
+          <p className="hm-sction-spirit__sub">to uphold God's teaching</p>
         </div>
 
         {isVisible && (
-          <div className="spirituality-indicators">
-            {slides.map((_, index) => (
+          <div className="hm-sction-spirit__dots">
+            {slides.map((_, i) => (
               <button
-                key={index}
-                className={`indicator ${index === currentSlide ? "active" : ""}`}
-                onClick={() => handleIndicatorClick(index)}
-                aria-label={`Go to slide ${index + 1}`}
+                key={i}
+                className={`hm-sction-spirit__dot ${i === currentSlide ? "is-active" : ""}`}
+                onClick={() => handleIndicatorClick(i)}
+                aria-label={`Slide ${i + 1}`}
               />
             ))}
           </div>
         )}
       </section>
 
-      {/* About Section */}
-      <section className="about">
-        <div className="container">
-          <h2 className="home-section-title">About Us</h2>
-          <div className="about-content">
-            <div className="about-image">
-              <img
-                src={imgHutaHalasan}
-                alt="Bale Pasogit Building"
-                className="building"
-              />
-            </div>
-            <div className="about-text">
-              <p>
-                Maragam-ragam do Ugamo adong di liat Portibion. Sada sian na
-                maragam-ragam i namargoar Ugamo Malim, marojahan di tonga-tonga
-                bangso Batak, hinatindanghon tu Amanta Raja Nasiakbagi.
-              </p>
-              <br />
-              <p>
-                Ugamo Malim, ima sada dalan pardomuan dompak debata, marhite
-                pelean ingkon ias jala malim, dohot pangihutna pe ingkon ias
-                jala malim.
-              </p>
-            </div>
+      {/* ── ABOUT ── */}
+      <section id="about" className="hm-sction-about">
+        <div className="hm-sction-about__inner">
+          <div className="hm-sction-about__media">
+            <img src={imgHutaHalasan} alt="Bale Pasogit" className="hm-sction-about__img" />
+            <div className="hm-sction-about__img-deco" />
+          </div>
+          <div className="hm-sction-about__text">
+            <span className="hm-sction-about__label">Tentang Kami</span>
+            <h2 className="hm-sction-about__heading">About Us</h2>
+            <div className="hm-sction-about__rule" />
+            <p className="hm-sction-about__para">
+              Maragam-ragam do Ugamo adong di liat Portibion. Sada sian na
+              maragam-ragam i namargoar Ugamo Malim, marojahan di tonga-tonga
+              bangso Batak, hinatindanghon tu Amanta Raja Nasiakbagi.
+            </p>
+            <p className="hm-sction-about__para">
+              Ugamo Malim, ima sada dalan pardomuan dompak debata, marhite
+              pelean ingkon ias jala malim, dohot pangihutna pe ingkon ias
+              jala malim.
+            </p>
           </div>
         </div>
       </section>
 
-      {/* Legality Documents */}
-      <section className="documents">
-        <div className="container">
-          <h2 className="home-section-title">Legality Documents</h2>
-          <div className="documents-carousel">
-            <button className="carousel-btn prev" onClick={prevDoc}>
-              ‹
-            </button>
-            <div className="document-card">
-              <div className="document-preview">
-                <p>Click for preview</p>
+      {/* ── LEGALITY DOCUMENTS ── */}
+      <section className="hm-sction-docs">
+        <div className="hm-sction-docs__inner">
+          <span className="hm-sction-docs__label">Legalitas</span>
+          <h2 className="hm-sction-docs__heading">Legality Documents</h2>
+          <div className="hm-sction-docs__carousel">
+            <button className="hm-sction-docs__btn hm-sction-docs__btn--prev" onClick={prevDoc} aria-label="Previous">&#8592;</button>
+            <div className="hm-sction-docs__card">
+              <div className="hm-sction-docs__preview">
+                <svg width="48" height="64" viewBox="0 0 48 64" fill="none">
+                  <rect width="48" height="64" rx="4" fill="#e8ddd0"/>
+                  <rect x="8" y="12" width="32" height="4" rx="2" fill="#c4a882"/>
+                  <rect x="8" y="22" width="24" height="3" rx="1.5" fill="#d4c5b0"/>
+                  <rect x="8" y="30" width="28" height="3" rx="1.5" fill="#d4c5b0"/>
+                  <rect x="8" y="38" width="20" height="3" rx="1.5" fill="#d4c5b0"/>
+                  <rect x="8" y="46" width="25" height="3" rx="1.5" fill="#d4c5b0"/>
+                </svg>
+                <p>Klik untuk pratinjau</p>
               </div>
-              <div className="document-info">
+              <div className="hm-sction-docs__info">
                 <h3>{documents[currentDocIndex].title}</h3>
                 <p>{documents[currentDocIndex].description}</p>
+                <div className="hm-sction-docs__counter">
+                  {currentDocIndex + 1} / {documents.length}
+                </div>
               </div>
             </div>
-            <button className="carousel-btn next" onClick={nextDoc}>
-              ›
-            </button>
+            <button className="hm-sction-docs__btn hm-sction-docs__btn--next" onClick={nextDoc} aria-label="Next">&#8594;</button>
           </div>
         </div>
       </section>
 
-      {/* Organization Structure */}
-      <section className="organization">
-        <h2 className="title">Organization Structure</h2>
+      {/* ── ORGANIZATION ── */}
+      <section className="hm-sction-org">
+        <div className="hm-sction-org__inner">
+          <span className="hm-sction-org__label">Kepengurusan</span>
+          <h2 className="hm-sction-org__heading">Organization Structure</h2>
+          <div className="hm-sction-org__placeholder">
+            <p>Struktur organisasi akan ditampilkan di sini.</p>
+          </div>
+        </div>
       </section>
 
-      {/* Calendar Section */}
-      {/* ✅ showTitle={false} — title & meta tidak di-override, JSON-LD tetap aktif */}
-      <section className="calendar-section">
-        <BatakCalendarSEO
-          year={currentYear}
-          month={currentMonth}
-          showTitle={false}
-        />
-        <h2 className="calendar-title">Calendar</h2>
-        <Calendar />
+      {/* ── CALENDAR ── */}
+      <section className="hm-sction-cal">
+        <BatakCalendarSEO year={currentYear} month={currentMonth} showTitle={false} />
+        <div className="hm-sction-cal__inner">
+          <span className="hm-sction-cal__label">Penanggalan Batak</span>
+          <h2 className="hm-sction-cal__heading">Calendar</h2>
+          <Calendar />
+        </div>
       </section>
 
-      {/* Bottom Sections */}
-      <section className="bottom-sections">
-        {/* News */}
-        <Link
-          to="/news"
-          className="bottom-section"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${newsBg})`,
-          }}
-        >
-          <div className="section-overlay">
-            <div className="text-container">
-              <h2 className="bottom-title">News</h2>
-              <p className="hover-subtext">
-                Menjelajahi halaman News untuk berita terbaru
-              </p>
-            </div>
+      {/* ── BOTTOM LINKS ── */}
+      <section className="hm-sction-links">
+        <Link to="/news" className="hm-sction-links__card hm-sction-links__card--news" style={{ backgroundImage: `url(${newsBg})` }}>
+          <div className="hm-sction-links__glass" />
+          <div className="hm-sction-links__text">
+            <span className="hm-sction-links__tag">Terbaru</span>
+            <h3 className="hm-sction-links__title">News</h3>
+            <p className="hm-sction-links__desc">Berita terbaru dari Bale Pasogit Huta Halasan</p>
+            <span className="hm-sction-links__arrow">→</span>
           </div>
         </Link>
 
-        {/* Education */}
-        <Link
-          to="/edu"
-          className="bottom-section"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${eduBg})`,
-          }}
-        >
-          <div className="section-overlay red">
-            <div className="text-container">
-              <h2 className="bottom-title">Educations</h2>
-              <p className="hover-subtext">
-                Menjelajahi halaman Education untuk materi pembelajaran
-              </p>
-            </div>
+        <Link to="/edu" className="hm-sction-links__card hm-sction-links__card--edu" style={{ backgroundImage: `url(${eduBg})` }}>
+          <div className="hm-sction-links__glass" />
+          <div className="hm-sction-links__text">
+            <span className="hm-sction-links__tag">Pembelajaran</span>
+            <h3 className="hm-sction-links__title">Educations</h3>
+            <p className="hm-sction-links__desc">Materi dan pelajaran tentang Ugamo Malim</p>
+            <span className="hm-sction-links__arrow">→</span>
           </div>
         </Link>
 
-        {/* Knowledge */}
-        <Link
-          to="/knowledge"
-          className="bottom-section"
-          style={{
-            backgroundImage: `linear-gradient(rgba(0,0,0,0.4), rgba(0,0,0,0.4)), url(${knowledgeBg})`,
-          }}
-        >
-          <div className="section-overlay blue">
-            <div className="text-container">
-              <h2 className="bottom-title">Knowledges</h2>
-              <p className="hover-subtext">
-                Menjelajahi halaman Knowledge untuk wawasan tambahan
-              </p>
-            </div>
+        <Link to="/knowledge" className="hm-sction-links__card hm-sction-links__card--know" style={{ backgroundImage: `url(${knowledgeBg})` }}>
+          <div className="hm-sction-links__glass" />
+          <div className="hm-sction-links__text">
+            <span className="hm-sction-links__tag">Wawasan</span>
+            <h3 className="hm-sction-links__title">Knowledges</h3>
+            <p className="hm-sction-links__desc">Perluas wawasan tentang budaya Batak</p>
+            <span className="hm-sction-links__arrow">→</span>
           </div>
         </Link>
       </section>
 
-      {/* Footer */}
       <Footer />
     </div>
   );

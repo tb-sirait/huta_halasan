@@ -1,292 +1,226 @@
+// src/Knowledge/Knowledge.jsx
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Header from "../Navbar/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
-import "./knowledge.css";
-import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 import { Helmet } from "react-helmet";
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import { usePengetahuanList, fmtNum, timeAgo } from "../hooks/usePengetahuan.js";
+import "../styles/konten-shared.css";
 
 const Knowledge = () => {
   const navigate = useNavigate();
-  const [searchQuery, setSearchQuery] = useState("");
-  const [selectedFilter, setSelectedFilter] = useState("Related");
   const [sortBy, setSortBy] = useState("Latest");
 
-  // Sample data for main featured article
-  const featuredArticle = {
-    id: 1,
-    title: "Acara Ulaon Sipaha Lima di Huta Halasan",
-    subtitle: "Ritual tradisional yang masih lestari | Journalist",
-    image: "/api/placeholder/600/400",
-    category: "Budaya",
-    views: 1200,
-    comments: 45,
-    isFeatured: true,
+  const {
+    data, total, loading, error,
+    search: searchQuery, setSearch: setSearchQuery,
+  } = usePengetahuanList({ limit: 50 });
+
+  const getSorted = () => {
+    let s = [...data];
+    if (sortBy === "Oldest")
+      s.sort((a, b) => new Date(a.tanggal_upload) - new Date(b.tanggal_upload));
+    else if (sortBy === "Popular")
+      s.sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0));
+    else
+      s.sort((a, b) => new Date(b.tanggal_upload) - new Date(a.tanggal_upload));
+    return s;
   };
 
-  // Sample data for regular articles
-  const articles = [
-    {
-      id: 2,
-      title: "Festival Gondang Sabangunan 2024",
-      subtitle: "Perayaan musik tradisional Batak | Journalist",
-      image: "/api/placeholder/400/300",
-      category: "Budaya",
-      views: 856,
-      comments: 23,
-      timeAgo: "2 days ago",
-    },
-    {
-      id: 3,
-      title: "Sopo Godang: Arsitektur Tradisional Batak",
-      subtitle: "Rumah adat yang penuh makna | Journalist",
-      image: "/api/placeholder/400/300",
-      category: "Budaya",
-      views: 642,
-      comments: 18,
-      timeAgo: "3 days ago",
-    },
-  ];
+  const sorted   = getSorted();
+  const featured = sorted[0] || null;
+  const rest     = sorted.slice(1);
+  const trending = [...data]
+    .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
+    .slice(0, 5);
 
-  // Sample trending data
-  const trendingNews = [
-    {
-      id: 4,
-      title: "Ulos Batak: Kain Suci Penuh Makna",
-      subtitle: "Filosofi dan kegunaan dalam kehidupan",
-      timeAgo: "1 day ago",
-      author: "Journalist",
-      views: 1300,
-      comments: 67,
-      rank: 1,
-    },
-    {
-      id: 5,
-      title: "Sigale-gale: Boneka Tradisional yang Hidup",
-      subtitle: "Seni pertunjukan unik dari Samosir",
-      timeAgo: "2 days ago",
-      author: "Journalist",
-      views: 921,
-      comments: 43,
-      rank: 2,
-    },
-    {
-      id: 6,
-      title: "Bahasa Batak: Pelestarian Warisan Leluhur",
-      subtitle: "Upaya menjaga bahasa daerah",
-      timeAgo: "3 days ago",
-      author: "Journalist",
-      views: 756,
-      comments: 29,
-      rank: 3,
-    },
-  ];
-
-  // Navigation handlers
-  const handleArticleClick = (articleId) => {
-    navigate(`/knowledge/${articleId}`);
-  };
-
-  const handleTrendingClick = (trendingId) => {
-    // For trending items, you might want to create detail pages or redirect
-    console.log(`Trending item ${trendingId} clicked`);
-    // navigate(`/knowledge/${trendingId}`); // Uncomment if you want to navigate to detail
-  };
-
-  // Filter and sort functions
-  const handleSearch = (e) => {
-    setSearchQuery(e.target.value);
-    // Implement search logic here
-  };
-
-  const handleFilterChange = (e) => {
-    setSelectedFilter(e.target.value);
-    // Implement filter logic here
-  };
-
-  const handleSortChange = (e) => {
-    setSortBy(e.target.value);
-    // Implement sort logic here
+  const getTagline = (item) => {
+    try {
+      const arr = typeof item.tagline === "string" ? JSON.parse(item.tagline) : item.tagline;
+      return Array.isArray(arr) ? arr : [];
+    } catch { return []; }
   };
 
   return (
-    <div className="knowledge-page">
-      <Helmet></Helmet>
-      <title>Parbinotoan | Parmalim Bale Pasogit Huta Halasan</title>
-      <meta
-        name="description"
-        content="Explore articles and knowledge about the culture, traditions, and heritage of Parmalim Bale Pasogit Huta Halasan."
-      />
-      <meta
-        name="keywords"
-        content="Parmalim, Huta Halasan, Parbinotoan, Parmalim bale pasogit Huta Halasan, Parmalim knowledge"
-      />
-      <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-      <meta name="author" content="Huta Halasan" />
+    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
+      <Helmet>
+        <title>Parbinotoan | Parmalim Bale Pasogit Huta Halasan</title>
+        <meta name="description" content="Explore knowledge files and documents of Parmalim Bale Pasogit Huta Halasan." />
+      </Helmet>
       <Header />
 
-      {/* Main Content */}
-      {/* Hero Section with Background Image */}
-      <div className="news-hero-section">
-        <div className="news-hero-overlay">
-          <img
-            src={imgHutaHalasan}
-            alt="Huta Halasan"
-            className="knowledge-hero-background"
-          />
-          <div className="news-hero-content">
-            <h1 className="news-hero-title">Knowledge</h1>
-            <p className="news-hero-subtitle">(batak script)</p>
-          </div>
+      {/* ── Hero ── */}
+      <div className="k-hero">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="k-hero-img" />
+        <div className="k-hero-overlay" />
+        <div className="k-hero-content">
+          <span className="k-hero-label">📄 File & Dokumen</span>
+          <h1 className="k-hero-title">Pengetahuan</h1>
+          <p className="k-hero-sub">
+            {loading ? "Memuat…" : `${total} dokumen tersedia`}
+          </p>
         </div>
       </div>
 
-      <div className="knowledge-container">
-        {/* Header Section */}
-        <div className="knowledge-header">
-          <h2 className="knowledge-section-title">Knowledge</h2>
-          <div className="knowledge-controls">
-            <div className="knowledge-search-wrapper">
-              <input
-                type="text"
-                placeholder="Type here..."
-                value={searchQuery}
-                onChange={handleSearch}
-                className="knowledge-search-input"
-              />
-            </div>
-            <div className="knowledge-filter-group">
-              <select
-                value={selectedFilter}
-                onChange={handleFilterChange}
-                className="knowledge-filter-select"
-              >
-                <option value="Related">📋 Related</option>
-                <option value="Popular">🔥 Popular</option>
-                <option value="Recent">📖 Recent</option>
-              </select>
-              <select
-                value={sortBy}
-                onChange={handleSortChange}
-                className="knowledge-sort-select knowledge-sort-latest"
-              >
-                <option value="Latest">❤️ Latest</option>
-                <option value="Oldest">⏰ Oldest</option>
-                <option value="Popular">🔥 Popular</option>
-              </select>
-            </div>
+      {/* ── Toolbar ── */}
+      <div className="k-toolbar">
+        <div className="k-toolbar-inner">
+          <div className="k-search-wrap">
+            <span className="k-search-icon">🔍</span>
+            <input
+              className="k-search-input"
+              placeholder="Cari dokumen…"
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
           </div>
+          <select className="k-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+            <option value="Latest">Terbaru</option>
+            <option value="Popular">Terpopuler</option>
+            <option value="Oldest">Terlama</option>
+          </select>
         </div>
+      </div>
 
-        <div className="knowledge-content">
-          {/* News Section */}
-          <div className="knowledge-news-section">
-            {/* NEW Badge and Featured Article */}
-            <div className="knowledge-new-badge">NEW</div>
+      {/* ── Konten ── */}
+      <div className="k-container">
+        <div className="k-layout">
 
-            <div
-              className="knowledge-news-featured"
-              onClick={() => handleArticleClick(featuredArticle.id)}
-              style={{ cursor: "pointer" }}
-            >
-              <div className="knowledge-news-featured-image">
-                <img src={featuredArticle.image} alt={featuredArticle.title} />
-                <div className="knowledge-featured-badge">FEATURED</div>
-              </div>
-              <div className="knowledge-news-content">
-                <h3 className="knowledge-news-title">
-                  {featuredArticle.title}
-                </h3>
-                <p className="knowledge-news-subtitle">
-                  {featuredArticle.subtitle}
-                </p>
-                <div className="knowledge-news-meta">
-                  <div className="knowledge-meta-icons">
-                    <span className="knowledge-icon">
-                      👁️ {featuredArticle.views.toLocaleString()}
-                    </span>
-                    <span className="knowledge-icon">
-                      💬 {featuredArticle.comments}
-                    </span>
+          {/* Main */}
+          <div style={{ paddingTop: 28 }}>
+            {error && <div className="k-error">⚠️ {error}</div>}
+
+            {/* Featured */}
+            {loading ? (
+              <div className="k-skeleton" style={{ height: 280, borderRadius: 20, marginBottom: 24 }} />
+            ) : featured ? (
+              <>
+                <div className="k-section-label">✦ Dokumen Unggulan</div>
+                <div
+                  className="k-featured"
+                  onClick={() => navigate(`/knowledge/${featured.id_file}`)}
+                  role="button" tabIndex={0}
+                  onKeyDown={(e) => e.key === "Enter" && navigate(`/knowledge/${featured.id_file}`)}
+                >
+                  <div className="k-featured-img">
+                    <div className="k-featured-img-placeholder">📄</div>
+                    <span className="k-featured-badge">UNGGULAN</span>
                   </div>
-                  <div className="knowledge-category-tag">
-                    {featuredArticle.category}
+                  <div className="k-featured-body">
+                    <span className="k-featured-cat">File Pengetahuan</span>
+                    <h2 className="k-featured-title">{featured.nama_file}</h2>
+                    {getTagline(featured).length > 0 && (
+                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                        {getTagline(featured).map((t, i) => (
+                          <span key={i} className="k-tag">{t}</span>
+                        ))}
+                      </div>
+                    )}
+                    <div className="k-featured-meta">
+                      <span>✍ {featured.nama_uploader || "Admin"}</span>
+                      <span>·</span>
+                      <span>🕐 {timeAgo(featured.tanggal_upload)}</span>
+                      <span>·</span>
+                      <span>👁 {fmtNum(featured.total_interaksi || 0)}</span>
+                    </div>
+                    <span className="k-featured-cta">Buka Dokumen →</span>
                   </div>
                 </div>
-              </div>
-            </div>
+              </>
+            ) : null}
 
-            {/* Regular Articles */}
-            <div className="knowledge-news-grid">
-              {articles.map((article) => (
-                <div
-                  key={article.id}
-                  className="knowledge-news-card"
-                  onClick={() => handleArticleClick(article.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div className="knowledge-news-card-image">
-                    <img src={article.image} alt={article.title} />
-                  </div>
-                  <div className="knowledge-news-card-content">
-                    <h4 className="knowledge-news-card-title">
-                      {article.title}
-                    </h4>
-                    <p className="knowledge-news-card-subtitle">
-                      {article.subtitle}
-                    </p>
-                    <div className="knowledge-news-card-meta">
-                      <div className="knowledge-meta-icons">
-                        <span className="knowledge-icon">
-                          👁️ {article.views}
-                        </span>
-                        <span className="knowledge-icon">
-                          💬 {article.comments}
-                        </span>
+            {/* Grid */}
+            {rest.length > 0 && (
+              <div style={{ marginTop: 28 }}>
+                <div className="k-section-label">📋 Semua Dokumen</div>
+                <div className="k-card-grid">
+                  {loading
+                    ? Array.from({ length: 6 }).map((_, i) => (
+                        <div key={i}>
+                          <div className="k-skeleton" style={{ height: 160, borderRadius: 12 }} />
+                          <div className="k-skeleton" style={{ height: 14, borderRadius: 4, marginTop: 12, width: "80%" }} />
+                        </div>
+                      ))
+                    : rest.map((item) => (
+                        <div
+                          key={item.id_file}
+                          className="k-card"
+                          onClick={() => navigate(`/knowledge/${item.id_file}`)}
+                          role="button" tabIndex={0}
+                          onKeyDown={(e) => e.key === "Enter" && navigate(`/knowledge/${item.id_file}`)}
+                        >
+                          <div className="k-card-img-wrap">
+                            <div className="k-card-img-placeholder">📄</div>
+                            <span className="k-card-badge">Dokumen</span>
+                          </div>
+                          <div className="k-card-body">
+                            <span className="k-card-cat">File Pengetahuan</span>
+                            <h3 className="k-card-title">{item.nama_file}</h3>
+                            {getTagline(item).length > 0 && (
+                              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
+                                {getTagline(item).slice(0, 2).map((t, i) => (
+                                  <span key={i} className="k-tag" style={{ fontSize: 10 }}>{t}</span>
+                                ))}
+                              </div>
+                            )}
+                            <div className="k-card-meta">
+                              <span className="k-card-meta-item">✍ {item.nama_uploader || "Admin"}</span>
+                              <span className="k-card-meta-item">🕐 {timeAgo(item.tanggal_upload)}</span>
+                              <span className="k-card-meta-item">👁 {fmtNum(item.total_interaksi || 0)}</span>
+                            </div>
+                            <div className="k-card-footer">
+                              <span className="k-card-read">Buka →</span>
+                            </div>
+                          </div>
+                        </div>
+                      ))
+                  }
+                </div>
+              </div>
+            )}
+
+            {!loading && !error && sorted.length === 0 && (
+              <div className="k-empty">
+                <div className="k-empty-icon">🔍</div>
+                <h3>Tidak ada dokumen ditemukan</h3>
+                <p>Coba kata kunci yang berbeda.</p>
+                <button className="k-empty-btn" onClick={() => setSearchQuery("")}>Reset Pencarian</button>
+              </div>
+            )}
+          </div>
+
+          {/* Sidebar */}
+          <div className="k-sidebar" style={{ paddingTop: 28 }}>
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">🔥</span>
+                <h3 className="k-sidebar-head-title">Trending</h3>
+              </div>
+              {loading
+                ? Array.from({ length: 4 }).map((_, i) => (
+                    <div key={i} style={{ padding: "14px 18px", borderBottom: "1px solid var(--k-border)" }}>
+                      <div className="k-skeleton" style={{ height: 14, borderRadius: 4, marginBottom: 6 }} />
+                      <div className="k-skeleton" style={{ height: 11, borderRadius: 4, width: "60%" }} />
+                    </div>
+                  ))
+                : trending.map((item, i) => (
+                    <div key={item.id_file} className="k-trending-item"
+                      onClick={() => navigate(`/knowledge/${item.id_file}`)}>
+                      <span className="k-trending-rank">{i + 1}</span>
+                      <div className="k-trending-body">
+                        <p className="k-trending-title">{item.nama_file}</p>
+                        <div className="k-trending-meta">
+                          <span>{timeAgo(item.tanggal_upload)}</span>
+                          <span>👁 {fmtNum(item.total_interaksi || 0)}</span>
+                        </div>
                       </div>
                     </div>
-                  </div>
-                </div>
-              ))}
+                  ))
+              }
             </div>
           </div>
 
-          {/* Trending Section */}
-          <div className="knowledge-trending-sidebar">
-            <h3 className="knowledge-trending-header">Trending</h3>
-
-            <div className="knowledge-trending-list">
-              {trendingNews.map((item) => (
-                <div
-                  key={item.id}
-                  className="knowledge-trending-item"
-                  onClick={() => handleTrendingClick(item.id)}
-                  style={{ cursor: "pointer" }}
-                >
-                  <div className="knowledge-trending-rank">{item.rank}</div>
-                  <div className="knowledge-trending-content">
-                    <h4 className="knowledge-trending-title">{item.title}</h4>
-                    <p className="knowledge-trending-subtitle">
-                      {item.subtitle}
-                    </p>
-                    <div className="knowledge-trending-info">
-                      <span className="knowledge-trending-time">
-                        {item.timeAgo} | {item.author}
-                      </span>
-                      <div className="knowledge-trending-stats">
-                        <span className="knowledge-icon">
-                          👁️ {item.views.toLocaleString()}
-                        </span>
-                        <span className="knowledge-icon">
-                          💬 {item.comments}
-                        </span>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-          </div>
         </div>
       </div>
 

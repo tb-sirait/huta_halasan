@@ -1,6 +1,4 @@
 // src/admin/pages/Login.jsx
-// Sama seperti sebelumnya tapi menerima prop adminBasePath
-// agar redirect setelah login mengarah ke /admin/dashboard
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
@@ -10,36 +8,64 @@ export const Login = ({ adminBasePath = "/admin" }) => {
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
-  const [form, setForm] = useState({ email: "", password: "" });
-  const [showPass, setShowPass] = useState(false);
-  const [loading, setLoading] = useState(false);
-  const [error, setError] = useState("");
-  const [showModal, setShowModal] = useState(false);
-  const [userName, setUserName] = useState("");
+  const [form, setForm]             = useState({ email: "", password: "" });
+  const [showPass, setShowPass]     = useState(false);
+  const [loading, setLoading]       = useState(false);
+  const [error, setError]           = useState("");       // ← inline error di form
+  const [showModal, setShowModal]   = useState(false);
+  const [userName, setUserName]     = useState("");
 
+  // Kalau sudah login, redirect ke dashboard
   useEffect(() => {
-    if (isAuthenticated)
-      navigate(`${adminBasePath}/dashboard`, { replace: true });
+    if (isAuthenticated) navigate(`${adminBasePath}/dashboard`, { replace: true });
   }, [isAuthenticated, navigate, adminBasePath]);
 
   const handleChange = (e) => {
     setForm((f) => ({ ...f, [e.target.name]: e.target.value }));
-    setError("");
+    if (error) setError(""); // hapus error saat user mulai mengetik
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.email || !form.password) {
-      setError("Email dan password wajib diisi.");
-      return;
-    }
+
+    // Validasi lokal
+    if (!form.email.trim()) { setError("Email wajib diisi."); return; }
+    if (!form.password)     { setError("Password wajib diisi."); return; }
+
     setLoading(true);
+    setError("");
+
     try {
-      const data = await login(form);
+      const data = await login({ email: form.email.trim(), password: form.password });
+
+      // Pastikan yang login adalah Admin
+      if (data.user?.role !== "Admin") {
+        setError("Akun Anda tidak memiliki akses ke dashboard admin.");
+        // Hapus token yang sudah tersimpan
+        localStorage.removeItem("token");
+        setLoading(false);
+        return;
+      }
+
       setUserName(data.user?.nama_user || data.user?.email || "Admin");
       setShowModal(true);
+
     } catch (err) {
-      setError(err.message || "Login gagal. Periksa email dan password Anda.");
+      // ── Tangani semua jenis error tanpa redirect ──────────────────────────
+      const status  = err?.status || 0;
+      const message = err?.message || "";
+
+      if (status === 401 || message.toLowerCase().includes("password") || message.toLowerCase().includes("email")) {
+        setError("Email atau password salah. Silakan periksa kembali.");
+      } else if (status === 404 || message.toLowerCase().includes("tidak ditemukan") || message.toLowerCase().includes("not found")) {
+        setError("Email atau password salah. Silakan periksa kembali.");
+      } else if (status === 0 || message.toLowerCase().includes("server")) {
+        setError("Tidak dapat terhubung ke server. Coba beberapa saat lagi.");
+      } else if (status === 403) {
+        setError("Akun Anda tidak memiliki akses ke dashboard admin.");
+      } else {
+        setError(err.message || "Terjadi kesalahan. Silakan coba lagi.");
+      }
     } finally {
       setLoading(false);
     }
@@ -52,11 +78,9 @@ export const Login = ({ adminBasePath = "/admin" }) => {
 
   return (
     <div className="login-root">
-      {/* ── Sisi kiri: background placeholder ── */}
+      {/* ── Sisi kiri: background ── */}
       <div className="login-bg">
         <div className="login-bg-image" />
-        {/* Untuk pasang gambar: edit .login-bg-image di login.css
-            background-image: url('/assets/bg-login.jpg'); */}
         <div className="login-bg-overlay" />
         <div className="login-bg-deco" />
         <div className="login-bg-content">
@@ -65,8 +89,7 @@ export const Login = ({ adminBasePath = "/admin" }) => {
             Parmalim Hutahalasan
           </div>
           <h1 className="login-bg-title">
-            Portal Admin
-            <br />
+            Portal Admin<br />
             <span>Pengelolaan Konten</span>
           </h1>
           <p className="login-bg-desc">
@@ -81,12 +104,11 @@ export const Login = ({ adminBasePath = "/admin" }) => {
         <div className="login-panel-inner">
           <div className="login-panel-header">
             <h2 className="login-panel-title">Masuk ke Dashboard</h2>
-            <p className="login-panel-subtitle">
-              Gunakan akun admin yang telah terdaftar.
-            </p>
+            <p className="login-panel-subtitle">Gunakan akun admin yang telah terdaftar.</p>
           </div>
 
-          <form className="login-form" onSubmit={handleSubmit}>
+          <form className="login-form" onSubmit={handleSubmit} noValidate>
+
             <div className="login-field">
               <label htmlFor="email">Alamat Email</label>
               <div className="login-field-wrap">
@@ -99,6 +121,7 @@ export const Login = ({ adminBasePath = "/admin" }) => {
                   onChange={handleChange}
                   autoComplete="email"
                   disabled={loading}
+                  style={error ? { borderColor: 'var(--c-danger)' } : {}}
                 />
               </div>
             </div>
@@ -115,21 +138,25 @@ export const Login = ({ adminBasePath = "/admin" }) => {
                   onChange={handleChange}
                   autoComplete="current-password"
                   disabled={loading}
+                  style={error ? { borderColor: 'var(--c-danger)' } : {}}
                 />
                 <button
                   type="button"
                   className="login-eye-btn"
                   onClick={() => setShowPass((v) => !v)}
                   tabIndex={-1}
+                  aria-label={showPass ? "Sembunyikan password" : "Tampilkan password"}
                 >
                   {showPass ? "🙈" : "👁"}
                 </button>
               </div>
             </div>
 
+            {/* ── Pesan error inline (tidak redirect) ── */}
             {error && (
-              <div className="login-error-msg">
-                <span>⚠</span> {error}
+              <div className="login-error-msg" role="alert">
+                <span aria-hidden="true">⚠</span>
+                <span>{error}</span>
               </div>
             )}
 
@@ -142,15 +169,10 @@ export const Login = ({ adminBasePath = "/admin" }) => {
             </button>
           </form>
 
-          {/* Tombol kembali ke website utama */}
           <div style={{ marginTop: 24, textAlign: "center" }}>
             <a
               href="/"
-              style={{
-                fontSize: 13,
-                color: "var(--c-text-muted)",
-                textDecoration: "none",
-              }}
+              style={{ fontSize: 13, color: "var(--c-text-muted)", textDecoration: "none" }}
             >
               ← Kembali ke website utama
             </a>
@@ -158,7 +180,7 @@ export const Login = ({ adminBasePath = "/admin" }) => {
         </div>
       </div>
 
-      {/* ── Modal sukses ── */}
+      {/* ── Modal sukses login ── */}
       {showModal && (
         <div className="login-modal-overlay">
           <div className="login-modal-box">

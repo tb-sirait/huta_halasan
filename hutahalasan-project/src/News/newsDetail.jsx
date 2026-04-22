@@ -1,242 +1,306 @@
-import React from "react";
-import "./newsDetail.css";
+// src/News/NewsDetail.jsx
+import React, { useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import {
+  useKontenDetail, useKontenList,
+  parseParagraphs, parseGambar,
+  fmtNum, timeAgo, fmtDate,
+} from "../hooks/useKonten.js";
+import "../styles/konten-shared.css";
 
-const NewsDetail = ({ article, onBack }) => {
-  if (!article) {
-    return (
-      <div className="news-detail-container">
-        <Header />
-        <div className="news-detail-error">
-          <h2>Artikel tidak ditemukan</h2>
-          <button onClick={onBack} className="back-button">
-            Kembali ke News
-          </button>
-        </div>
-        <Footer />
+const NewsDetail = () => {
+  const { id }   = useParams();
+  const navigate = useNavigate();
+
+  const {
+    konten, komentar, likeCount, liked,
+    loading, loadKomen, error, submitting,
+    handleLike, handleKomentar,
+  } = useKontenDetail(id);
+
+  const { data: allNews } = useKontenList({ jenis_konten: "Berita", limit: 20 });
+  const related  = allNews.filter((k) => k.id_konten !== id).slice(0, 4);
+  const trending = [...allNews]
+    .filter((k) => k.id_konten !== id)
+    .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
+    .slice(0, 4);
+
+  const [komentarText, setKomentarText] = useState("");
+  const [komentarSent, setKomentarSent] = useState(false);
+
+  const getImg = (k) => {
+    const imgs = parseGambar(k?.id_gambar);
+    return imgs?.[0] || null;
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const ok = await handleKomentar(komentarText);
+    if (ok) { setKomentarText(""); setKomentarSent(true); }
+  };
+
+  const share = (platform) => {
+    const url  = encodeURIComponent(window.location.href);
+    const text = encodeURIComponent(konten?.judul || "");
+    const map  = {
+      Facebook: `https://www.facebook.com/sharer/sharer.php?u=${url}`,
+      Twitter:  `https://twitter.com/intent/tweet?url=${url}&text=${text}`,
+      WhatsApp: `https://wa.me/?text=${text}%20${url}`,
+    };
+    window.open(map[platform]);
+  };
+
+  /* ── Loading ── */
+  if (loading) return (
+    <div style={{ background: "var(--k-bg)", fontFamily: "var(--k-font)" }}>
+      <Header />
+      <div className="k-detail-hero" style={{ background: "#e5e7eb" }}>
+        <div className="k-skeleton" style={{ width: "100%", height: "100%", borderRadius: 0 }} />
       </div>
-    );
-  }
+      <div className="k-container" style={{ padding: "32px 20px", textAlign: "center", color: "var(--k-text-muted)" }}>
+        Memuat berita…
+      </div>
+      <Footer />
+    </div>
+  );
+
+  /* ── Error ── */
+  if (error || !konten) return (
+    <div style={{ background: "var(--k-bg)", fontFamily: "var(--k-font)" }}>
+      <Header />
+      <div className="k-container" style={{ padding: "60px 20px" }}>
+        <div className="k-empty">
+          <div className="k-empty-icon">📰</div>
+          <h3>{error || "Artikel tidak ditemukan"}</h3>
+          <p>Artikel yang Anda cari tidak tersedia.</p>
+          <button className="k-empty-btn" onClick={() => navigate("/news")}>← Kembali ke Berita</button>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+
+  const paragraphs = parseParagraphs(konten.isi_konten);
+  const images     = parseGambar(konten.id_gambar);
+  const heroImg    = getImg(konten) || imgHutaHalasan;
 
   return (
-    <div className="news-detail-container">
+    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
       <Header />
 
-      {/* Hero Section with Background Image */}
-      <div className="news-detail-hero">
-        <img
-          src={imgHutaHalasan}
-          alt="Huta Halasan"
-          className="news-detail-hero-background"
-        />
-        <div className="news-detail-hero-overlay">
-          <div className="news-detail-hero-content">
-            <span className="news-detail-category">{article.category}</span>
-            <h1 className="news-detail-title">{article.title}</h1>
-            <p className="news-detail-subtitle">{article.subtitle}</p>
+      {/* ── Hero image di atas ── */}
+      <div className="k-detail-hero">
+        <img src={heroImg} alt={konten.judul} className="k-detail-hero-img" />
+        <div className="k-detail-hero-overlay" />
+        <div className="k-detail-hero-content">
+          <div style={{ maxWidth: "var(--k-container)", width: "100%", margin: "0 auto" }}>
+            <span className="k-detail-hero-cat">{konten.jenis_konten}</span>
+            <h1 className="k-detail-hero-title">{konten.judul}</h1>
+            <div className="k-detail-hero-meta">
+              <span>✍ {konten.penulis}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>🕐 {fmtDate(konten.tanggal_dibuat)}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>👁 {fmtNum(konten.total_interaksi || 0)}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>💬 {komentar.length}</span>
+            </div>
           </div>
         </div>
       </div>
 
-      {/* Back Button and Navigation */}
-      <div className="news-detail-nav">
-        <button onClick={onBack} className="news-detail-back-btn">
-          ← Kembali ke News
-        </button>
-        <div className="news-detail-breadcrumb">
-          <span>News</span> / <span>{article.category}</span> /{" "}
-          <span>{article.title}</span>
+      {/* ── Breadcrumb ── */}
+      <div className="k-breadcrumb">
+        <div className="k-breadcrumb-inner">
+          <button className="k-breadcrumb-link" onClick={() => navigate("/")}>Beranda</button>
+          <span className="k-breadcrumb-sep">/</span>
+          <button className="k-breadcrumb-link" onClick={() => navigate("/news")}>Berita</button>
+          <span className="k-breadcrumb-sep">/</span>
+          <span className="k-breadcrumb-curr"
+            style={{ maxWidth: 240, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {konten.judul}
+          </span>
         </div>
       </div>
 
-      {/* Article Content */}
-      <div className="news-detail-content">
-        <div className="news-detail-main">
-          {/* Article Header */}
-          <div className="news-detail-header">
-            <h1 className="news-detail-main-title">{article.title}</h1>
-            <div className="news-detail-meta">
-              <div className="news-detail-meta-left">
-                <span className="news-detail-author">By {article.author}</span>
-                <span className="news-detail-date">{article.date}</span>
-                <span className="news-detail-category-tag">
-                  {article.category}
+      {/* ── Layout ── */}
+      <div className="k-container">
+        <div className="k-detail-layout">
+
+          {/* Artikel */}
+          <div>
+            <div className="k-article">
+
+              {/* Meta bar */}
+              <div className="k-article-meta-bar">
+                <span className="k-article-meta-item">
+                  <span className="k-tag">{konten.jenis_konten}</span>
                 </span>
+                {konten.tagline && (
+                  <span className="k-article-meta-item">
+                    <span className="k-tag k-tag-purple">{konten.tagline}</span>
+                  </span>
+                )}
+                <span className="k-article-meta-sep">·</span>
+                <span className="k-article-meta-item">✍ {konten.penulis}</span>
+                <span className="k-article-meta-sep">·</span>
+                <span className="k-article-meta-item">📅 {fmtDate(konten.tanggal_dibuat)}</span>
               </div>
-              <div className="news-detail-meta-right">
-                <span className="news-detail-views">👁 {article.views}</span>
-                <span className="news-detail-comments">
-                  💬 {article.comments}
-                </span>
-              </div>
-            </div>
-          </div>
 
-          {/* Featured Image */}
-          <div className="news-detail-featured-image">
-            <img src={article.image} alt={article.title} />
-            <p className="news-detail-image-caption">{article.subtitle}</p>
-          </div>
+              {/* Gambar tambahan */}
+              {images && images.length > 1 && (
+                <div style={{
+                  display: "grid",
+                  gridTemplateColumns: "repeat(auto-fit, minmax(160px, 1fr))",
+                  gap: 8, padding: "16px 24px 0"
+                }}>
+                  {images.slice(1).map((img, i) => (
+                    <img key={i} src={img} alt={`${konten.judul} ${i + 2}`}
+                      style={{ width: "100%", borderRadius: 10, objectFit: "cover", aspectRatio: "16/9" }} />
+                  ))}
+                </div>
+              )}
 
-          {/* Article Body */}
-          <div className="news-detail-body">
-            <p className="news-detail-lead">
-              {article.subtitle} - Lorem ipsum dolor sit amet, consectetur
-              adipiscing elit, sed do eiusmod tempor incididunt ut labore et
-              dolore magna aliqua. Ut enim ad minim veniam, quis nostrud
-              exercitation ullamco laboris.
-            </p>
+              {/* Isi artikel */}
+              <div className="k-article-body">
+                {konten.nama_validator && (
+                  <span className="k-validator-chip">
+                    ✓ Divalidasi oleh {konten.nama_validator}
+                  </span>
+                )}
+                <div className="k-article-content">
+                  {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                </div>
 
-            <p>
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-              eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut
-              enim ad minim veniam, quis nostrud exercitation ullamco laboris
-              nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in
-              reprehenderit in voluptate velit esse cillum dolore eu fugiat
-              nulla pariatur.
-            </p>
+                {/* Komentar */}
+                <div className="k-komentar-section">
+                  <h3 className="k-komentar-title">💬 Komentar ({komentar.length})</h3>
 
-            <h3>Sejarah dan Tradisi</h3>
-            <p>
-              Excepteur sint occaecat cupidatat non proident, sunt in culpa qui
-              officia deserunt mollit anim id est laborum. Sed ut perspiciatis
-              unde omnis iste natus error sit voluptatem accusantium doloremque
-              laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore
-              veritatis.
-            </p>
-
-            <p>
-              Et harum quidem rerum facilis est et expedita distinctio. Nam
-              libero tempore, cum soluta nobis est eligendi optio cumque nihil
-              impedit quo minus id quod maxime placeat facere possimus, omnis
-              voluptas assumenda est, omnis dolor repellendus.
-            </p>
-
-            <h3>Makna dan Filosofi</h3>
-            <p>
-              Temporibus autem quibusdam et aut officiis debitis aut rerum
-              necessitatibus saepe eveniet ut et voluptates repudiandae sint et
-              molestiae non recusandae. Itaque earum rerum hic tenetur a
-              sapiente delectus, ut aut reiciendis voluptatibus maiores alias
-              consequatur aut perferendis doloribus asperiores.
-            </p>
-
-            <blockquote className="news-detail-quote">
-              "Budaya Batak adalah warisan leluhur yang harus dijaga dan
-              dilestarikan untuk generasi mendatang."
-            </blockquote>
-
-            <p>
-              At vero eos et accusamus et iusto odio dignissimos ducimus qui
-              blanditiis praesentium voluptatum deleniti atque corrupti quos
-              dolores et quas molestias excepturi sint occaecati cupiditate non
-              provident, similique sunt in culpa qui officia deserunt mollitia
-              animi, id est laborum et dolorum fuga.
-            </p>
-
-            <h3>Pelestarian untuk Masa Depan</h3>
-            <p>
-              Et harum quidem rerum facilis est et expedita distinctio. Nam
-              libero tempore, cum soluta nobis est eligendi optio cumque nihil
-              impedit quo minus id quod maxime placeat facere possimus, omnis
-              voluptas assumenda est.
-            </p>
-          </div>
-
-          {/* Share and Actions */}
-          <div className="news-detail-actions">
-            <button className="news-action-btn share-btn">📤 Share</button>
-            <button className="news-action-btn save-btn">🔖 Save</button>
-            <button className="news-action-btn like-btn">👍 Like</button>
-          </div>
-
-          {/* Comments Section */}
-          <div className="news-detail-comments">
-            <h3>Komentar ({article.comments})</h3>
-            <div className="news-comment-form">
-              <textarea
-                placeholder="Tulis komentar Anda..."
-                className="news-comment-textarea"
-              ></textarea>
-              <button className="news-comment-submit">Kirim Komentar</button>
-            </div>
-
-            {/* Sample Comments */}
-            <div className="news-comments-list">
-              <div className="news-comment-item">
-                <div className="news-comment-avatar">U</div>
-                <div className="news-comment-content">
-                  <div className="news-comment-header">
-                    <strong>User123</strong>
-                    <span className="news-comment-time">2 jam yang lalu</span>
+                  <div className="k-komentar-form">
+                    <p className="k-komentar-form-title">Tinggalkan Komentar</p>
+                    {komentarSent && (
+                      <div className="k-komentar-success">✓ Komentar berhasil dikirim!</div>
+                    )}
+                    <form onSubmit={handleSubmit}>
+                      <textarea
+                        className="k-komentar-textarea"
+                        placeholder="Tulis komentar Anda di sini…"
+                        value={komentarText}
+                        onChange={(e) => { setKomentarText(e.target.value); setKomentarSent(false); }}
+                        disabled={submitting}
+                      />
+                      <button
+                        type="submit"
+                        className="k-komentar-submit"
+                        disabled={submitting || !komentarText.trim()}
+                      >
+                        {submitting ? "Mengirim…" : "✉ Kirim Komentar"}
+                      </button>
+                    </form>
                   </div>
-                  <p>
-                    Artikel yang sangat menarik tentang budaya Batak! Terima
-                    kasih telah berbagi.
-                  </p>
+
+                  {loadKomen ? (
+                    <div style={{ color: "var(--k-text-muted)", fontSize: 13 }}>Memuat komentar…</div>
+                  ) : komentar.length === 0 ? (
+                    <div style={{ color: "var(--k-text-dim)", fontSize: 13, padding: "12px 0" }}>
+                      Belum ada komentar. Jadilah yang pertama!
+                    </div>
+                  ) : komentar.map((k) => (
+                    <div key={k.id_interaksi} className="k-komentar-item">
+                      <div className="k-komentar-avatar">
+                        {(k.nama_user || "A").slice(0, 2).toUpperCase()}
+                      </div>
+                      <div className="k-komentar-body">
+                        <p className="k-komentar-name">{k.nama_user || "Anonim"}</p>
+                        <p className="k-komentar-text">{k.isi_komentar}</p>
+                        <p className="k-komentar-time">{timeAgo(k.waktu_interaksi)}</p>
+                      </div>
+                    </div>
+                  ))}
                 </div>
               </div>
 
-              <div className="news-comment-item">
-                <div className="news-comment-avatar">B</div>
-                <div className="news-comment-content">
-                  <div className="news-comment-header">
-                    <strong>BatakPride</strong>
-                    <span className="news-comment-time">5 jam yang lalu</span>
+              {/* Action bar */}
+              <div className="k-article-actions">
+                <button
+                  className={`k-action-btn k-action-btn-like${liked ? " liked" : ""}`}
+                  onClick={handleLike}
+                >
+                  {liked ? "❤️" : "🤍"} {liked ? "Disukai" : "Suka"} ({fmtNum(likeCount)})
+                </button>
+                <button className="k-action-btn k-action-btn-share" onClick={() => share("WhatsApp")}>
+                  📤 Bagikan
+                </button>
+                <button className="k-action-btn k-action-btn-back" onClick={() => navigate("/news")}>
+                  ← Kembali ke Berita
+                </button>
+              </div>
+            </div>
+          </div>
+
+          {/* Sidebar */}
+          <div className="k-sidebar">
+
+            {/* Trending */}
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">🔥</span>
+                <h3 className="k-sidebar-head-title">Trending</h3>
+              </div>
+              {trending.map((item, i) => (
+                <div key={item.id_konten} className="k-trending-item"
+                  onClick={() => navigate(`/news/${item.id_konten}`)}>
+                  <span className="k-trending-rank">{i + 1}</span>
+                  <div className="k-trending-body">
+                    <p className="k-trending-title">{item.judul}</p>
+                    <div className="k-trending-meta">
+                      <span>{timeAgo(item.tanggal_dibuat)}</span>
+                      <span>👁 {fmtNum(item.total_interaksi || 0)}</span>
+                    </div>
                   </div>
-                  <p>
-                    Sebagai orang Batak, saya sangat bangga membaca artikel ini.
-                    Horas!
-                  </p>
+                </div>
+              ))}
+            </div>
+
+            {/* Artikel terkait */}
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">📄</span>
+                <h3 className="k-sidebar-head-title">Artikel Terkait</h3>
+              </div>
+              {related.map((item) => (
+                <div key={item.id_konten} className="k-related-item"
+                  onClick={() => navigate(`/news/${item.id_konten}`)}>
+                  {getImg(item)
+                    ? <img className="k-related-img" src={getImg(item)} alt={item.judul} />
+                    : <div className="k-related-img-placeholder">📰</div>
+                  }
+                  <div className="k-related-body">
+                    <p className="k-related-title">{item.judul}</p>
+                    <p className="k-related-date">{timeAgo(item.tanggal_dibuat)}</p>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+            {/* Share */}
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">📤</span>
+                <h3 className="k-sidebar-head-title">Bagikan</h3>
+              </div>
+              <div style={{ padding: "14px 18px" }}>
+                <div className="k-share-wrap">
+                  <button className="k-share-btn k-share-facebook" onClick={() => share("Facebook")}>Facebook</button>
+                  <button className="k-share-btn k-share-twitter"  onClick={() => share("Twitter")}>Twitter</button>
+                  <button className="k-share-btn k-share-whatsapp" onClick={() => share("WhatsApp")}>WhatsApp</button>
                 </div>
               </div>
             </div>
-          </div>
-        </div>
 
-        {/* Sidebar - Related Articles */}
-        <div className="news-detail-sidebar">
-          <div className="news-related-section">
-            <h3>Artikel Terkait</h3>
-            <div className="news-related-articles">
-              <div className="news-related-item">
-                <img src="/api/placeholder/100/80" alt="Related article" />
-                <div className="news-related-content">
-                  <h4>Ulos Batak: Kain Suci Penuh Makna</h4>
-                  <span className="news-related-date">1 hari yang lalu</span>
-                </div>
-              </div>
-
-              <div className="news-related-item">
-                <img src="/api/placeholder/100/80" alt="Related article" />
-                <div className="news-related-content">
-                  <h4>Sigale-gale: Boneka Tradisional</h4>
-                  <span className="news-related-date">2 hari yang lalu</span>
-                </div>
-              </div>
-
-              <div className="news-related-item">
-                <img src="/api/placeholder/100/80" alt="Related article" />
-                <div className="news-related-content">
-                  <h4>Festival Gondang Sabangunan</h4>
-                  <span className="news-related-date">3 hari yang lalu</span>
-                </div>
-              </div>
-            </div>
-          </div>
-
-          {/* Tags */}
-          <div className="news-tags-section">
-            <h3>Tags</h3>
-            <div className="news-tags">
-              <span className="news-tag">Budaya Batak</span>
-              <span className="news-tag">Tradisi</span>
-              <span className="news-tag">Adat</span>
-              <span className="news-tag">Samosir</span>
-              <span className="news-tag">Danau Toba</span>
-            </div>
           </div>
         </div>
       </div>

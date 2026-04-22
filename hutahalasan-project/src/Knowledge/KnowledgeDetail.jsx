@@ -1,559 +1,314 @@
-import React, { useState, useEffect } from "react";
+// src/Knowledge/KnowledgeDetail.jsx
+import React, { useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import Header from "../Navbar/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
-import "./KnowledgeDetail.css";
+import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
+import { usePengetahuanDetail, usePengetahuanList, fmtNum, timeAgo, fmtDate } from "../hooks/usePengetahuan.js";
+import "../styles/konten-shared.css";
 
 const KnowledgeDetail = () => {
-  const { id } = useParams();
+  const { id }   = useParams();
   const navigate = useNavigate();
-  const [article, setArticle] = useState(null);
-  const [relatedArticles, setRelatedArticles] = useState([]);
-  const [trendingArticles, setTrendingArticles] = useState([]);
 
-  // Sample data - in real app, this would come from API
-  const allArticles = {
-    1: {
-      id: 1,
-      title: "Acara Ulaon Sipaha Lima di Huta Halasan",
-      subtitle: "Ritual tradisional yang masih lestari",
-      image: "/api/placeholder/800/400",
-      category: "Budaya",
-      views: 1200,
-      comments: 45,
-      author: "Journalist",
-      publishedDate: "2024-08-29",
-      timeAgo: "3 days ago",
-      content: `
-        <p>Acara Ulaon Sipaha Lima merupakan salah satu ritual tradisional yang masih dilestarikan oleh masyarakat Batak di Huta Halasan. Ritual ini memiliki makna yang sangat mendalam dalam kehidupan sosial dan spiritual masyarakat setempat.</p>
-        
-        <h3>Sejarah dan Makna</h3>
-        <p>Ulaon Sipaha Lima telah dilaksanakan secara turun-temurun selama berabad-abad. Nama "Sipaha Lima" sendiri berasal dari bahasa Batak yang berarti "lima tahap" atau "lima bagian", merujuk pada lima tahapan penting dalam ritual ini.</p>
-        
-        <p>Setiap tahapan memiliki simbolisme tersendiri yang berkaitan dengan kehidupan manusia, mulai dari kelahiran hingga kematian. Ritual ini tidak hanya sebagai bentuk penghormatan kepada leluhur, tetapi juga sebagai sarana untuk memperkuat ikatan sosial dalam komunitas.</p>
-        
-        <h3>Prosesi Ritual</h3>
-        <p>Ritual dimulai dengan persiapan yang melibatkan seluruh anggota masyarakat. Para tetua adat memimpin jalannya acara dengan menggunakan berbagai perlengkapan tradisional seperti gondang, ulos, dan berbagai sesaji.</p>
-        
-        <p>Proses ritual berlangsung selama beberapa hari dengan melibatkan berbagai kegiatan seperti tarian tradisional, nyanyian, dan pembacaan mantra-mantra kuno yang diwariskan dari generasi ke generasi.</p>
-        
-        <h3>Pelestarian Budaya</h3>
-        <p>Di era modern ini, Ulaon Sipaha Lima menjadi sangat penting sebagai bentuk pelestarian budaya Batak. Generasi muda diharapkan dapat memahami dan melanjutkan tradisi ini agar tidak hilang ditelan zaman.</p>
-        
-        <p>Pemerintah daerah juga turut mendukung pelestarian ritual ini dengan memberikan bantuan dan pengakuan resmi sebagai warisan budaya takbenda yang perlu dijaga kelestariannya.</p>
-      `,
-      tags: ["budaya", "ritual", "tradisional", "batak", "huta halasan"],
-    },
-    2: {
-      id: 2,
-      title: "Festival Gondang Sabangunan 2024",
-      subtitle: "Perayaan musik tradisional Batak",
-      image: "/api/placeholder/800/400",
-      category: "Budaya",
-      views: 856,
-      comments: 23,
-      author: "Journalist",
-      publishedDate: "2024-08-30",
-      timeAgo: "2 days ago",
-      content: `
-        <p>Festival Gondang Sabangunan 2024 telah sukses diselenggarakan dengan meriah di Samosir, Sumatera Utara. Acara tahunan ini menjadi ajang pelestarian dan promosi musik tradisional Batak kepada dunia.</p>
-        
-        <h3>Tentang Gondang Sabangunan</h3>
-        <p>Gondang Sabangunan adalah ensemble musik tradisional Batak yang terdiri dari berbagai alat musik seperti gondang, ogung, dan sarune. Musik ini memiliki peran penting dalam berbagai upacara adat Batak.</p>
-        
-        <p>Festival ini menghadirkan puluhan grup gondang dari berbagai daerah di Sumatera Utara, menciptakan harmoni musik yang memukau ribuan pengunjung yang hadir.</p>
-      `,
-      tags: ["musik", "gondang", "festival", "batak", "samosir"],
-    },
-    3: {
-      id: 3,
-      title: "Sopo Godang: Arsitektur Tradisional Batak",
-      subtitle: "Rumah adat yang penuh makna",
-      image: "/api/placeholder/800/400",
-      category: "Budaya",
-      views: 642,
-      comments: 18,
-      author: "Journalist",
-      publishedDate: "2024-08-28",
-      timeAgo: "4 days ago",
-      content: `
-        <p>Sopo Godang merupakan rumah adat tradisional Batak yang memiliki arsitektur unik dan sarat akan makna filosofis. Bangunan ini tidak hanya berfungsi sebagai tempat tinggal, tetapi juga sebagai pusat kehidupan sosial masyarakat Batak.</p>
-        
-        <h3>Struktur dan Filosofi</h3>
-        <p>Arsitektur Sopo Godang mencerminkan kosmologi Batak yang membagi dunia menjadi tiga bagian: banua ginjang (dunia atas), banua tonga (dunia tengah), dan banua toru (dunia bawah).</p>
-        
-        <p>Setiap elemen bangunan memiliki makna simbolis yang mendalam, mulai dari bentuk atap yang menyerupai perahu terbalik hingga ukiran-ukiran yang menghiasi dinding dan tiang-tiang rumah.</p>
-      `,
-      tags: ["arsitektur", "rumah adat", "batak", "sopo godang", "filosofi"],
-    },
+  const {
+    item, komentar, likeCount, liked,
+    loading, loadKomen, error, submitting,
+    taglineArr, handleLike, handleKomentar,
+  } = usePengetahuanDetail(id);
+
+  const { data: allData } = usePengetahuanList({ limit: 20 });
+  const trending = [...allData]
+    .filter((k) => k.id_file !== id)
+    .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
+    .slice(0, 4);
+  const related = allData.filter((k) => k.id_file !== id).slice(0, 4);
+
+  const [komentarText, setKomentarText] = useState("");
+  const [komentarSent, setKomentarSent] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const ok = await handleKomentar(komentarText);
+    if (ok) { setKomentarText(""); setKomentarSent(true); }
   };
 
-  const trendingData = [
-    {
-      id: 4,
-      title: "Ulos Batak: Kain Suci Penuh Makna",
-      subtitle: "Filosofi dan kegunaan dalam kehidupan",
-      timeAgo: "1 day ago",
-      author: "Journalist",
-      views: 1300,
-      comments: 67,
-      rank: 1,
-    },
-    {
-      id: 5,
-      title: "Sigale-gale: Boneka Tradisional yang Hidup",
-      subtitle: "Seni pertunjukan unik dari Samosir",
-      timeAgo: "2 days ago",
-      author: "Journalist",
-      views: 921,
-      comments: 43,
-      rank: 2,
-    },
-    {
-      id: 6,
-      title: "Bahasa Batak: Pelestarian Warisan Leluhur",
-      subtitle: "Upaya menjaga bahasa daerah",
-      timeAgo: "3 days ago",
-      author: "Journalist",
-      views: 756,
-      comments: 29,
-      rank: 3,
-    },
-  ];
-
-  useEffect(() => {
-    // Get current article
-    const currentArticle = allArticles[parseInt(id)];
-    setArticle(currentArticle);
-
-    // Get related articles (exclude current article)
-    const related = Object.values(allArticles)
-      .filter((art) => art.id !== parseInt(id))
-      .slice(0, 2);
-    setRelatedArticles(related);
-
-    // Set trending articles
-    setTrendingArticles(trendingData);
-  }, [id]);
-
-  const handleBackToKnowledge = () => {
-    navigate("/knowledge");
-  };
-
-  const handleArticleClick = (articleId) => {
-    navigate(`/knowledge/${articleId}`);
-  };
-
-  const handleTrendingClick = (trendingId) => {
-    // For trending items, you might want to create them or redirect
-    console.log(`Trending item ${trendingId} clicked`);
-  };
-
-  if (!article) {
-    return (
-      <div className="knowledge-detail-page">
-        <Header />
-        <div className="knowledge-detail-container">
-          <div className="knowledge-detail-loading">
-            <p>Artikel tidak ditemukan</p>
-            <button
-              onClick={handleBackToKnowledge}
-              className="knowledge-back-button"
-            >
-              ← Kembali ke Knowledge
-            </button>
-          </div>
-        </div>
-        <Footer />
+  /* ── Loading ── */
+  if (loading) return (
+    <div style={{ background: "var(--k-bg)", fontFamily: "var(--k-font)" }}>
+      <Header />
+      <div className="k-detail-hero" style={{ background: "#e5e7eb" }}>
+        <div className="k-skeleton" style={{ width: "100%", height: "100%", borderRadius: 0 }} />
       </div>
-    );
-  }
+      <div className="k-container" style={{ padding: "32px 20px", textAlign: "center", color: "var(--k-text-muted)" }}>
+        Memuat dokumen…
+      </div>
+      <Footer />
+    </div>
+  );
+
+  /* ── Error ── */
+  if (error || !item) return (
+    <div style={{ background: "var(--k-bg)", fontFamily: "var(--k-font)" }}>
+      <Header />
+      <div className="k-container" style={{ padding: "60px 20px" }}>
+        <div className="k-empty">
+          <div className="k-empty-icon">📄</div>
+          <h3>{error || "Dokumen tidak ditemukan"}</h3>
+          <p>Dokumen yang Anda cari tidak tersedia.</p>
+          <button className="k-empty-btn" onClick={() => navigate("/knowledge")}>← Kembali ke Pengetahuan</button>
+        </div>
+      </div>
+      <Footer />
+    </div>
+  );
+
+  const paragraphs = (item.deskripsi || "")
+    .split(/\n\s*\n|\n/)
+    .map((p) => p.trim())
+    .filter(Boolean);
 
   return (
-    <div className="knowledge-detail-page">
+    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
       <Header />
 
-      <div className="knowledge-detail-container">
-        {/* Back Button */}
-        <button
-          onClick={handleBackToKnowledge}
-          className="knowledge-back-button"
-        >
-          ← Kembali ke Knowledge
-        </button>
+      {/* ── Hero — pakai background Huta Halasan dengan overlay kuat + icon file di tengah ── */}
+      <div className="k-detail-hero">
+        <img src={imgHutaHalasan} alt="Huta Halasan" className="k-detail-hero-img" />
+        <div className="k-detail-hero-overlay" />
+        {/* Icon file di tengah hero */}
+        <div style={{
+          position: "absolute", inset: 0,
+          display: "flex", alignItems: "center", justifyContent: "center",
+        }}>
+          <div style={{
+            background: "rgba(255,255,255,0.12)",
+            backdropFilter: "blur(8px)",
+            border: "2px solid rgba(255,255,255,0.25)",
+            borderRadius: 20,
+            padding: "20px 32px",
+            textAlign: "center",
+            color: "#fff",
+          }}>
+            <div style={{ fontSize: 52, marginBottom: 8 }}>📄</div>
+            <div style={{ fontFamily: "var(--k-font)", fontSize: 14, fontWeight: 700, opacity: 0.9 }}>
+              Dokumen Pengetahuan
+            </div>
+          </div>
+        </div>
+        <div className="k-detail-hero-content">
+          <div style={{ maxWidth: "var(--k-container)", width: "100%", margin: "0 auto" }}>
+            <span className="k-detail-hero-cat">📄 File Pengetahuan</span>
+            <h1 className="k-detail-hero-title">{item.nama_file}</h1>
+            <div className="k-detail-hero-meta">
+              <span>✍ {item.nama_uploader || "Admin"}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>📅 {fmtDate(item.tanggal_upload)}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>👁 {fmtNum(likeCount)}</span>
+              <span className="k-detail-hero-meta-dot" />
+              <span>💬 {komentar.length}</span>
+            </div>
+          </div>
+        </div>
+      </div>
 
-        <div className="knowledge-detail-content">
-          {/* Main Article Content */}
-          <div className="knowledge-detail-main">
-            <article className="knowledge-detail-article">
-              {/* Article Header */}
-              <header className="knowledge-detail-header">
-                <div className="knowledge-detail-category">
-                  {article.category}
-                </div>
-                <h1 className="knowledge-detail-title">{article.title}</h1>
-                <p className="knowledge-detail-subtitle">{article.subtitle}</p>
+      {/* ── Breadcrumb ── */}
+      <div className="k-breadcrumb">
+        <div className="k-breadcrumb-inner">
+          <button className="k-breadcrumb-link" onClick={() => navigate("/")}>Beranda</button>
+          <span className="k-breadcrumb-sep">/</span>
+          <button className="k-breadcrumb-link" onClick={() => navigate("/knowledge")}>Pengetahuan</button>
+          <span className="k-breadcrumb-sep">/</span>
+          <span className="k-breadcrumb-curr"
+            style={{ maxWidth: 240, overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+            {item.nama_file}
+          </span>
+        </div>
+      </div>
 
-                {/* Article Meta */}
-                <div className="knowledge-detail-meta">
-                  <div className="knowledge-detail-author-info">
-                    <span className="knowledge-detail-author">
-                      By {article.author}
-                    </span>
-                    <span className="knowledge-detail-date">
-                      {article.timeAgo}
-                    </span>
-                  </div>
-                  <div className="knowledge-detail-stats">
-                    <span className="knowledge-detail-stat">
-                      👁️ {article.views.toLocaleString()}
-                    </span>
-                    <span className="knowledge-detail-stat">
-                      💬 {article.comments}
-                    </span>
-                  </div>
-                </div>
-              </header>
+      {/* ── Layout ── */}
+      <div className="k-container">
+        <div className="k-detail-layout">
 
-              {/* Featured Image */}
-              <div className="knowledge-detail-image">
-                <img src={article.image} alt={article.title} />
+          {/* Artikel */}
+          <div>
+            <div className="k-article">
+
+              {/* Meta bar */}
+              <div className="k-article-meta-bar">
+                <span className="k-tag">File Pengetahuan</span>
+                {taglineArr.map((t, i) => (
+                  <span key={i} className="k-tag k-tag-blue">{t}</span>
+                ))}
+                <span className="k-article-meta-sep">·</span>
+                <span className="k-article-meta-item">✍ {item.nama_uploader || "Admin"}</span>
+                <span className="k-article-meta-sep">·</span>
+                <span className="k-article-meta-item">📅 {fmtDate(item.tanggal_upload)}</span>
               </div>
 
-              {/* Article Content */}
-              <div
-                className="knowledge-detail-body"
-                dangerouslySetInnerHTML={{ __html: article.content }}
-              />
-
-              {/* Tags */}
-              <div className="knowledge-detail-tags">
-                <h4>Tags:</h4>
-                <div className="knowledge-detail-tag-list">
-                  {article.tags.map((tag, index) => (
-                    <span key={index} className="knowledge-detail-tag">
-                      #{tag}
-                    </span>
-                  ))}
+              <div className="k-article-body">
+                {/* Download box */}
+                <div className="k-file-box">
+                  <div className="k-file-icon">📄</div>
+                  <div className="k-file-name">{item.nama_file}</div>
+                  {item.path_file && (
+                    <a href={item.path_file} target="_blank" rel="noreferrer" className="k-file-download">
+                      ⬇ Unduh / Buka File
+                    </a>
+                  )}
                 </div>
-              </div>
 
-              {/* Comments Section */}
-              <div className="knowledge-detail-comments">
-                <h3>Komentar ({article.comments})</h3>
+                {item.nama_validator && (
+                  <span className="k-validator-chip">✓ Divalidasi oleh {item.nama_validator}</span>
+                )}
 
-                {/* Comment Form */}
-                <div className="knowledge-detail-comment-form">
-                  <h4>Tinggalkan Komentar</h4>
-                  <form
-                    onSubmit={(e) => {
-                      e.preventDefault();
-                      const formData = new FormData(e.target);
-                      const comment = {
-                        name: formData.get("name"),
-                        email: formData.get("email"),
-                        message: formData.get("message"),
-                      };
-                      console.log("New comment:", comment);
-                      // Handle comment submission here
-                      e.target.reset();
-                    }}
-                  >
-                    <div className="knowledge-detail-form-row">
-                      <div className="knowledge-detail-form-group">
-                        <label htmlFor="name">Nama *</label>
-                        <input
-                          type="text"
-                          id="name"
-                          name="name"
-                          required
-                          placeholder="Masukkan nama Anda"
-                        />
-                      </div>
-                      <div className="knowledge-detail-form-group">
-                        <label htmlFor="email">Email *</label>
-                        <input
-                          type="email"
-                          id="email"
-                          name="email"
-                          required
-                          placeholder="Masukkan email Anda"
-                        />
-                      </div>
-                    </div>
-                    <div className="knowledge-detail-form-group">
-                      <label htmlFor="message">Komentar *</label>
+                {/* Tagline */}
+                {taglineArr.length > 0 && (
+                  <div className="k-tags-wrap">
+                    {taglineArr.map((t, i) => (
+                      <span key={i} className="k-tag">#{t}</span>
+                    ))}
+                  </div>
+                )}
+
+                {/* Deskripsi */}
+                <div className="k-article-content">
+                  {paragraphs.map((p, i) => <p key={i}>{p}</p>)}
+                </div>
+
+                {/* Komentar */}
+                <div className="k-komentar-section">
+                  <h3 className="k-komentar-title">💬 Komentar ({komentar.length})</h3>
+
+                  <div className="k-komentar-form">
+                    <p className="k-komentar-form-title">Tinggalkan Komentar</p>
+                    {komentarSent && (
+                      <div className="k-komentar-success">✓ Komentar berhasil dikirim!</div>
+                    )}
+                    <form onSubmit={handleSubmit}>
                       <textarea
-                        id="message"
-                        name="message"
-                        required
-                        rows="4"
-                        placeholder="Tulis komentar Anda di sini..."
-                      ></textarea>
-                    </div>
-                    <button
-                      type="submit"
-                      className="knowledge-detail-submit-btn"
-                    >
-                      Kirim Komentar
-                    </button>
-                  </form>
-                </div>
-
-                {/* Comments List */}
-                <div className="knowledge-detail-comments-list">
-                  <div className="knowledge-detail-comment">
-                    <div className="knowledge-detail-comment-avatar">
-                      <div className="knowledge-detail-avatar-circle">JD</div>
-                    </div>
-                    <div className="knowledge-detail-comment-content">
-                      <div className="knowledge-detail-comment-header">
-                        <h5 className="knowledge-detail-comment-author">
-                          John Doe
-                        </h5>
-                        <span className="knowledge-detail-comment-time">
-                          2 hari yang lalu
-                        </span>
-                      </div>
-                      <p className="knowledge-detail-comment-text">
-                        Artikel yang sangat menarik! Saya baru mengetahui
-                        tentang ritual Ulaon Sipaha Lima ini. Terima kasih telah
-                        membagikan informasi budaya yang begitu berharga. Semoga
-                        tradisi seperti ini tetap lestari di masa depan.
-                      </p>
-                      <div className="knowledge-detail-comment-actions">
-                        <button className="knowledge-detail-comment-action">
-                          👍 Suka (12)
-                        </button>
-                        <button className="knowledge-detail-comment-action">
-                          💬 Balas
-                        </button>
-                      </div>
-                    </div>
+                        className="k-komentar-textarea"
+                        placeholder="Tulis komentar Anda di sini…"
+                        value={komentarText}
+                        onChange={(e) => { setKomentarText(e.target.value); setKomentarSent(false); }}
+                        disabled={submitting}
+                      />
+                      <button
+                        type="submit"
+                        className="k-komentar-submit"
+                        disabled={submitting || !komentarText.trim()}
+                      >
+                        {submitting ? "Mengirim…" : "✉ Kirim Komentar"}
+                      </button>
+                    </form>
                   </div>
 
-                  <div className="knowledge-detail-comment">
-                    <div className="knowledge-detail-comment-avatar">
-                      <div className="knowledge-detail-avatar-circle">MS</div>
+                  {loadKomen ? (
+                    <div style={{ color: "var(--k-text-muted)", fontSize: 13 }}>Memuat komentar…</div>
+                  ) : komentar.length === 0 ? (
+                    <div style={{ color: "var(--k-text-dim)", fontSize: 13, padding: "12px 0" }}>
+                      Belum ada komentar. Jadilah yang pertama!
                     </div>
-                    <div className="knowledge-detail-comment-content">
-                      <div className="knowledge-detail-comment-header">
-                        <h5 className="knowledge-detail-comment-author">
-                          Maria Sitompul
-                        </h5>
-                        <span className="knowledge-detail-comment-time">
-                          1 hari yang lalu
-                        </span>
+                  ) : komentar.map((k) => (
+                    <div key={k.id_interaksi} className="k-komentar-item">
+                      <div className="k-komentar-avatar">
+                        {(k.nama_user || "A").slice(0, 2).toUpperCase()}
                       </div>
-                      <p className="knowledge-detail-comment-text">
-                        Sebagai orang Batak, saya sangat bangga dengan
-                        pelestarian budaya seperti ini. Ritual Ulaon Sipaha Lima
-                        memang masih dilaksanakan di kampung halaman saya.
-                        Artikel ini menjelaskan dengan sangat baik makna dan
-                        prosesinya.
-                      </p>
-                      <div className="knowledge-detail-comment-actions">
-                        <button className="knowledge-detail-comment-action">
-                          👍 Suka (8)
-                        </button>
-                        <button className="knowledge-detail-comment-action">
-                          💬 Balas
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="knowledge-detail-comment">
-                    <div className="knowledge-detail-comment-avatar">
-                      <div className="knowledge-detail-avatar-circle">RP</div>
-                    </div>
-                    <div className="knowledge-detail-comment-content">
-                      <div className="knowledge-detail-comment-header">
-                        <h5 className="knowledge-detail-comment-author">
-                          Rudi Pangaribuan
-                        </h5>
-                        <span className="knowledge-detail-comment-time">
-                          18 jam yang lalu
-                        </span>
-                      </div>
-                      <p className="knowledge-detail-comment-text">
-                        Apakah ada jadwal khusus untuk ritual ini? Saya ingin
-                        mengajak keluarga untuk menyaksikan langsung tradisi
-                        yang luar biasa ini.
-                      </p>
-                      <div className="knowledge-detail-comment-actions">
-                        <button className="knowledge-detail-comment-action">
-                          👍 Suka (3)
-                        </button>
-                        <button className="knowledge-detail-comment-action">
-                          💬 Balas
-                        </button>
-                      </div>
-
-                      {/* Reply to comment */}
-                      <div className="knowledge-detail-comment-reply">
-                        <div className="knowledge-detail-comment-avatar">
-                          <div className="knowledge-detail-avatar-circle small">
-                            AD
-                          </div>
-                        </div>
-                        <div className="knowledge-detail-comment-content">
-                          <div className="knowledge-detail-comment-header">
-                            <h5 className="knowledge-detail-comment-author">
-                              Admin
-                            </h5>
-                            <span className="knowledge-detail-comment-time">
-                              10 jam yang lalu
-                            </span>
-                          </div>
-                          <p className="knowledge-detail-comment-text">
-                            Biasanya ritual ini dilaksanakan setiap bulan ke-7
-                            dan ke-12 menurut kalender Batak. Untuk informasi
-                            lebih detail, bisa menghubungi tokoh adat setempat.
-                          </p>
-                          <div className="knowledge-detail-comment-actions">
-                            <button className="knowledge-detail-comment-action">
-                              👍 Suka (5)
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  {/* Load More Comments */}
-                  <div className="knowledge-detail-load-more">
-                    <button className="knowledge-detail-load-more-btn">
-                      Muat Komentar Lainnya (42)
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Related Articles Section */}
-              <div className="knowledge-detail-related">
-                <h3>Artikel Terkait</h3>
-                <div className="knowledge-detail-related-grid">
-                  {relatedArticles.map((relatedArticle) => (
-                    <div
-                      key={relatedArticle.id}
-                      className="knowledge-detail-related-card"
-                      onClick={() => handleArticleClick(relatedArticle.id)}
-                    >
-                      <div className="knowledge-detail-related-image">
-                        <img
-                          src={relatedArticle.image}
-                          alt={relatedArticle.title}
-                        />
-                      </div>
-                      <div className="knowledge-detail-related-content">
-                        <h4>{relatedArticle.title}</h4>
-                        <p>{relatedArticle.subtitle}</p>
-                        <div className="knowledge-detail-related-meta">
-                          <span>👁️ {relatedArticle.views}</span>
-                          <span>💬 {relatedArticle.comments}</span>
-                        </div>
+                      <div className="k-komentar-body">
+                        <p className="k-komentar-name">{k.nama_user || "Anonim"}</p>
+                        <p className="k-komentar-text">{k.isi_komentar}</p>
+                        <p className="k-komentar-time">{timeAgo(k.waktu_interaksi)}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </div>
-            </article>
+
+              {/* Actions */}
+              <div className="k-article-actions">
+                <button
+                  className={`k-action-btn k-action-btn-like${liked ? " liked" : ""}`}
+                  onClick={handleLike}
+                >
+                  {liked ? "❤️" : "🤍"} {liked ? "Disukai" : "Suka"} ({fmtNum(likeCount)})
+                </button>
+                {item.path_file && (
+                  <a href={item.path_file} target="_blank" rel="noreferrer"
+                    className="k-action-btn" style={{ background: "var(--k-gold-pale)", color: "var(--k-gold)", borderColor: "rgba(201,168,76,0.3)", textDecoration: "none" }}>
+                    ⬇ Unduh File
+                  </a>
+                )}
+                <button className="k-action-btn k-action-btn-back" onClick={() => navigate("/knowledge")}>
+                  ← Kembali
+                </button>
+              </div>
+            </div>
           </div>
 
           {/* Sidebar */}
-          <aside className="knowledge-detail-sidebar">
-            {/* Latest/Trending News */}
-            <div className="knowledge-detail-trending">
-              <h3 className="knowledge-detail-trending-title">
-                Konten Trending
-              </h3>
-
-              <div className="knowledge-detail-trending-list">
-                {trendingArticles.map((item) => (
-                  <div
-                    key={item.id}
-                    className="knowledge-detail-trending-item"
-                    onClick={() => handleTrendingClick(item.id)}
-                  >
-                    <div className="knowledge-detail-trending-rank">
-                      {item.rank}
-                    </div>
-                    <div className="knowledge-detail-trending-content">
-                      <h4 className="knowledge-detail-trending-item-title">
-                        {item.title}
-                      </h4>
-                      <p className="knowledge-detail-trending-item-subtitle">
-                        {item.subtitle}
-                      </p>
-                      <div className="knowledge-detail-trending-info">
-                        <span className="knowledge-detail-trending-time">
-                          {item.timeAgo} | {item.author}
-                        </span>
-                        <div className="knowledge-detail-trending-stats">
-                          <span>👁️ {item.views.toLocaleString()}</span>
-                          <span>💬 {item.comments}</span>
-                        </div>
-                      </div>
+          <div className="k-sidebar">
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">🔥</span>
+                <h3 className="k-sidebar-head-title">Trending</h3>
+              </div>
+              {trending.map((item, i) => (
+                <div key={item.id_file} className="k-trending-item"
+                  onClick={() => navigate(`/knowledge/${item.id_file}`)}>
+                  <span className="k-trending-rank">{i + 1}</span>
+                  <div className="k-trending-body">
+                    <p className="k-trending-title">{item.nama_file}</p>
+                    <div className="k-trending-meta">
+                      <span>{timeAgo(item.tanggal_upload)}</span>
+                      <span>👁 {fmtNum(item.total_interaksi || 0)}</span>
                     </div>
                   </div>
-                ))}
-              </div>
+                </div>
+              ))}
             </div>
 
-            {/* Latest Updates */}
-            <div className="knowledge-detail-latest">
-              <h3 className="knowledge-detail-latest-title">Konten Terbaru</h3>
-
-              <div className="knowledge-detail-latest-list">
-                <div className="knowledge-detail-latest-item">
-                  <div className="knowledge-detail-latest-content">
-                    <h4>Tradisi Mangongkal Holi di Batak Toba</h4>
-                    <p>Ritual pemindahan tulang leluhur</p>
-                    <span className="knowledge-detail-latest-time">
-                      5 jam yang lalu
-                    </span>
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">📄</span>
+                <h3 className="k-sidebar-head-title">Dokumen Terkait</h3>
+              </div>
+              {related.map((rel) => (
+                <div key={rel.id_file} className="k-related-item"
+                  onClick={() => navigate(`/knowledge/${rel.id_file}`)}>
+                  <div className="k-related-img-placeholder">📄</div>
+                  <div className="k-related-body">
+                    <p className="k-related-title">{rel.nama_file}</p>
+                    <p className="k-related-date">{timeAgo(rel.tanggal_upload)}</p>
                   </div>
                 </div>
+              ))}
+            </div>
 
-                <div className="knowledge-detail-latest-item">
-                  <div className="knowledge-detail-latest-content">
-                    <h4>Horja Bius: Upacara Pernikahan Adat</h4>
-                    <p>Prosesi pernikahan tradisional Batak</p>
-                    <span className="knowledge-detail-latest-time">
-                      1 hari yang lalu
-                    </span>
-                  </div>
-                </div>
-
-                <div className="knowledge-detail-latest-item">
-                  <div className="knowledge-detail-latest-content">
-                    <h4>Makanan Tradisional: Arsik dan Naniura</h4>
-                    <p>Kuliner khas yang mendunia</p>
-                    <span className="knowledge-detail-latest-time">
-                      2 hari yang lalu
-                    </span>
-                  </div>
+            <div className="k-sidebar-box">
+              <div className="k-sidebar-head">
+                <span className="k-sidebar-head-icon">📤</span>
+                <h3 className="k-sidebar-head-title">Bagikan</h3>
+              </div>
+              <div style={{ padding: "14px 18px" }}>
+                <div className="k-share-wrap">
+                  <button className="k-share-btn k-share-facebook"
+                    onClick={() => window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(window.location.href)}`)}>
+                    Facebook
+                  </button>
+                  <button className="k-share-btn k-share-twitter"
+                    onClick={() => window.open(`https://twitter.com/intent/tweet?url=${encodeURIComponent(window.location.href)}&text=${encodeURIComponent(item.nama_file)}`)}>
+                    Twitter
+                  </button>
+                  <button className="k-share-btn k-share-whatsapp"
+                    onClick={() => window.open(`https://wa.me/?text=${encodeURIComponent(item.nama_file + " " + window.location.href)}`)}>
+                    WhatsApp
+                  </button>
                 </div>
               </div>
             </div>
+          </div>
 
-            {/* Share Options */}
-            <div className="knowledge-detail-share">
-              <h4>Bagikan Artikel</h4>
-              <div className="knowledge-detail-share-buttons">
-                <button className="knowledge-detail-share-btn facebook">
-                  Facebook
-                </button>
-                <button className="knowledge-detail-share-btn twitter">
-                  Twitter
-                </button>
-                <button className="knowledge-detail-share-btn whatsapp">
-                  WhatsApp
-                </button>
-              </div>
-            </div>
-          </aside>
         </div>
       </div>
 

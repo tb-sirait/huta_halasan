@@ -97,8 +97,6 @@ function App() {
           <Route path="users" element={<Users />} />
         </Route>
 
-        {/* Fallback 404 → home */}
-        <Route path="*" element={<Navigate to="/" replace />} />
       </Routes>
     </Router>
   );
