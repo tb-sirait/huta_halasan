@@ -18,55 +18,52 @@ function Footer() {
                   <p className="footer-brand-sub">Huta Halasan</p>
                 </div>
               </div>
-              <div className="footer-map">
-                <div className="map-placeholder">
-                  <p>
-                    Huta Halasan
-                    <br />
-                    H2G5+82, Sionggang Tengah,
-                    <br />
-                    Kec. Lumban Julu, Toba, Sumatera Utara
-                    <br />
-                    Indonesia 22386
-                  </p>
+
+              <div className="map-embed">
+                <iframe
+                  src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3984.1!2d99.0766!3d2.5733!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x0%3A0x0!2zMsKwMzQnMjQuMCJOIDk5wrAwNCczNi4wIkU!5e0!3m2!1sen!2sid"
+                  allowFullScreen=""
+                  loading="lazy"
+                  referrerPolicy="no-referrer-when-downgrade"
+                  title="Lokasi Huta Halasan"
+                />
+                <div className="map-address">
+                  📍 Huta Halasan, H2G5+82, Sionggang Tengah,<br />
+                  Kec. Lumban Julu, Toba, Sumatera Utara, Indonesia 22386
                 </div>
               </div>
             </div>
+
             <div className="footer-right">
               <div className="footer-links">
                 <ul>
-                  <li>
-                    <a href="#">Check the Latest News</a>
-                  </li>
-                  <li>
-                    <a href="#">Learning the stories/news</a>
-                  </li>
-                  <li>
-                    <a href="#">Improve the Knowledges</a>
-                  </li>
-                  <li>
-                    <a href="#">Our Legalized Authorities</a>
-                  </li>
-                  <li>
-                    <a href="#">Community Structure</a>
-                  </li>
+                  <li><a href="#">Check the Latest News</a></li>
+                  <li><a href="#">Learning the stories/news</a></li>
+                  <li><a href="#">Improve the Knowledges</a></li>
+                  <li><a href="#">Our Legalized Authorities</a></li>
+                  <li><a href="#">Community Structure</a></li>
                 </ul>
               </div>
+
+              <div className="footer-legal-links">
+                <a href="/terms">Terms &amp; Conditions</a>
+                <a href="/about">About Us</a>
+              </div>
+
               <div className="footer-description">
                 <p>
-                  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut
-                  tempor leo elit, nec fringilla ipsum bibendum sed. Nulla
-                  iaculisque ligula vel arcu bibendum molestie. Donec vehicula
-                  est posuere facilisi mauris. Mauris varius sagittis arcu. Nec
-                  convallis pettentesque bibendum nam netus consequat tellus.
-                  Cras laoreet. Donec non elit magna.
+                  Ugamo Malim adalah kepercayaan tradisional masyarakat Batak
+                  yang berakar pada ajaran leluhur. Bale Pasogit Huta Halasan
+                  hadir sebagai pusat kegiatan spiritual dan kebudayaan
+                  Parmalim di Sumatera Utara.
                 </p>
               </div>
             </div>
           </div>
+
           <div className="footer-bottom">
             <p>
-              2025 © Parmalim Bale Pasogit Huta Halasan | All Rights Reserved
+              {new Date().getFullYear()} © Parmalim Bale Pasogit Huta Halasan | All Rights Reserved
             </p>
           </div>
         </div>
