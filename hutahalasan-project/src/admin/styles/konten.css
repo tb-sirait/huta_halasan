@@ -219,7 +219,7 @@
 
 /* File upload zone */
 .konten-upload-zone {
-  border: 1px dashed var(--c-border2);
+  border: 1px dashed var(--caramel);
   border-radius: var(--r-md);
   padding: 24px;
   text-align: center;
@@ -369,4 +369,17 @@
 .konten-detail-komentar-deleted {
   opacity: 0.4;
   font-style: italic;
+}
+
+.konten-modal-header {
+  display: flex; align-items: center; gap: 12px;
+  padding: 18px 24px; 
+  background: var(--caramel);
+  color: var(--parchment); font-size: 16px; font-weight: 700;
+}
+.konten-modal-body { padding: 20px 24px; background-color: var(--white);}
+.konten-modal-footer {
+  display: flex; align-items: center; gap: 10px;
+  padding: 16px 24px; justify-content: flex-end;
+  background: var(--surface);
 }

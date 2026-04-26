@@ -19,6 +19,8 @@ import Education from "./Edu/Edu";
 import News from "./News/News";
 import Knowledge from "./Knowledge/Knowledge";
 import KnowledgeDetail from "./Knowledge/KnowledgeDetail";
+import BalePartonggoanDetail from "./Knowledge/BalePartonggoan/BalePartonggoanDetail";
+import BalePartonggoanSection from "./Knowledge/BalePartonggoan/BalePartonggoanSection.jsx";
 import EducationDetail from "./Edu/EducationDetail";
 import UseScrollToTop from "./hooks/UseScrollToTop";
 
@@ -67,6 +69,14 @@ function App() {
         <Route path="/edu" element={<Education />} />
         <Route path="/education/:id" element={<EducationDetail />} />
         <Route path="/knowledge" element={<Knowledge />} />
+        <Route
+                  path="/bale-partonggoan/bale-pasogit-huta-halasan"
+                  element={<BalePartonggoanDetail isPasogit={true} />}
+                />
+                <Route
+                  path="/bale-partonggoan/bale-parsantian/:nama"
+                  element={<BalePartonggoanDetail isPasogit={false} />}
+                />
         <Route path="/knowledge/:id" element={<KnowledgeDetail />} />
         <Route path="/news" element={<News />} />
 

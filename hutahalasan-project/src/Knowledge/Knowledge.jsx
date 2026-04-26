@@ -6,6 +6,7 @@ import Footer from "../Footer/Footer.jsx";
 import { Helmet } from "react-helmet";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
 import { usePengetahuanList, fmtNum, timeAgo } from "../hooks/usePengetahuan.js";
+import BalePartonggoanSection from "./BalePartonggoan/BalePartonggoanSection.jsx";
 import "../styles/konten-shared.css";
 
 const Knowledge = () => {
@@ -188,6 +189,10 @@ const Knowledge = () => {
                 <button className="k-empty-btn" onClick={() => setSearchQuery("")}>Reset Pencarian</button>
               </div>
             )}
+
+            {/* ── Bale Partonggoan Section ── */}
+            <BalePartonggoanSection />
+
           </div>
 
           {/* Sidebar */}

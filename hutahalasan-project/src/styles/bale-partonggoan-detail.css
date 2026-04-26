@@ -1,0 +1,763 @@
+/* src/styles/bale-partonggoan-detail.css */
+
+/* ────────────────────────────────
+   Page Base
+──────────────────────────────── */
+.bpd-page {
+  min-height: 100vh;
+  background: #faf8f4;
+  font-family: "Georgia", "Times New Roman", serif;
+}
+
+/* ────────────────────────────────
+   Hero
+──────────────────────────────── */
+.bpd-hero {
+  position: relative;
+  height: 420px;
+  overflow: hidden;
+}
+
+.bpd-hero-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.bpd-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(20, 10, 0, 0.25) 0%,
+    rgba(20, 10, 0, 0.72) 100%
+  );
+}
+
+.bpd-hero-content {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 36px 48px;
+  gap: 10px;
+}
+
+.bpd-breadcrumb {
+  background: rgba(255, 255, 255, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  color: #fff;
+  font-size: 13px;
+  padding: 6px 14px;
+  border-radius: 20px;
+  cursor: pointer;
+  width: fit-content;
+  backdrop-filter: blur(4px);
+  transition: background 0.2s;
+}
+
+.bpd-breadcrumb:hover {
+  background: rgba(255, 255, 255, 0.25);
+}
+
+.bpd-jenis-badge {
+  width: fit-content;
+  padding: 5px 14px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.bpd-badge-pasogit {
+  background: #7c3e0e;
+  color: #fff5e8;
+}
+
+.bpd-badge-parsantian {
+  background: #1a4f7e;
+  color: #e8f4ff;
+}
+
+.bpd-hero-title {
+  font-size: 2.4rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+  line-height: 1.2;
+  text-shadow: 0 2px 12px rgba(0, 0, 0, 0.5);
+}
+
+.bpd-hero-sub {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.8);
+  margin: 0;
+  font-style: italic;
+}
+
+/* ────────────────────────────────
+   Tabs
+──────────────────────────────── */
+.bpd-tabs-wrap {
+  background: #fff;
+  border-bottom: 1px solid #e8e0d0;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.bpd-tabs {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: flex;
+  overflow-x: auto;
+  padding: 0 24px;
+}
+
+.bpd-tab {
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  padding: 16px 22px;
+  background: none;
+  border: none;
+  border-bottom: 3px solid transparent;
+  font-size: 14px;
+  font-weight: 600;
+  color: #8a7a60;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: color 0.2s, border-color 0.2s;
+  font-family: inherit;
+}
+
+.bpd-tab:hover {
+  color: #3d2b10;
+}
+
+.bpd-tab-active {
+  color: #7c3e0e;
+  border-bottom-color: #7c3e0e;
+}
+
+.bpd-tab-icon {
+  font-size: 16px;
+}
+
+/* ────────────────────────────────
+   Container
+──────────────────────────────── */
+.bpd-container {
+  max-width: 1000px;
+  margin: 0 auto;
+  padding: 36px 24px 60px;
+}
+
+.bpd-section {
+  animation: bpdFadeIn 0.3s ease;
+}
+
+@keyframes bpdFadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+.bpd-section-title {
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #2c1a08;
+  margin-bottom: 8px;
+  padding-bottom: 12px;
+  border-bottom: 2px solid #e8d9c0;
+}
+
+.bpd-section-desc {
+  color: #7a6d5a;
+  font-size: 14px;
+  margin-bottom: 24px;
+  font-style: italic;
+}
+
+.bpd-sub-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: #3d2b10;
+  margin: 28px 0 14px;
+}
+
+/* ────────────────────────────────
+   Profil Grid
+──────────────────────────────── */
+.bpd-profil-grid {
+  display: grid;
+  grid-template-columns: 320px 1fr;
+  gap: 36px;
+  align-items: start;
+  margin-top: 28px;
+}
+
+.bpd-profil-img-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 6px 24px rgba(0, 0, 0, 0.14);
+}
+
+.bpd-profil-img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  display: block;
+}
+
+.bpd-profil-img-caption {
+  background: #3d2b10;
+  color: #f5e8d0;
+  text-align: center;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  font-weight: 600;
+  font-style: italic;
+}
+
+.bpd-profil-nama {
+  font-size: 1.7rem;
+  font-weight: 700;
+  color: #2c1a08;
+  margin: 0 0 20px;
+  line-height: 1.25;
+}
+
+.bpd-info-rows {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.bpd-info-row {
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.bpd-info-label {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #a08b65;
+  min-width: 140px;
+  padding-top: 2px;
+}
+
+.bpd-info-value {
+  font-size: 14.5px;
+  color: #3d2b10;
+  flex: 1;
+  line-height: 1.45;
+}
+
+.bpd-jenis-tag {
+  padding: 3px 12px;
+  border-radius: 14px;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.bpd-tag-pasogit { background: #fde8d0; color: #7c3e0e; }
+.bpd-tag-parsantian { background: #d0e8fd; color: #1a4f7e; }
+
+.bpd-ulu {
+  font-weight: 700;
+  color: #7c3e0e;
+}
+
+.bpd-koordinat {
+  font-family: monospace;
+  font-size: 13px;
+  background: #f5f0e8;
+  padding: 4px 10px;
+  border-radius: 6px;
+}
+
+/* ────────────────────────────────
+   Sejarah
+──────────────────────────────── */
+.bpd-sejarah-wrap {
+  margin-top: 28px;
+}
+
+/* Timeline */
+.bpd-timeline {
+  display: flex;
+  gap: 0;
+  margin-bottom: 32px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+}
+
+.bpd-timeline-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1;
+  min-width: 180px;
+  position: relative;
+}
+
+.bpd-timeline-item:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 13px;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: #d4c4a8;
+}
+
+.bpd-timeline-dot {
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  border: 3px solid #fff;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  z-index: 1;
+  margin-bottom: 10px;
+}
+
+.bpd-dot-1 { background: #c07820; }
+.bpd-dot-2 { background: #7c3e0e; }
+.bpd-dot-3 { background: #2c5f2e; }
+
+.bpd-timeline-content {
+  text-align: center;
+  padding: 0 8px;
+}
+
+.bpd-timeline-label {
+  display: block;
+  font-size: 11.5px;
+  font-weight: 700;
+  color: #5a4a30;
+  letter-spacing: 0.03em;
+  margin-bottom: 4px;
+}
+
+.bpd-timeline-date {
+  display: block;
+  font-size: 12.5px;
+  color: #7c3e0e;
+  font-weight: 600;
+}
+
+/* Narasi */
+.bpd-narasi {
+  background: #fff;
+  border-left: 4px solid #c07820;
+  border-radius: 0 12px 12px 0;
+  padding: 24px 28px;
+  margin-bottom: 28px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bpd-narasi p {
+  font-size: 15px;
+  color: #3d2b10;
+  line-height: 1.8;
+  margin: 0 0 16px;
+}
+
+.bpd-narasi p:last-child {
+  margin-bottom: 0;
+}
+
+/* Ulu List */
+.bpd-ulu-list-wrap {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+}
+
+.bpd-ulu-list {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-top: 4px;
+}
+
+.bpd-ulu-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  background: #faf6ef;
+  border-radius: 10px;
+  border: 1px solid #ede5d4;
+}
+
+.bpd-ulu-no {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: #7c3e0e;
+  color: #fff;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.bpd-ulu-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.bpd-ulu-nama {
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #2c1a08;
+}
+
+.bpd-ulu-periode {
+  font-size: 12.5px;
+  color: #8a7a60;
+  background: #ede5d4;
+  padding: 3px 10px;
+  border-radius: 12px;
+}
+
+/* ────────────────────────────────
+   Kegiatan
+──────────────────────────────── */
+.bpd-kegiatan-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 18px;
+  margin-top: 8px;
+}
+
+.bpd-kegiatan-card {
+  background: #fff;
+  border-radius: 14px;
+  padding: 20px;
+  border: 1px solid #ede5d4;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  position: relative;
+  overflow: hidden;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.bpd-kegiatan-card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+}
+
+.bpd-kegiatan-card::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 4px;
+  height: 100%;
+  background: linear-gradient(to bottom, #c07820, #7c3e0e);
+}
+
+.bpd-kegiatan-no {
+  font-size: 2.4rem;
+  font-weight: 900;
+  color: #f0e8d8;
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  line-height: 1;
+  font-family: "Georgia", serif;
+}
+
+.bpd-kegiatan-body {
+  padding-left: 8px;
+}
+
+.bpd-kegiatan-nama {
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c1a08;
+  margin: 0 0 6px;
+  line-height: 1.3;
+}
+
+.bpd-kegiatan-waktu {
+  font-size: 12px;
+  color: #7c3e0e;
+  font-weight: 600;
+  margin: 0 0 8px;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.bpd-kegiatan-ket {
+  font-size: 13px;
+  color: #6b5e4a;
+  line-height: 1.5;
+  margin: 0;
+}
+
+/* ────────────────────────────────
+   Lokasi
+──────────────────────────────── */
+.bpd-lokasi-wrap {
+  display: grid;
+  grid-template-columns: 300px 1fr;
+  gap: 28px;
+  margin-top: 28px;
+  align-items: start;
+}
+
+.bpd-alamat-box {
+  background: #fff;
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  border: 1px solid #ede5d4;
+}
+
+.bpd-alamat-header {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 14px;
+}
+
+.bpd-alamat-icon {
+  font-size: 22px;
+}
+
+.bpd-alamat-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: #2c1a08;
+  margin: 0;
+}
+
+.bpd-alamat-text {
+  font-size: 14px;
+  color: #5a4a30;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.bpd-koordinat-row {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+
+.bpd-koordinat-item {
+  flex: 1;
+  background: #faf6ef;
+  border-radius: 10px;
+  padding: 12px;
+  border: 1px solid #ede5d4;
+}
+
+.bpd-koordinat-label {
+  display: block;
+  font-size: 10.5px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #a08b65;
+  margin-bottom: 4px;
+}
+
+.bpd-koordinat-val {
+  display: block;
+  font-family: monospace;
+  font-size: 13.5px;
+  font-weight: 700;
+  color: #3d2b10;
+}
+
+.bpd-gmaps-btn {
+  display: block;
+  text-align: center;
+  padding: 12px;
+  background: #7c3e0e;
+  color: #fff;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 700;
+  transition: background 0.2s;
+}
+
+.bpd-gmaps-btn:hover {
+  background: #5c2e08;
+}
+
+.bpd-map-wrap {
+  border-radius: 16px;
+  overflow: hidden;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+  border: 1px solid #ede5d4;
+}
+
+.bpd-map-label {
+  background: #3d2b10;
+  color: #f5e8d0;
+  padding: 10px 18px;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.bpd-map-iframe {
+  width: 100%;
+  height: 380px;
+  display: block;
+  border: none;
+}
+
+/* ────────────────────────────────
+   Not Found
+──────────────────────────────── */
+.bpd-notfound {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 80px 24px;
+  gap: 16px;
+  text-align: center;
+}
+
+.bpd-notfound-icon {
+  font-size: 4rem;
+}
+
+.bpd-notfound h2 {
+  font-size: 1.5rem;
+  color: #3d2b10;
+  margin: 0;
+}
+
+.bpd-btn-back {
+  padding: 10px 24px;
+  background: #7c3e0e;
+  color: #fff;
+  border: none;
+  border-radius: 24px;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.bpd-btn-back:hover {
+  background: #5c2e08;
+}
+
+/* ────────────────────────────────
+   Responsive
+──────────────────────────────── */
+@media (max-width: 768px) {
+  .bpd-hero {
+    height: 320px;
+  }
+
+  .bpd-hero-content {
+    padding: 24px 20px;
+  }
+
+  .bpd-hero-title {
+    font-size: 1.7rem;
+  }
+
+  .bpd-container {
+    padding: 24px 16px 48px;
+  }
+
+  .bpd-profil-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .bpd-lokasi-wrap {
+    grid-template-columns: 1fr;
+  }
+
+  .bpd-timeline {
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .bpd-timeline-item::after {
+    display: none;
+  }
+
+  .bpd-kegiatan-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .bpd-hero {
+    height: 260px;
+  }
+
+  .bpd-hero-title {
+    font-size: 1.35rem;
+  }
+
+  .bpd-tabs {
+    padding: 0 8px;
+  }
+
+  .bpd-tab {
+    padding: 14px 14px;
+    font-size: 13px;
+  }
+}
+
+/* ── Jemaat inline chips di tab Profil ── */
+.bpd-jemaat-inline {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.bpd-jemaat-chip {
+  display: flex;
+  align-items: baseline;
+  gap: 5px;
+  background: #faf6ef;
+  border: 1px solid #ede5d4;
+  border-radius: 10px;
+  padding: 8px 14px;
+}
+
+.bpd-jemaat-chip-val {
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: #7c3e0e;
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+
+.bpd-jemaat-chip-lbl {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  color: #a08b65;
+}
