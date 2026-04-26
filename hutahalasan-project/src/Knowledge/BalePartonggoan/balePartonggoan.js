@@ -7,7 +7,8 @@ export const balePartonggoanData = [
     nama: "Bale Pasogit Huta Halasan",
     slug: "bale-pasogit-huta-halasan",
     route: "/bale-partonggoan/bale-pasogit-huta-halasan",
-    alamat: "Jl. Sisingamangaraja No. 12, Huta Halasan, Balige, Toba Samosir, Sumatera Utara 22313",
+    alamat:
+      "Jl. Sisingamangaraja No. 12, Huta Halasan, Balige, Toba Samosir, Sumatera Utara 22313",
     koordinat: {
       lat: 2.3315,
       lng: 99.0648,
@@ -56,7 +57,8 @@ export const balePartonggoanData = [
         id: 5,
         nama: "Ulaon Martutuaek",
         tanggal: "Sesuai kalender liturgi",
-        keterangan: "Upacara adat dan keagamaan yang dilaksanakan secara berkala.",
+        keterangan:
+          "Upacara adat dan keagamaan yang dilaksanakan secara berkala.",
       },
       {
         id: 6,
@@ -131,7 +133,8 @@ export const balePartonggoanData = [
     nama: "Bale Parsantian Jakarta Selatan",
     slug: "bale-parsantian-jakarta-selatan",
     route: "/bale-partonggoan/bale-parsantian/jakarta-selatan",
-    alamat: "Jl. Fatmawati Raya No. 78, Cilandak, Jakarta Selatan, DKI Jakarta 12430",
+    alamat:
+      "Jl. Fatmawati Raya No. 78, Cilandak, Jakarta Selatan, DKI Jakarta 12430",
     koordinat: {
       lat: -6.2927,
       lng: 106.7947,
@@ -163,7 +166,8 @@ export const balePartonggoanData = [
         id: 2,
         nama: "Parguruan Naposo",
         tanggal: "Setiap Sabtu, 17.00 WIB",
-        keterangan: "Forum pemuda lintas generasi dengan kegiatan rohani dan sosial.",
+        keterangan:
+          "Forum pemuda lintas generasi dengan kegiatan rohani dan sosial.",
       },
       {
         id: 3,

@@ -8,8 +8,10 @@ import "../../styles/bale-partonggoan.css";
 const BalePartonggoanSection = () => {
   const navigate = useNavigate();
 
-  const pasogit    = balePartonggoanData.filter((b) => b.jenis === "Bale Pasogit");
-  const parsantian = balePartonggoanData.filter((b) => b.jenis === "Bale Parsantian");
+  const pasogit = balePartonggoanData.filter((b) => b.jenis === "Bale Pasogit");
+  const parsantian = balePartonggoanData.filter(
+    (b) => b.jenis === "Bale Parsantian",
+  );
 
   const BaleCard = ({ item }) => (
     <div
@@ -21,7 +23,9 @@ const BalePartonggoanSection = () => {
     >
       <div className="bp-card-img-wrap">
         <img src={item.gambar} alt={item.nama} className="bp-card-img" />
-        <span className={`bp-card-badge ${item.jenis === "Bale Pasogit" ? "bp-badge-pasogit" : "bp-badge-parsantian"}`}>
+        <span
+          className={`bp-card-badge ${item.jenis === "Bale Pasogit" ? "bp-badge-pasogit" : "bp-badge-parsantian"}`}
+        >
           {item.jenis}
         </span>
       </div>
@@ -56,7 +60,9 @@ const BalePartonggoanSection = () => {
 
   return (
     <div className="bp-section">
-      <div className="k-section-label" style={{ marginBottom: 16 }}>⛪ Bale Partonggoan – Tempat Ibadah</div>
+      <div className="k-section-label" style={{ marginBottom: 16 }}>
+        ⛪ Bale Partonggoan – Tempat Ibadah
+      </div>
 
       {pasogit.length > 0 && (
         <div style={{ marginBottom: 32 }}>

@@ -13,9 +13,9 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  padding: 0 2.5rem;      /* ← tambahkan ini */
-  max-width: 1200px;      /* ← tambahkan ini */
-  margin: 0 auto;         /* ← tambahkan ini */
+  padding: 0 2.5rem; /* ← tambahkan ini */
+  max-width: 1200px; /* ← tambahkan ini */
+  margin: 0 auto; /* ← tambahkan ini */
 }
 .nav-brand {
   display: flex;

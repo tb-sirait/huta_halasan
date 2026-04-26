@@ -1,7 +1,6 @@
 // src/components/ui/Toast.jsx
 import "../../../styles/ui/toast.css";
 
-
 const ICONS = { success: "✓", error: "✕", warning: "⚠", info: "ℹ" };
 
 export const ToastContainer = ({ toasts, removeToast }) => (

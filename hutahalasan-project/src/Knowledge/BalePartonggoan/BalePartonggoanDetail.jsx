@@ -20,12 +20,16 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
 
   if (!bale) {
     return (
-      <div style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}>
+      <div
+        style={{ minHeight: "100vh", display: "flex", flexDirection: "column" }}
+      >
         <Header />
         <div className="bpd-notfound">
           <div className="bpd-notfound-icon">🔍</div>
           <h2>Tempat ibadah tidak ditemukan</h2>
-          <button className="bpd-btn-back" onClick={() => navigate(-1)}>← Kembali</button>
+          <button className="bpd-btn-back" onClick={() => navigate(-1)}>
+            ← Kembali
+          </button>
         </div>
         <Footer />
       </div>
@@ -43,7 +47,10 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
     <div className="bpd-page">
       <Helmet>
         <title>{bale.nama} | Parmalim Bale Pasogit Huta Halasan</title>
-        <meta name="description" content={`Detail informasi ${bale.nama} – ${bale.alamat}`} />
+        <meta
+          name="description"
+          content={`Detail informasi ${bale.nama} – ${bale.alamat}`}
+        />
       </Helmet>
 
       <Header />
@@ -56,11 +63,15 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
           <button className="bpd-breadcrumb" onClick={() => navigate(-1)}>
             ← Kembali ke Pengetahuan
           </button>
-          <span className={`bpd-jenis-badge ${bale.jenis === "Bale Pasogit" ? "bpd-badge-pasogit" : "bpd-badge-parsantian"}`}>
+          <span
+            className={`bpd-jenis-badge ${bale.jenis === "Bale Pasogit" ? "bpd-badge-pasogit" : "bpd-badge-parsantian"}`}
+          >
             {bale.jenis}
           </span>
           <h1 className="bpd-hero-title">{bale.nama}</h1>
-          <p className="bpd-hero-sub">{bale.jemaat.kk} KK · {bale.jemaat.orang} Jemaat</p>
+          <p className="bpd-hero-sub">
+            {bale.jemaat.kk} KK · {bale.jemaat.orang} Jemaat
+          </p>
         </div>
       </div>
 
@@ -82,14 +93,17 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
 
       {/* ── Content ── */}
       <div className="bpd-container">
-
         {/* ── PROFIL ── */}
         {activeTab === "profil" && (
           <section className="bpd-section bpd-profil">
             <div className="bpd-profil-grid">
               {/* Foto */}
               <div className="bpd-profil-img-wrap">
-                <img src={bale.gambar} alt={bale.nama} className="bpd-profil-img" />
+                <img
+                  src={bale.gambar}
+                  alt={bale.nama}
+                  className="bpd-profil-img"
+                />
                 <div className="bpd-profil-img-caption">{bale.nama}</div>
               </div>
 
@@ -99,7 +113,9 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
                 <div className="bpd-info-rows">
                   <div className="bpd-info-row">
                     <span className="bpd-info-label">Jenis</span>
-                    <span className={`bpd-jenis-tag ${bale.jenis === "Bale Pasogit" ? "bpd-tag-pasogit" : "bpd-tag-parsantian"}`}>
+                    <span
+                      className={`bpd-jenis-tag ${bale.jenis === "Bale Pasogit" ? "bpd-tag-pasogit" : "bpd-tag-parsantian"}`}
+                    >
                       {bale.jenis}
                     </span>
                   </div>
@@ -107,11 +123,15 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
                     <span className="bpd-info-label">Jumlah Jemaat</span>
                     <div className="bpd-jemaat-inline">
                       <span className="bpd-jemaat-chip">
-                        <span className="bpd-jemaat-chip-val">{bale.jemaat.kk}</span>
+                        <span className="bpd-jemaat-chip-val">
+                          {bale.jemaat.kk}
+                        </span>
                         <span className="bpd-jemaat-chip-lbl">KK</span>
                       </span>
                       <span className="bpd-jemaat-chip">
-                        <span className="bpd-jemaat-chip-val">{bale.jemaat.orang}</span>
+                        <span className="bpd-jemaat-chip-val">
+                          {bale.jemaat.orang}
+                        </span>
                         <span className="bpd-jemaat-chip-lbl">Orang</span>
                       </span>
                     </div>
@@ -122,7 +142,9 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
                   </div>
                   <div className="bpd-info-row">
                     <span className="bpd-info-label">Ulu Punguan</span>
-                    <span className="bpd-info-value bpd-ulu">{bale.uluPunguan}</span>
+                    <span className="bpd-info-value bpd-ulu">
+                      {bale.uluPunguan}
+                    </span>
                   </div>
                   <div className="bpd-info-row">
                     <span className="bpd-info-label">Koordinat</span>
@@ -132,7 +154,9 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
                   </div>
                   <div className="bpd-info-row">
                     <span className="bpd-info-label">Tanggal Peresmian</span>
-                    <span className="bpd-info-value">{bale.sejarah.tanggalPeresmian}</span>
+                    <span className="bpd-info-value">
+                      {bale.sejarah.tanggalPeresmian}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -151,22 +175,34 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
                 <div className="bpd-timeline-item">
                   <div className="bpd-timeline-dot bpd-dot-1" />
                   <div className="bpd-timeline-content">
-                    <span className="bpd-timeline-label">Peletakan Batu Pertama</span>
-                    <span className="bpd-timeline-date">{bale.sejarah.tanggalBatuPertama}</span>
+                    <span className="bpd-timeline-label">
+                      Peletakan Batu Pertama
+                    </span>
+                    <span className="bpd-timeline-date">
+                      {bale.sejarah.tanggalBatuPertama}
+                    </span>
                   </div>
                 </div>
                 <div className="bpd-timeline-item">
                   <div className="bpd-timeline-dot bpd-dot-2" />
                   <div className="bpd-timeline-content">
-                    <span className="bpd-timeline-label">Peresmian & Turpuk</span>
-                    <span className="bpd-timeline-date">{bale.sejarah.tanggalPeresmian}</span>
+                    <span className="bpd-timeline-label">
+                      Peresmian & Turpuk
+                    </span>
+                    <span className="bpd-timeline-date">
+                      {bale.sejarah.tanggalPeresmian}
+                    </span>
                   </div>
                 </div>
                 <div className="bpd-timeline-item">
                   <div className="bpd-timeline-dot bpd-dot-3" />
                   <div className="bpd-timeline-content">
-                    <span className="bpd-timeline-label">Pardebataan Punguan & Turpuk</span>
-                    <span className="bpd-timeline-date">{bale.sejarah.tanggalPardebataan}</span>
+                    <span className="bpd-timeline-label">
+                      Pardebataan Punguan & Turpuk
+                    </span>
+                    <span className="bpd-timeline-date">
+                      {bale.sejarah.tanggalPardebataan}
+                    </span>
                   </div>
                 </div>
               </div>
@@ -174,35 +210,48 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
               {/* Narasi */}
               <div className="bpd-narasi">
                 <p>
-                  <strong>{bale.nama}</strong> merupakan salah satu tempat peribadatan dalam lingkungan
-                  Parmalim yang berkedudukan di {bale.alamat}. Proses pembangunan {bale.jenis === "Bale Pasogit" ? "Bale Pasogit" : "Bale Parsantian"} ini
-                  dimulai dengan peletakan batu pertama pada tanggal{" "}
-                  <strong>{bale.sejarah.tanggalBatuPertama}</strong>, yang menjadi tonggak awal bagi
-                  terwujudnya tempat ibadah yang dinantikan oleh seluruh umat Parmalim di wilayah ini.
+                  <strong>{bale.nama}</strong> merupakan salah satu tempat
+                  peribadatan dalam lingkungan Parmalim yang berkedudukan di{" "}
+                  {bale.alamat}. Proses pembangunan{" "}
+                  {bale.jenis === "Bale Pasogit"
+                    ? "Bale Pasogit"
+                    : "Bale Parsantian"}{" "}
+                  ini dimulai dengan peletakan batu pertama pada tanggal{" "}
+                  <strong>{bale.sejarah.tanggalBatuPertama}</strong>, yang
+                  menjadi tonggak awal bagi terwujudnya tempat ibadah yang
+                  dinantikan oleh seluruh umat Parmalim di wilayah ini.
                 </p>
                 <p>
-                  Setelah melalui proses pembangunan yang penuh semangat kebersamaan, {bale.nama} secara
-                  resmi diresmikan dan dipangomgomhon tu Bale Pasogit pada tanggal{" "}
-                  <strong>{bale.sejarah.tanggalPeresmian}</strong>. Peresmian ini menjadi momen bersejarah
-                  yang dihadiri oleh seluruh warga punguan beserta tokoh-tokoh Parmalim dari berbagai daerah.
+                  Setelah melalui proses pembangunan yang penuh semangat
+                  kebersamaan, {bale.nama} secara resmi diresmikan dan
+                  dipangomgomhon tu Bale Pasogit pada tanggal{" "}
+                  <strong>{bale.sejarah.tanggalPeresmian}</strong>. Peresmian
+                  ini menjadi momen bersejarah yang dihadiri oleh seluruh warga
+                  punguan beserta tokoh-tokoh Parmalim dari berbagai daerah.
                 </p>
                 <p>
-                  Selanjutnya, ditetapkan pula Pardebataan Punguan dan Turpuk pada tanggal{" "}
-                  <strong>{bale.sejarah.tanggalPardebataan}</strong>, yang menandai kematangan organisasi
-                  punguan secara administratif dan spiritual. Sejak saat itu, {bale.nama} telah menjalankan
-                  fungsinya sebagai pusat kegiatan ibadah, pembinaan rohani, serta kegiatan sosial-budaya
-                  bagi seluruh umat Parmalim di lingkungan {bale.dataRuas}.
+                  Selanjutnya, ditetapkan pula Pardebataan Punguan dan Turpuk
+                  pada tanggal{" "}
+                  <strong>{bale.sejarah.tanggalPardebataan}</strong>, yang
+                  menandai kematangan organisasi punguan secara administratif
+                  dan spiritual. Sejak saat itu, {bale.nama} telah menjalankan
+                  fungsinya sebagai pusat kegiatan ibadah, pembinaan rohani,
+                  serta kegiatan sosial-budaya bagi seluruh umat Parmalim di
+                  lingkungan {bale.dataRuas}.
                 </p>
                 <p>
                   Hingga saat ini, {bale.nama} dipimpin oleh{" "}
-                  <strong>{bale.uluPunguan}</strong> yang mengemban amanah sebagai Ulu Punguan dengan penuh
-                  dedikasi dan tanggung jawab kepada seluruh umat yang bernaung di bawah punguan ini.
+                  <strong>{bale.uluPunguan}</strong> yang mengemban amanah
+                  sebagai Ulu Punguan dengan penuh dedikasi dan tanggung jawab
+                  kepada seluruh umat yang bernaung di bawah punguan ini.
                 </p>
               </div>
 
               {/* Daftar Ulu Punguan */}
               <div className="bpd-ulu-list-wrap">
-                <h3 className="bpd-sub-title">Daftar Ulu Punguan yang Pernah Menjabat</h3>
+                <h3 className="bpd-sub-title">
+                  Daftar Ulu Punguan yang Pernah Menjabat
+                </h3>
                 <div className="bpd-ulu-list">
                   {bale.sejarah.daftarUluPunguan.map((ulu, i) => (
                     <div key={i} className="bpd-ulu-item">
@@ -224,12 +273,15 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
           <section className="bpd-section">
             <h2 className="bpd-section-title">Daftar Kegiatan Punguan</h2>
             <p className="bpd-section-desc">
-              Berikut adalah kegiatan-kegiatan yang berlangsung secara rutin maupun berkala di {bale.nama}.
+              Berikut adalah kegiatan-kegiatan yang berlangsung secara rutin
+              maupun berkala di {bale.nama}.
             </p>
             <div className="bpd-kegiatan-grid">
               {bale.kegiatan.map((k, i) => (
                 <div key={k.id} className="bpd-kegiatan-card">
-                  <div className="bpd-kegiatan-no">{String(i + 1).padStart(2, "0")}</div>
+                  <div className="bpd-kegiatan-no">
+                    {String(i + 1).padStart(2, "0")}
+                  </div>
                   <div className="bpd-kegiatan-body">
                     <h3 className="bpd-kegiatan-nama">{k.nama}</h3>
                     <p className="bpd-kegiatan-waktu">
@@ -260,11 +312,15 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
                 <div className="bpd-koordinat-row">
                   <div className="bpd-koordinat-item">
                     <span className="bpd-koordinat-label">Latitude</span>
-                    <span className="bpd-koordinat-val">{bale.koordinat.lat}</span>
+                    <span className="bpd-koordinat-val">
+                      {bale.koordinat.lat}
+                    </span>
                   </div>
                   <div className="bpd-koordinat-item">
                     <span className="bpd-koordinat-label">Longitude</span>
-                    <span className="bpd-koordinat-val">{bale.koordinat.lng}</span>
+                    <span className="bpd-koordinat-val">
+                      {bale.koordinat.lng}
+                    </span>
                   </div>
                 </div>
 
@@ -293,7 +349,6 @@ const BalePartonggoanDetail = ({ isPasogit }) => {
             </div>
           </section>
         )}
-
       </div>
 
       <Footer />

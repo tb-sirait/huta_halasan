@@ -130,7 +130,9 @@
   color: #8a7a60;
   cursor: pointer;
   white-space: nowrap;
-  transition: color 0.2s, border-color 0.2s;
+  transition:
+    color 0.2s,
+    border-color 0.2s;
   font-family: inherit;
 }
 
@@ -161,8 +163,14 @@
 }
 
 @keyframes bpdFadeIn {
-  from { opacity: 0; transform: translateY(10px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .bpd-section-title {
@@ -266,8 +274,14 @@
   font-weight: 700;
 }
 
-.bpd-tag-pasogit { background: #fde8d0; color: #7c3e0e; }
-.bpd-tag-parsantian { background: #d0e8fd; color: #1a4f7e; }
+.bpd-tag-pasogit {
+  background: #fde8d0;
+  color: #7c3e0e;
+}
+.bpd-tag-parsantian {
+  background: #d0e8fd;
+  color: #1a4f7e;
+}
 
 .bpd-ulu {
   font-weight: 700;
@@ -327,9 +341,15 @@
   margin-bottom: 10px;
 }
 
-.bpd-dot-1 { background: #c07820; }
-.bpd-dot-2 { background: #7c3e0e; }
-.bpd-dot-3 { background: #2c5f2e; }
+.bpd-dot-1 {
+  background: #c07820;
+}
+.bpd-dot-2 {
+  background: #7c3e0e;
+}
+.bpd-dot-3 {
+  background: #2c5f2e;
+}
 
 .bpd-timeline-content {
   text-align: center;
@@ -453,7 +473,9 @@
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
   position: relative;
   overflow: hidden;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
 }
 
 .bpd-kegiatan-card:hover {

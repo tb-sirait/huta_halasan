@@ -70,13 +70,13 @@ function App() {
         <Route path="/education/:id" element={<EducationDetail />} />
         <Route path="/knowledge" element={<Knowledge />} />
         <Route
-                  path="/bale-partonggoan/bale-pasogit-huta-halasan"
-                  element={<BalePartonggoanDetail isPasogit={true} />}
-                />
-                <Route
-                  path="/bale-partonggoan/bale-parsantian/:nama"
-                  element={<BalePartonggoanDetail isPasogit={false} />}
-                />
+          path="/bale-partonggoan/bale-pasogit-huta-halasan"
+          element={<BalePartonggoanDetail isPasogit={true} />}
+        />
+        <Route
+          path="/bale-partonggoan/bale-parsantian/:nama"
+          element={<BalePartonggoanDetail isPasogit={false} />}
+        />
         <Route path="/knowledge/:id" element={<KnowledgeDetail />} />
         <Route path="/news" element={<News />} />
 
@@ -106,7 +106,6 @@ function App() {
           <Route path="validasi" element={<Validasi />} />
           <Route path="users" element={<Users />} />
         </Route>
-
       </Routes>
     </Router>
   );

@@ -1,18 +1,17 @@
 // ApiService/services/konten.service.js
 // Digunakan oleh halaman News (jenis_konten=Berita)
 // dan Education (jenis_konten=Edukasi)
-import { publicApi, getSessionId } from '../api.config.js';
+import { publicApi, getSessionId } from "../api.config.js";
 
 export const KontenService = {
-
   // ── List konten (hanya yang sudah divalidasi) ─────────────────────────────
   // params: { page, limit, jenis_konten, search }
   getAll: (params = {}) => {
-    const q = new URLSearchParams({ status_validasi: 'sudah' });
-    if (params.page)         q.set('page', params.page);
-    if (params.limit)        q.set('limit', params.limit);
-    if (params.jenis_konten) q.set('jenis_konten', params.jenis_konten);
-    if (params.search)       q.set('search', params.search);
+    const q = new URLSearchParams({ status_validasi: "sudah" });
+    if (params.page) q.set("page", params.page);
+    if (params.limit) q.set("limit", params.limit);
+    if (params.jenis_konten) q.set("jenis_konten", params.jenis_konten);
+    if (params.search) q.set("search", params.search);
     return publicApi.get(`/konten?${q}`);
     // Response: { success: true, data: [...], total, page, limit }
   },
@@ -25,11 +24,17 @@ export const KontenService = {
 
   // ── Catat view ────────────────────────────────────────────────────────────
   recordView: (id_konten) =>
-    publicApi.post('/interaksi/view', { id_konten, session_id: getSessionId() }),
+    publicApi.post("/interaksi/view", {
+      id_konten,
+      session_id: getSessionId(),
+    }),
 
   // ── Toggle like ───────────────────────────────────────────────────────────
   toggleLike: (id_konten) =>
-    publicApi.post('/interaksi/like', { id_konten, session_id: getSessionId() }),
+    publicApi.post("/interaksi/like", {
+      id_konten,
+      session_id: getSessionId(),
+    }),
   // Response: { success: true, liked: true/false, total: 42 }
 
   // ── Jumlah like ───────────────────────────────────────────────────────────
@@ -38,12 +43,14 @@ export const KontenService = {
 
   // ── Ambil komentar aktif ──────────────────────────────────────────────────
   getKomentar: (id_konten, page = 1, limit = 20) =>
-    publicApi.get(`/interaksi/komentar?id_konten=${id_konten}&page=${page}&limit=${limit}`),
+    publicApi.get(
+      `/interaksi/komentar?id_konten=${id_konten}&page=${page}&limit=${limit}`,
+    ),
   // Response: { success: true, data: [{ id_interaksi, nama_user, isi_komentar, waktu_interaksi }] }
 
   // ── Kirim komentar (anonim boleh) ─────────────────────────────────────────
   addKomentar: (id_konten, isi_komentar) =>
-    publicApi.post('/interaksi/komentar', {
+    publicApi.post("/interaksi/komentar", {
       id_konten,
       isi_komentar,
       session_id: getSessionId(),

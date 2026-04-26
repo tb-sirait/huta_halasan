@@ -1,35 +1,38 @@
 // src/hooks/usePengetahuan.js
-import { useState, useEffect, useCallback, useRef } from 'react';
-import { PengetahuanService } from '../ApiService/services/pengetahuan.service.js';
-import { fmtDate, timeAgo, fmtNum } from './useKonten.js';
+import { useState, useEffect, useCallback, useRef } from "react";
+import { PengetahuanService } from "../ApiService/services/pengetahuan.service.js";
+import { fmtDate, timeAgo, fmtNum } from "./useKonten.js";
 
 // ── Hook: list file pengetahuan ───────────────────────────────────────────────
 export const usePengetahuanList = ({ limit = 10 } = {}) => {
-  const [data, setData]       = useState([]);
-  const [total, setTotal]     = useState(0);
-  const [page, setPage]       = useState(1);
-  const [search, setSearch]   = useState('');
+  const [data, setData] = useState([]);
+  const [total, setTotal] = useState(0);
+  const [page, setPage] = useState(1);
+  const [search, setSearch] = useState("");
   const [loading, setLoading] = useState(false);
-  const [error, setError]     = useState(null);
-  const timer                 = useRef(null);
+  const [error, setError] = useState(null);
+  const timer = useRef(null);
 
-  const fetchData = useCallback(async (pg = 1, q = search) => {
-    setLoading(true);
-    setError(null);
-    try {
-      const params = { page: pg, limit };
-      if (q) params.search = q;
-      const res = await PengetahuanService.getAll(params);
-      setData(res.data || []);
-      setTotal(res.total || 0);
-      setPage(pg);
-    } catch (err) {
-      setError(err.message);
-      setData([]);
-    } finally {
-      setLoading(false);
-    }
-  }, [limit, search]);
+  const fetchData = useCallback(
+    async (pg = 1, q = search) => {
+      setLoading(true);
+      setError(null);
+      try {
+        const params = { page: pg, limit };
+        if (q) params.search = q;
+        const res = await PengetahuanService.getAll(params);
+        setData(res.data || []);
+        setTotal(res.total || 0);
+        setPage(pg);
+      } catch (err) {
+        setError(err.message);
+        setData([]);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [limit, search],
+  );
 
   useEffect(() => {
     clearTimeout(timer.current);
@@ -37,26 +40,33 @@ export const usePengetahuanList = ({ limit = 10 } = {}) => {
     return () => clearTimeout(timer.current);
   }, [search]);
 
-  useEffect(() => { fetchData(1); }, []);
+  useEffect(() => {
+    fetchData(1);
+  }, []);
 
   return {
-    data, total, page, loading, error, search,
+    data,
+    total,
+    page,
+    loading,
+    error,
+    search,
     setSearch,
     goToPage: (pg) => fetchData(pg),
-    refresh:  () => fetchData(page),
+    refresh: () => fetchData(page),
     totalPages: Math.ceil(total / limit),
   };
 };
 
 // ── Hook: detail satu file pengetahuan ───────────────────────────────────────
 export const usePengetahuanDetail = (id_file) => {
-  const [item, setItem]         = useState(null);
+  const [item, setItem] = useState(null);
   const [komentar, setKomentar] = useState([]);
   const [likeCount, setLikeCount] = useState(0);
-  const [liked, setLiked]       = useState(false);
-  const [loading, setLoading]   = useState(false);
+  const [liked, setLiked] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [loadKomen, setLoadKomen] = useState(false);
-  const [error, setError]       = useState(null);
+  const [error, setError] = useState(null);
   const [submitting, setSubmitting] = useState(false);
 
   useEffect(() => {
@@ -90,7 +100,9 @@ export const usePengetahuanDetail = (id_file) => {
       const res = await PengetahuanService.toggleLike(id_file);
       setLiked(res.liked);
       setLikeCount(res.total);
-    } catch { /* silent */ }
+    } catch {
+      /* silent */
+    }
   };
 
   const handleKomentar = async (isi_komentar) => {
@@ -101,23 +113,37 @@ export const usePengetahuanDetail = (id_file) => {
       const komen = await PengetahuanService.getKomentar(id_file);
       setKomentar(komen.data || []);
       return true;
-    } catch { return false; }
-    finally { setSubmitting(false); }
+    } catch {
+      return false;
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   // Parse tagline dari JSON string → array
   const taglineArr = (() => {
     if (!item?.tagline) return [];
     try {
-      return typeof item.tagline === 'string'
+      return typeof item.tagline === "string"
         ? JSON.parse(item.tagline)
         : item.tagline;
-    } catch { return []; }
+    } catch {
+      return [];
+    }
   })();
 
   return {
-    item, komentar, likeCount, liked, loading, loadKomen, error, submitting,
-    taglineArr, handleLike, handleKomentar,
+    item,
+    komentar,
+    likeCount,
+    liked,
+    loading,
+    loadKomen,
+    error,
+    submitting,
+    taglineArr,
+    handleLike,
+    handleKomentar,
   };
 };
 

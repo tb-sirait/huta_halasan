@@ -28,7 +28,8 @@ function Footer() {
                   title="Lokasi Huta Halasan"
                 />
                 <div className="map-address">
-                  📍 Huta Halasan, H2G5+82, Sionggang Tengah,<br />
+                  📍 Huta Halasan, H2G5+82, Sionggang Tengah,
+                  <br />
                   Kec. Lumban Julu, Toba, Sumatera Utara, Indonesia 22386
                 </div>
               </div>
@@ -37,11 +38,21 @@ function Footer() {
             <div className="footer-right">
               <div className="footer-links">
                 <ul>
-                  <li><a href="#">Check the Latest News</a></li>
-                  <li><a href="#">Learning the stories/news</a></li>
-                  <li><a href="#">Improve the Knowledges</a></li>
-                  <li><a href="#">Our Legalized Authorities</a></li>
-                  <li><a href="#">Community Structure</a></li>
+                  <li>
+                    <a href="#">Check the Latest News</a>
+                  </li>
+                  <li>
+                    <a href="#">Learning the stories/news</a>
+                  </li>
+                  <li>
+                    <a href="#">Improve the Knowledges</a>
+                  </li>
+                  <li>
+                    <a href="#">Our Legalized Authorities</a>
+                  </li>
+                  <li>
+                    <a href="#">Community Structure</a>
+                  </li>
                 </ul>
               </div>
 
@@ -54,8 +65,8 @@ function Footer() {
                 <p>
                   Ugamo Malim adalah kepercayaan tradisional masyarakat Batak
                   yang berakar pada ajaran leluhur. Bale Pasogit Huta Halasan
-                  hadir sebagai pusat kegiatan spiritual dan kebudayaan
-                  Parmalim di Sumatera Utara.
+                  hadir sebagai pusat kegiatan spiritual dan kebudayaan Parmalim
+                  di Sumatera Utara.
                 </p>
               </div>
             </div>
@@ -63,7 +74,8 @@ function Footer() {
 
           <div className="footer-bottom">
             <p>
-              {new Date().getFullYear()} © Parmalim Bale Pasogit Huta Halasan | All Rights Reserved
+              {new Date().getFullYear()} © Parmalim Bale Pasogit Huta Halasan |
+              All Rights Reserved
             </p>
           </div>
         </div>

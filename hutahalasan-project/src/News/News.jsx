@@ -5,17 +5,26 @@ import Header from "../Navbar/Header";
 import Footer from "../Footer/Footer";
 import { Helmet } from "react-helmet";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
-import { useKontenList, fmtNum, timeAgo, parseGambar } from "../hooks/useKonten.js";
+import {
+  useKontenList,
+  fmtNum,
+  timeAgo,
+  parseGambar,
+} from "../hooks/useKonten.js";
 import "../styles/konten-shared.css";
 
 const NewsPage = () => {
   const navigate = useNavigate();
   const [selectedFilter, setSelectedFilter] = useState("Latest");
-  const [selectedSort,   setSelectedSort]   = useState("Latest");
+  const [selectedSort, setSelectedSort] = useState("Latest");
 
   const {
-    data, total, loading, error,
-    search: searchQuery, setSearch: setSearchQuery,
+    data,
+    total,
+    loading,
+    error,
+    search: searchQuery,
+    setSearch: setSearchQuery,
   } = useKontenList({ jenis_konten: "Berita", limit: 50 });
 
   const getSorted = () => {
@@ -29,9 +38,9 @@ const NewsPage = () => {
     return s;
   };
 
-  const sorted   = getSorted();
+  const sorted = getSorted();
   const featured = sorted[0] || null;
-  const regular  = sorted.slice(1);
+  const regular = sorted.slice(1);
   const trending = [...data]
     .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
     .slice(0, 5);
@@ -42,10 +51,19 @@ const NewsPage = () => {
   };
 
   return (
-    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
+    <div
+      style={{
+        background: "var(--k-bg)",
+        minHeight: "100vh",
+        fontFamily: "var(--k-font)",
+      }}
+    >
       <Helmet>
         <title>Berita | Parmalim Bale Pasogit Huta Halasan</title>
-        <meta name="description" content="Berita terbaru dari komunitas Parmalim Bale Pasogit Huta Halasan." />
+        <meta
+          name="description"
+          content="Berita terbaru dari komunitas Parmalim Bale Pasogit Huta Halasan."
+        />
       </Helmet>
       <Header />
 
@@ -74,11 +92,19 @@ const NewsPage = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <select className="k-select" value={selectedFilter} onChange={(e) => setSelectedFilter(e.target.value)}>
+          <select
+            className="k-select"
+            value={selectedFilter}
+            onChange={(e) => setSelectedFilter(e.target.value)}
+          >
             <option value="Latest">Terbaru</option>
             <option value="Popular">Terpopuler</option>
           </select>
-          <select className="k-select" value={selectedSort} onChange={(e) => setSelectedSort(e.target.value)}>
+          <select
+            className="k-select"
+            value={selectedSort}
+            onChange={(e) => setSelectedSort(e.target.value)}
+          >
             <option value="Latest">⬆ Latest</option>
             <option value="Oldest">⬇ Oldest</option>
             <option value="Most Viewed">👁 Most Viewed</option>
@@ -89,32 +115,40 @@ const NewsPage = () => {
       {/* ── Konten ── */}
       <div className="k-container">
         <div className="k-layout">
-
           {/* Main */}
           <div>
             {error && <div className="k-error">⚠️ {error}</div>}
 
             {/* Featured */}
             {loading ? (
-              <div className="k-skeleton" style={{ height: 280, borderRadius: 20, marginBottom: 24 }} />
+              <div
+                className="k-skeleton"
+                style={{ height: 280, borderRadius: 20, marginBottom: 24 }}
+              />
             ) : featured ? (
               <>
                 <div className="k-section-label">✦ Featured</div>
                 <div
                   className="k-featured"
                   onClick={() => navigate(`/news/${featured.id_konten}`)}
-                  role="button" tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && navigate(`/news/${featured.id_konten}`)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" && navigate(`/news/${featured.id_konten}`)
+                  }
                 >
                   <div className="k-featured-img">
-                    {getImg(featured)
-                      ? <img src={getImg(featured)} alt={featured.judul} />
-                      : <div className="k-featured-img-placeholder">📰</div>
-                    }
+                    {getImg(featured) ? (
+                      <img src={getImg(featured)} alt={featured.judul} />
+                    ) : (
+                      <div className="k-featured-img-placeholder">📰</div>
+                    )}
                     <span className="k-featured-badge">FEATURED</span>
                   </div>
                   <div className="k-featured-body">
-                    <span className="k-featured-cat">{featured.jenis_konten}</span>
+                    <span className="k-featured-cat">
+                      {featured.jenis_konten}
+                    </span>
                     <h2 className="k-featured-title">{featured.judul}</h2>
                     {featured.tagline && (
                       <p className="k-featured-sub">{featured.tagline}</p>
@@ -135,14 +169,35 @@ const NewsPage = () => {
             {/* Grid artikel */}
             {regular.length > 0 && (
               <>
-                <div className="k-section-label" style={{ marginTop: 28 }}>📋 Semua Berita</div>
+                <div className="k-section-label" style={{ marginTop: 28 }}>
+                  📋 Semua Berita
+                </div>
                 <div className="k-card-grid">
                   {loading
                     ? Array.from({ length: 6 }).map((_, i) => (
                         <div key={i}>
-                          <div className="k-skeleton" style={{ height: 180, borderRadius: 12 }} />
-                          <div className="k-skeleton" style={{ height: 16, borderRadius: 4, marginTop: 12, width: "80%" }} />
-                          <div className="k-skeleton" style={{ height: 12, borderRadius: 4, marginTop: 8, width: "50%" }} />
+                          <div
+                            className="k-skeleton"
+                            style={{ height: 180, borderRadius: 12 }}
+                          />
+                          <div
+                            className="k-skeleton"
+                            style={{
+                              height: 16,
+                              borderRadius: 4,
+                              marginTop: 12,
+                              width: "80%",
+                            }}
+                          />
+                          <div
+                            className="k-skeleton"
+                            style={{
+                              height: 12,
+                              borderRadius: 4,
+                              marginTop: 8,
+                              width: "50%",
+                            }}
+                          />
                         </div>
                       ))
                     : regular.map((item) => (
@@ -150,36 +205,56 @@ const NewsPage = () => {
                           key={item.id_konten}
                           className="k-card"
                           onClick={() => navigate(`/news/${item.id_konten}`)}
-                          role="button" tabIndex={0}
-                          onKeyDown={(e) => e.key === "Enter" && navigate(`/news/${item.id_konten}`)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) =>
+                            e.key === "Enter" &&
+                            navigate(`/news/${item.id_konten}`)
+                          }
                         >
                           <div className="k-card-img-wrap">
-                            {getImg(item)
-                              ? <img src={getImg(item)} alt={item.judul} />
-                              : <div className="k-card-img-placeholder">📰</div>
-                            }
-                            <span className="k-card-badge">{item.jenis_konten}</span>
+                            {getImg(item) ? (
+                              <img src={getImg(item)} alt={item.judul} />
+                            ) : (
+                              <div className="k-card-img-placeholder">📰</div>
+                            )}
+                            <span className="k-card-badge">
+                              {item.jenis_konten}
+                            </span>
                           </div>
                           <div className="k-card-body">
-                            <span className="k-card-cat">{item.jenis_konten}</span>
+                            <span className="k-card-cat">
+                              {item.jenis_konten}
+                            </span>
                             <h3 className="k-card-title">{item.judul}</h3>
                             {item.tagline && (
-                              <p style={{ fontSize: 12, color: "var(--k-text-muted)", margin: 0 }}>
+                              <p
+                                style={{
+                                  fontSize: 12,
+                                  color: "var(--k-text-muted)",
+                                  margin: 0,
+                                }}
+                              >
                                 {item.tagline}
                               </p>
                             )}
                             <div className="k-card-meta">
-                              <span className="k-card-meta-item">✍ {item.penulis}</span>
-                              <span className="k-card-meta-item">🕐 {timeAgo(item.tanggal_dibuat)}</span>
-                              <span className="k-card-meta-item">👁 {fmtNum(item.total_interaksi || 0)}</span>
+                              <span className="k-card-meta-item">
+                                ✍ {item.penulis}
+                              </span>
+                              <span className="k-card-meta-item">
+                                🕐 {timeAgo(item.tanggal_dibuat)}
+                              </span>
+                              <span className="k-card-meta-item">
+                                👁 {fmtNum(item.total_interaksi || 0)}
+                              </span>
                             </div>
                             <div className="k-card-footer">
                               <span className="k-card-read">Baca →</span>
                             </div>
                           </div>
                         </div>
-                      ))
-                  }
+                      ))}
                 </div>
               </>
             )}
@@ -189,7 +264,12 @@ const NewsPage = () => {
                 <div className="k-empty-icon">🔍</div>
                 <h3>Tidak ada berita ditemukan</h3>
                 <p>Coba kata kunci yang berbeda atau hapus filter.</p>
-                <button className="k-empty-btn" onClick={() => setSearchQuery("")}>Reset Pencarian</button>
+                <button
+                  className="k-empty-btn"
+                  onClick={() => setSearchQuery("")}
+                >
+                  Reset Pencarian
+                </button>
               </div>
             )}
           </div>
@@ -203,9 +283,21 @@ const NewsPage = () => {
               </div>
               {loading
                 ? Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} style={{ padding: "14px 18px", borderBottom: "1px solid var(--k-border)" }}>
-                      <div className="k-skeleton" style={{ height: 14, borderRadius: 4, marginBottom: 6 }} />
-                      <div className="k-skeleton" style={{ height: 11, borderRadius: 4, width: "60%" }} />
+                    <div
+                      key={i}
+                      style={{
+                        padding: "14px 18px",
+                        borderBottom: "1px solid var(--k-border)",
+                      }}
+                    >
+                      <div
+                        className="k-skeleton"
+                        style={{ height: 14, borderRadius: 4, marginBottom: 6 }}
+                      />
+                      <div
+                        className="k-skeleton"
+                        style={{ height: 11, borderRadius: 4, width: "60%" }}
+                      />
                     </div>
                   ))
                 : trending.map((item, i) => (
@@ -223,11 +315,9 @@ const NewsPage = () => {
                         </div>
                       </div>
                     </div>
-                  ))
-              }
+                  ))}
             </div>
           </div>
-
         </div>
       </div>
 

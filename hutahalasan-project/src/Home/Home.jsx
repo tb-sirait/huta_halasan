@@ -50,8 +50,12 @@ const Home = () => {
     },
   ];
 
-  const nextDoc = () => setCurrentDocIndex((prev) => (prev + 1) % documents.length);
-  const prevDoc = () => setCurrentDocIndex((prev) => (prev - 1 + documents.length) % documents.length);
+  const nextDoc = () =>
+    setCurrentDocIndex((prev) => (prev + 1) % documents.length);
+  const prevDoc = () =>
+    setCurrentDocIndex(
+      (prev) => (prev - 1 + documents.length) % documents.length,
+    );
 
   const openPdf = (pdfUrl) => {
     setActivePdf(pdfUrl);
@@ -80,15 +84,20 @@ const Home = () => {
       (entries) => {
         entries.forEach((entry) => {
           if (entry.isIntersecting && !hasAnimated) {
-            setTimeout(() => { setIsVisible(true); setHasAnimated(true); }, 100);
+            setTimeout(() => {
+              setIsVisible(true);
+              setHasAnimated(true);
+            }, 100);
           }
         });
       },
-      { threshold: 0.2 }
+      { threshold: 0.2 },
     );
     const ref = sectionRef.current;
     if (ref) observer.observe(ref);
-    return () => { if (ref) observer.unobserve(ref); };
+    return () => {
+      if (ref) observer.unobserve(ref);
+    };
   }, [hasAnimated]);
 
   useEffect(() => {
@@ -96,8 +105,12 @@ const Home = () => {
     const interval = setInterval(() => {
       setIsTransitioning(true);
       setNextSlideIdx((currentSlide + 1) % slides.length);
-      setTimeout(() => { setCurrentSlide((prev) => (prev + 1) % slides.length); }, SLIDE_SPEED / 2);
-      setTimeout(() => { setIsTransitioning(false); }, SLIDE_SPEED);
+      setTimeout(() => {
+        setCurrentSlide((prev) => (prev + 1) % slides.length);
+      }, SLIDE_SPEED / 2);
+      setTimeout(() => {
+        setIsTransitioning(false);
+      }, SLIDE_SPEED);
     }, SLIDE_SPEED);
     return () => clearInterval(interval);
   }, [isVisible, slides.length, currentSlide]);
@@ -105,8 +118,12 @@ const Home = () => {
   const handleIndicatorClick = (index) => {
     setIsTransitioning(true);
     setNextSlideIdx(index);
-    setTimeout(() => { setCurrentSlide(index); }, 400);
-    setTimeout(() => { setIsTransitioning(false); }, 800);
+    setTimeout(() => {
+      setCurrentSlide(index);
+    }, 400);
+    setTimeout(() => {
+      setIsTransitioning(false);
+    }, 800);
   };
 
   return (
@@ -115,8 +132,14 @@ const Home = () => {
 
       <Helmet>
         <title>Horas | Kelompok Bale Pasogit Huta Halasan</title>
-        <meta name="description" content="Website Resmi Kelompok Bale Pasogit Huta Halasan, menampilkan informasi tentang Ugamo Malim di Bale Pasogit Huta Halasan, kalender Batak, dan Informasi terupdate tentang Bale Pasogit Huta Halasan." />
-        <meta name="keywords" content="Parmalim, Bale Pasogit, Huta Halasan, Parmalim Huta Halasan" />
+        <meta
+          name="description"
+          content="Website Resmi Kelompok Bale Pasogit Huta Halasan, menampilkan informasi tentang Ugamo Malim di Bale Pasogit Huta Halasan, kalender Batak, dan Informasi terupdate tentang Bale Pasogit Huta Halasan."
+        />
+        <meta
+          name="keywords"
+          content="Parmalim, Bale Pasogit, Huta Halasan, Parmalim Huta Halasan"
+        />
         <meta name="author" content="Huta Halasan" />
         <link rel="icon" type="image/svg+xml" href="/logo_huta_halasan.jpg" />
       </Helmet>
@@ -145,7 +168,9 @@ const Home = () => {
 
       {/* ── SLIDESHOW / SPIRITUALITY ── */}
       <section ref={sectionRef} className="hm-sction-spirit">
-        <div className={`hm-sction-spirit__slides ${isVisible ? "is-visible" : ""}`}>
+        <div
+          className={`hm-sction-spirit__slides ${isVisible ? "is-visible" : ""}`}
+        >
           <div
             className={`hm-sction-spirit__slide hm-sction-spirit__slide--current ${isVisible ? "is-loaded" : ""}`}
             style={{ backgroundImage: `url(${slides[currentSlide]})` }}
@@ -159,9 +184,15 @@ const Home = () => {
           <div className="hm-sction-spirit__overlay" />
         </div>
 
-        <div className={`hm-sction-spirit__body ${isVisible ? "is-visible" : ""}`}>
+        <div
+          className={`hm-sction-spirit__body ${isVisible ? "is-visible" : ""}`}
+        >
           <p className="hm-sction-spirit__label">Hakikat Parmalim</p>
-          <h2 className="hm-sction-spirit__heading">With Spirituality<br />and Ritual</h2>
+          <h2 className="hm-sction-spirit__heading">
+            With Spirituality
+            <br />
+            and Ritual
+          </h2>
           <p className="hm-sction-spirit__sub">to uphold God's teaching</p>
         </div>
 
@@ -183,7 +214,11 @@ const Home = () => {
       <section id="about" className="hm-sction-about">
         <div className="hm-sction-about__inner">
           <div className="hm-sction-about__media">
-            <img src={imgHutaHalasan} alt="Bale Pasogit" className="hm-sction-about__img" />
+            <img
+              src={imgHutaHalasan}
+              alt="Bale Pasogit"
+              className="hm-sction-about__img"
+            />
             <div className="hm-sction-about__img-deco" />
           </div>
           <div className="hm-sction-about__text">
@@ -191,20 +226,21 @@ const Home = () => {
             <h2 className="hm-sction-about__heading">About Us</h2>
             <div className="hm-sction-about__rule" />
             <p className="hm-sction-about__para">
-              Kelompok Bale Pasogit Partonggoan Huta Halasan merupakan organisasi 
-              penghayat kepercayaan berbasis tradisi Ugamo Malim yang berlokasi di 
-              Desa Sionggang Tengah, Kecamatan Lumban Julu, Kabupaten Toba, Sumatera Utara. 
-              Organisasi ini telah memperoleh Surat Keterangan Terinventarisasi (SKT) 
-              dari Direktorat Bina Kepercayaan Terhadap Tuhan Yang Maha Esa dan Masyarakat 
-              Adat dengan Tanda Inventarisasi No: 15/TI-KMA/06/2025, sehingga memiliki 
-              legitimasi formal sebagai wadah penghayat kepercayaan.
+              Kelompok Bale Pasogit Partonggoan Huta Halasan merupakan
+              organisasi penghayat kepercayaan berbasis tradisi Ugamo Malim yang
+              berlokasi di Desa Sionggang Tengah, Kecamatan Lumban Julu,
+              Kabupaten Toba, Sumatera Utara. Organisasi ini telah memperoleh
+              Surat Keterangan Terinventarisasi (SKT) dari Direktorat Bina
+              Kepercayaan Terhadap Tuhan Yang Maha Esa dan Masyarakat Adat
+              dengan Tanda Inventarisasi No: 15/TI-KMA/06/2025, sehingga
+              memiliki legitimasi formal sebagai wadah penghayat kepercayaan.
             </p>
             <p className="hm-sction-about__para">
-              Kelompok Bale Pasogit Huta Halasan menganut Ajaran Ugamo Malim, 
-              merupakan kepercayaan yang diwariskan secara turun-temurun oleh leluhur Batak.
-              Seperti definisi dari Parmalim (Par Ugamo Malim), yaitu "pengikut ajaran Malim", 
-              yang mempersiapkan diri dan persembahan yang suci dan pengikutnya harus suci dan 
-              juga bersih.
+              Kelompok Bale Pasogit Huta Halasan menganut Ajaran Ugamo Malim,
+              merupakan kepercayaan yang diwariskan secara turun-temurun oleh
+              leluhur Batak. Seperti definisi dari Parmalim (Par Ugamo Malim),
+              yaitu "pengikut ajaran Malim", yang mempersiapkan diri dan
+              persembahan yang suci dan pengikutnya harus suci dan juga bersih.
             </p>
           </div>
         </div>
@@ -246,9 +282,16 @@ const Home = () => {
                 {/* Overlay klik + label */}
                 <div className="hm-sction-docs__peek-overlay">
                   <span className="hm-sction-docs__peek-label">
-                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                      <circle cx="12" cy="12" r="3"/>
+                    <svg
+                      width="14"
+                      height="14"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2.5"
+                    >
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
                     </svg>
                     Pratinjau Penuh
                   </span>
@@ -258,7 +301,9 @@ const Home = () => {
 
               {/* Doc Info + Actions */}
               <div className="hm-sction-docs__info">
-                <span className="hm-sction-docs__doc-tag">{documents[currentDocIndex].tag}</span>
+                <span className="hm-sction-docs__doc-tag">
+                  {documents[currentDocIndex].tag}
+                </span>
                 <h3>{documents[currentDocIndex].title}</h3>
                 <p>{documents[currentDocIndex].description}</p>
 
@@ -270,9 +315,16 @@ const Home = () => {
                     rel="noopener noreferrer"
                     className="hm-sction-docs__action-btn hm-sction-docs__action-btn--view"
                   >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/>
-                      <circle cx="12" cy="12" r="3"/>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                      <circle cx="12" cy="12" r="3" />
                     </svg>
                     Buka Dokumen
                   </a>
@@ -283,10 +335,17 @@ const Home = () => {
                     download={documents[currentDocIndex].filename}
                     className="hm-sction-docs__action-btn hm-sction-docs__action-btn--download"
                   >
-                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                      <polyline points="7 10 12 15 17 10"/>
-                      <line x1="12" y1="15" x2="12" y2="3"/>
+                    <svg
+                      width="16"
+                      height="16"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                    >
+                      <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                      <polyline points="7 10 12 15 17 10" />
+                      <line x1="12" y1="15" x2="12" y2="3" />
                     </svg>
                     Unduh
                   </a>
@@ -324,7 +383,10 @@ const Home = () => {
       {/* ── PDF MODAL ── */}
       {pdfModalOpen && (
         <div className="hm-pdf-modal" onClick={closePdf}>
-          <div className="hm-pdf-modal__box" onClick={(e) => e.stopPropagation()}>
+          <div
+            className="hm-pdf-modal__box"
+            onClick={(e) => e.stopPropagation()}
+          >
             <div className="hm-pdf-modal__header">
               <span className="hm-pdf-modal__title">
                 {documents[currentDocIndex].title}
@@ -336,14 +398,25 @@ const Home = () => {
                   className="hm-pdf-modal__dl-btn"
                   title="Unduh PDF"
                 >
-                  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/>
-                    <polyline points="7 10 12 15 17 10"/>
-                    <line x1="12" y1="15" x2="12" y2="3"/>
+                  <svg
+                    width="16"
+                    height="16"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                  >
+                    <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4" />
+                    <polyline points="7 10 12 15 17 10" />
+                    <line x1="12" y1="15" x2="12" y2="3" />
                   </svg>
                   Unduh
                 </a>
-                <button className="hm-pdf-modal__close" onClick={closePdf} aria-label="Tutup">
+                <button
+                  className="hm-pdf-modal__close"
+                  onClick={closePdf}
+                  aria-label="Tutup"
+                >
                   ✕
                 </button>
               </div>
@@ -372,7 +445,11 @@ const Home = () => {
 
       {/* ── CALENDAR ── */}
       <section className="hm-sction-cal">
-        <BatakCalendarSEO year={currentYear} month={currentMonth} showTitle={false} />
+        <BatakCalendarSEO
+          year={currentYear}
+          month={currentMonth}
+          showTitle={false}
+        />
         <div className="hm-sction-cal__inner">
           <span className="hm-sction-cal__label">Penanggalan Batak</span>
           <h2 className="hm-sction-cal__heading">Calendar</h2>
@@ -382,32 +459,50 @@ const Home = () => {
 
       {/* ── BOTTOM LINKS ── */}
       <section className="hm-sction-links">
-        <Link to="/news" className="hm-sction-links__card hm-sction-links__card--news" style={{ backgroundImage: `url(${newsBg})` }}>
+        <Link
+          to="/news"
+          className="hm-sction-links__card hm-sction-links__card--news"
+          style={{ backgroundImage: `url(${newsBg})` }}
+        >
           <div className="hm-sction-links__glass" />
           <div className="hm-sction-links__text">
             <span className="hm-sction-links__tag">Terbaru</span>
             <h3 className="hm-sction-links__title">News</h3>
-            <p className="hm-sction-links__desc">Berita terbaru dari Bale Pasogit Huta Halasan</p>
+            <p className="hm-sction-links__desc">
+              Berita terbaru dari Bale Pasogit Huta Halasan
+            </p>
             <span className="hm-sction-links__arrow">→</span>
           </div>
         </Link>
 
-        <Link to="/edu" className="hm-sction-links__card hm-sction-links__card--edu" style={{ backgroundImage: `url(${eduBg})` }}>
+        <Link
+          to="/edu"
+          className="hm-sction-links__card hm-sction-links__card--edu"
+          style={{ backgroundImage: `url(${eduBg})` }}
+        >
           <div className="hm-sction-links__glass" />
           <div className="hm-sction-links__text">
             <span className="hm-sction-links__tag">Pembelajaran</span>
             <h3 className="hm-sction-links__title">Educations</h3>
-            <p className="hm-sction-links__desc">Materi dan pelajaran tentang Ugamo Malim</p>
+            <p className="hm-sction-links__desc">
+              Materi dan pelajaran tentang Ugamo Malim
+            </p>
             <span className="hm-sction-links__arrow">→</span>
           </div>
         </Link>
 
-        <Link to="/knowledge" className="hm-sction-links__card hm-sction-links__card--know" style={{ backgroundImage: `url(${knowledgeBg})` }}>
+        <Link
+          to="/knowledge"
+          className="hm-sction-links__card hm-sction-links__card--know"
+          style={{ backgroundImage: `url(${knowledgeBg})` }}
+        >
           <div className="hm-sction-links__glass" />
           <div className="hm-sction-links__text">
             <span className="hm-sction-links__tag">Wawasan</span>
             <h3 className="hm-sction-links__title">Knowledges</h3>
-            <p className="hm-sction-links__desc">Perluas wawasan tentang budaya Batak</p>
+            <p className="hm-sction-links__desc">
+              Perluas wawasan tentang budaya Batak
+            </p>
             <span className="hm-sction-links__arrow">→</span>
           </div>
         </Link>

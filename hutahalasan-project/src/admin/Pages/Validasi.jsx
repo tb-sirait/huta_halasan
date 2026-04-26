@@ -177,5 +177,3 @@ export const Validasi = () => {
     </div>
   );
 };
-
-

@@ -5,7 +5,11 @@ import Header from "../Navbar/Header.jsx";
 import Footer from "../Footer/Footer.jsx";
 import { Helmet } from "react-helmet";
 import imgHutaHalasan from "../assets/gambar_huta_halasan.jpg";
-import { usePengetahuanList, fmtNum, timeAgo } from "../hooks/usePengetahuan.js";
+import {
+  usePengetahuanList,
+  fmtNum,
+  timeAgo,
+} from "../hooks/usePengetahuan.js";
 import BalePartonggoanSection from "./BalePartonggoan/BalePartonggoanSection.jsx";
 import "../styles/konten-shared.css";
 
@@ -14,8 +18,12 @@ const Knowledge = () => {
   const [sortBy, setSortBy] = useState("Latest");
 
   const {
-    data, total, loading, error,
-    search: searchQuery, setSearch: setSearchQuery,
+    data,
+    total,
+    loading,
+    error,
+    search: searchQuery,
+    setSearch: setSearchQuery,
   } = usePengetahuanList({ limit: 50 });
 
   const getSorted = () => {
@@ -29,25 +37,39 @@ const Knowledge = () => {
     return s;
   };
 
-  const sorted   = getSorted();
+  const sorted = getSorted();
   const featured = sorted[0] || null;
-  const rest     = sorted.slice(1);
+  const rest = sorted.slice(1);
   const trending = [...data]
     .sort((a, b) => (b.total_interaksi || 0) - (a.total_interaksi || 0))
     .slice(0, 5);
 
   const getTagline = (item) => {
     try {
-      const arr = typeof item.tagline === "string" ? JSON.parse(item.tagline) : item.tagline;
+      const arr =
+        typeof item.tagline === "string"
+          ? JSON.parse(item.tagline)
+          : item.tagline;
       return Array.isArray(arr) ? arr : [];
-    } catch { return []; }
+    } catch {
+      return [];
+    }
   };
 
   return (
-    <div style={{ background: "var(--k-bg)", minHeight: "100vh", fontFamily: "var(--k-font)" }}>
+    <div
+      style={{
+        background: "var(--k-bg)",
+        minHeight: "100vh",
+        fontFamily: "var(--k-font)",
+      }}
+    >
       <Helmet>
         <title>Parbinotoan | Parmalim Bale Pasogit Huta Halasan</title>
-        <meta name="description" content="Explore knowledge files and documents of Parmalim Bale Pasogit Huta Halasan." />
+        <meta
+          name="description"
+          content="Explore knowledge files and documents of Parmalim Bale Pasogit Huta Halasan."
+        />
       </Helmet>
       <Header />
 
@@ -76,7 +98,11 @@ const Knowledge = () => {
               onChange={(e) => setSearchQuery(e.target.value)}
             />
           </div>
-          <select className="k-select" value={sortBy} onChange={(e) => setSortBy(e.target.value)}>
+          <select
+            className="k-select"
+            value={sortBy}
+            onChange={(e) => setSortBy(e.target.value)}
+          >
             <option value="Latest">Terbaru</option>
             <option value="Popular">Terpopuler</option>
             <option value="Oldest">Terlama</option>
@@ -87,22 +113,28 @@ const Knowledge = () => {
       {/* ── Konten ── */}
       <div className="k-container">
         <div className="k-layout">
-
           {/* Main */}
           <div style={{ paddingTop: 28 }}>
             {error && <div className="k-error">⚠️ {error}</div>}
 
             {/* Featured */}
             {loading ? (
-              <div className="k-skeleton" style={{ height: 280, borderRadius: 20, marginBottom: 24 }} />
+              <div
+                className="k-skeleton"
+                style={{ height: 280, borderRadius: 20, marginBottom: 24 }}
+              />
             ) : featured ? (
               <>
                 <div className="k-section-label">✦ Dokumen Unggulan</div>
                 <div
                   className="k-featured"
                   onClick={() => navigate(`/knowledge/${featured.id_file}`)}
-                  role="button" tabIndex={0}
-                  onKeyDown={(e) => e.key === "Enter" && navigate(`/knowledge/${featured.id_file}`)}
+                  role="button"
+                  tabIndex={0}
+                  onKeyDown={(e) =>
+                    e.key === "Enter" &&
+                    navigate(`/knowledge/${featured.id_file}`)
+                  }
                 >
                   <div className="k-featured-img">
                     <div className="k-featured-img-placeholder">📄</div>
@@ -112,9 +144,13 @@ const Knowledge = () => {
                     <span className="k-featured-cat">File Pengetahuan</span>
                     <h2 className="k-featured-title">{featured.nama_file}</h2>
                     {getTagline(featured).length > 0 && (
-                      <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
+                      <div
+                        style={{ display: "flex", gap: 6, flexWrap: "wrap" }}
+                      >
                         {getTagline(featured).map((t, i) => (
-                          <span key={i} className="k-tag">{t}</span>
+                          <span key={i} className="k-tag">
+                            {t}
+                          </span>
                         ))}
                       </div>
                     )}
@@ -139,8 +175,19 @@ const Knowledge = () => {
                   {loading
                     ? Array.from({ length: 6 }).map((_, i) => (
                         <div key={i}>
-                          <div className="k-skeleton" style={{ height: 160, borderRadius: 12 }} />
-                          <div className="k-skeleton" style={{ height: 14, borderRadius: 4, marginTop: 12, width: "80%" }} />
+                          <div
+                            className="k-skeleton"
+                            style={{ height: 160, borderRadius: 12 }}
+                          />
+                          <div
+                            className="k-skeleton"
+                            style={{
+                              height: 14,
+                              borderRadius: 4,
+                              marginTop: 12,
+                              width: "80%",
+                            }}
+                          />
                         </div>
                       ))
                     : rest.map((item) => (
@@ -148,8 +195,12 @@ const Knowledge = () => {
                           key={item.id_file}
                           className="k-card"
                           onClick={() => navigate(`/knowledge/${item.id_file}`)}
-                          role="button" tabIndex={0}
-                          onKeyDown={(e) => e.key === "Enter" && navigate(`/knowledge/${item.id_file}`)}
+                          role="button"
+                          tabIndex={0}
+                          onKeyDown={(e) =>
+                            e.key === "Enter" &&
+                            navigate(`/knowledge/${item.id_file}`)
+                          }
                         >
                           <div className="k-card-img-wrap">
                             <div className="k-card-img-placeholder">📄</div>
@@ -159,24 +210,43 @@ const Knowledge = () => {
                             <span className="k-card-cat">File Pengetahuan</span>
                             <h3 className="k-card-title">{item.nama_file}</h3>
                             {getTagline(item).length > 0 && (
-                              <div style={{ display: "flex", gap: 4, flexWrap: "wrap" }}>
-                                {getTagline(item).slice(0, 2).map((t, i) => (
-                                  <span key={i} className="k-tag" style={{ fontSize: 10 }}>{t}</span>
-                                ))}
+                              <div
+                                style={{
+                                  display: "flex",
+                                  gap: 4,
+                                  flexWrap: "wrap",
+                                }}
+                              >
+                                {getTagline(item)
+                                  .slice(0, 2)
+                                  .map((t, i) => (
+                                    <span
+                                      key={i}
+                                      className="k-tag"
+                                      style={{ fontSize: 10 }}
+                                    >
+                                      {t}
+                                    </span>
+                                  ))}
                               </div>
                             )}
                             <div className="k-card-meta">
-                              <span className="k-card-meta-item">✍ {item.nama_uploader || "Admin"}</span>
-                              <span className="k-card-meta-item">🕐 {timeAgo(item.tanggal_upload)}</span>
-                              <span className="k-card-meta-item">👁 {fmtNum(item.total_interaksi || 0)}</span>
+                              <span className="k-card-meta-item">
+                                ✍ {item.nama_uploader || "Admin"}
+                              </span>
+                              <span className="k-card-meta-item">
+                                🕐 {timeAgo(item.tanggal_upload)}
+                              </span>
+                              <span className="k-card-meta-item">
+                                👁 {fmtNum(item.total_interaksi || 0)}
+                              </span>
                             </div>
                             <div className="k-card-footer">
                               <span className="k-card-read">Buka →</span>
                             </div>
                           </div>
                         </div>
-                      ))
-                  }
+                      ))}
                 </div>
               </div>
             )}
@@ -186,13 +256,17 @@ const Knowledge = () => {
                 <div className="k-empty-icon">🔍</div>
                 <h3>Tidak ada dokumen ditemukan</h3>
                 <p>Coba kata kunci yang berbeda.</p>
-                <button className="k-empty-btn" onClick={() => setSearchQuery("")}>Reset Pencarian</button>
+                <button
+                  className="k-empty-btn"
+                  onClick={() => setSearchQuery("")}
+                >
+                  Reset Pencarian
+                </button>
               </div>
             )}
 
             {/* ── Bale Partonggoan Section ── */}
             <BalePartonggoanSection />
-
           </div>
 
           {/* Sidebar */}
@@ -204,14 +278,29 @@ const Knowledge = () => {
               </div>
               {loading
                 ? Array.from({ length: 4 }).map((_, i) => (
-                    <div key={i} style={{ padding: "14px 18px", borderBottom: "1px solid var(--k-border)" }}>
-                      <div className="k-skeleton" style={{ height: 14, borderRadius: 4, marginBottom: 6 }} />
-                      <div className="k-skeleton" style={{ height: 11, borderRadius: 4, width: "60%" }} />
+                    <div
+                      key={i}
+                      style={{
+                        padding: "14px 18px",
+                        borderBottom: "1px solid var(--k-border)",
+                      }}
+                    >
+                      <div
+                        className="k-skeleton"
+                        style={{ height: 14, borderRadius: 4, marginBottom: 6 }}
+                      />
+                      <div
+                        className="k-skeleton"
+                        style={{ height: 11, borderRadius: 4, width: "60%" }}
+                      />
                     </div>
                   ))
                 : trending.map((item, i) => (
-                    <div key={item.id_file} className="k-trending-item"
-                      onClick={() => navigate(`/knowledge/${item.id_file}`)}>
+                    <div
+                      key={item.id_file}
+                      className="k-trending-item"
+                      onClick={() => navigate(`/knowledge/${item.id_file}`)}
+                    >
                       <span className="k-trending-rank">{i + 1}</span>
                       <div className="k-trending-body">
                         <p className="k-trending-title">{item.nama_file}</p>
@@ -221,11 +310,9 @@ const Knowledge = () => {
                         </div>
                       </div>
                     </div>
-                  ))
-              }
+                  ))}
             </div>
           </div>
-
         </div>
       </div>
 

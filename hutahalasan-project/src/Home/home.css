@@ -4,28 +4,28 @@
    ===================================================== */
 
 /* ── GOOGLE FONTS ── */
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500;600&family=DM+Serif+Display:ital@0;1&display=swap");
 
 /* ── ROOT TOKENS ── */
 :root {
-  --hm-cream:     #faf6f0;
+  --hm-cream: #faf6f0;
   --hm-parchment: #f0e8d8;
-  --hm-sand:      #e2d5c0;
-  --hm-caramel:   #c4a882;
-  --hm-bark:      #8b6f47;
-  --hm-earth:     #5c3d1e;
-  --hm-ink:       #2a1f14;
-  --hm-warm-mid:  #7a5c38;
-  --hm-accent:    #d4561c;   /* burnt sienna accent */
-  --hm-white:     #ffffff;
+  --hm-sand: #e2d5c0;
+  --hm-caramel: #c4a882;
+  --hm-bark: #8b6f47;
+  --hm-earth: #5c3d1e;
+  --hm-ink: #2a1f14;
+  --hm-warm-mid: #7a5c38;
+  --hm-accent: #d4561c; /* burnt sienna accent */
+  --hm-white: #ffffff;
 
-  --hm-font-display: 'Playfair Display', serif;
-  --hm-font-serif:   'DM Serif Display', serif;
-  --hm-font-body:    'DM Sans', sans-serif;
+  --hm-font-display: "Playfair Display", serif;
+  --hm-font-serif: "DM Serif Display", serif;
+  --hm-font-body: "DM Sans", sans-serif;
 
-  --hm-radius:    12px;
+  --hm-radius: 12px;
   --hm-radius-lg: 20px;
-  --hm-shadow:    0 8px 32px rgba(92, 61, 30, 0.12);
+  --hm-shadow: 0 8px 32px rgba(92, 61, 30, 0.12);
   --hm-shadow-lg: 0 20px 60px rgba(92, 61, 30, 0.18);
 }
 
@@ -60,8 +60,12 @@
 }
 
 @keyframes hm-hero-zoom {
-  from { transform: scale(1.04); }
-  to   { transform: scale(1); }
+  from {
+    transform: scale(1.04);
+  }
+  to {
+    transform: scale(1);
+  }
 }
 
 .hm-hero__veil {
@@ -86,8 +90,14 @@
 }
 
 @keyframes hm-fade-up {
-  from { opacity: 0; transform: translateY(30px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .hm-hero__eyebrow {
@@ -129,14 +139,14 @@
   font-size: 0.72em;
   opacity: 0.7;
   display: block;
-  font-family: 'Batak', var(--hm-font-display);
+  font-family: "Batak", var(--hm-font-display);
   letter-spacing: 0.05em;
 }
 
 .hm-hero__batak-sm {
   font-size: 0.85em;
   opacity: 0.65;
-  font-family: 'Batak', var(--hm-font-body);
+  font-family: "Batak", var(--hm-font-body);
   margin-left: 0.4em;
 }
 
@@ -169,7 +179,9 @@
   padding: 0.8rem 2.2rem;
   border-radius: 99px;
   text-decoration: none;
-  transition: background 0.25s, transform 0.25s;
+  transition:
+    background 0.25s,
+    transform 0.25s;
   animation: hm-fade-up 1s ease-out 1.1s both;
 }
 .hm-hero__cta:hover {
@@ -190,13 +202,20 @@
   display: block;
   width: 2px;
   height: 48px;
-  background: linear-gradient(to bottom, rgba(255,255,255,0.7), transparent);
+  background: linear-gradient(to bottom, rgba(255, 255, 255, 0.7), transparent);
   margin: 0 auto;
   animation: hm-scroll-pulse 2s ease-in-out infinite;
 }
 @keyframes hm-scroll-pulse {
-  0%, 100% { opacity: 0.8; transform: scaleY(1); }
-  50%       { opacity: 0.3; transform: scaleY(0.6); }
+  0%,
+  100% {
+    opacity: 0.8;
+    transform: scaleY(1);
+  }
+  50% {
+    opacity: 0.3;
+    transform: scaleY(0.6);
+  }
 }
 
 /* =====================================================
@@ -218,7 +237,9 @@
   opacity: 0;
   transition: opacity 1.5s ease-out;
 }
-.hm-sction-spirit__slides.is-visible { opacity: 1; }
+.hm-sction-spirit__slides.is-visible {
+  opacity: 1;
+}
 
 .hm-sction-spirit__slide {
   position: absolute;
@@ -228,21 +249,36 @@
   opacity: 0;
   transition: opacity 0.9s ease-in-out;
 }
-.hm-sction-spirit__slide--current { opacity: 1; z-index: 1; }
+.hm-sction-spirit__slide--current {
+  opacity: 1;
+  z-index: 1;
+}
 .hm-sction-spirit__slide--next {
   z-index: 2;
   animation: hm-crossfade 0.9s ease-in-out forwards;
 }
 @keyframes hm-crossfade {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 .hm-sction-spirit__slide.is-loaded {
   animation: hm-slide-init 1.6s ease-out;
 }
 @keyframes hm-slide-init {
-  from { opacity: 0; transform: scale(1.06); filter: blur(6px); }
-  to   { opacity: 1; transform: scale(1);    filter: blur(0); }
+  from {
+    opacity: 0;
+    transform: scale(1.06);
+    filter: blur(6px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+    filter: blur(0);
+  }
 }
 
 .hm-sction-spirit__overlay {
@@ -265,7 +301,9 @@
   max-width: 700px;
   opacity: 0;
   transform: translateY(28px);
-  transition: opacity 1.2s ease-out 0.4s, transform 1.2s ease-out 0.4s;
+  transition:
+    opacity 1.2s ease-out 0.4s,
+    transform 1.2s ease-out 0.4s;
 }
 .hm-sction-spirit__body.is-visible {
   opacity: 1;
@@ -288,7 +326,7 @@
   font-weight: 900;
   line-height: 1.1;
   margin: 0 0 1rem;
-  text-shadow: 0 4px 24px rgba(0,0,0,0.5);
+  text-shadow: 0 4px 24px rgba(0, 0, 0, 0.5);
 }
 
 .hm-sction-spirit__sub {
@@ -311,13 +349,15 @@
   width: 8px;
   height: 8px;
   border-radius: 99px;
-  background: rgba(255,255,255,0.35);
+  background: rgba(255, 255, 255, 0.35);
   border: none;
   cursor: pointer;
   padding: 0;
   transition: all 0.35s ease;
 }
-.hm-sction-spirit__dot:hover { background: rgba(255,255,255,0.65); }
+.hm-sction-spirit__dot:hover {
+  background: rgba(255, 255, 255, 0.65);
+}
 .hm-sction-spirit__dot.is-active {
   width: 28px;
   background: var(--hm-white);
@@ -466,7 +506,9 @@
   border-radius: var(--hm-radius-lg);
   overflow: hidden;
   box-shadow: var(--hm-shadow);
-  transition: transform 0.3s, box-shadow 0.3s;
+  transition:
+    transform 0.3s,
+    box-shadow 0.3s;
 }
 .hm-sction-docs__card:hover {
   transform: translateY(-4px);
@@ -589,15 +631,17 @@
   gap: 6px;
   padding: 8px 18px;
   border-radius: 20px;
-  background: rgba(255,255,255,0.92);
+  background: rgba(255, 255, 255, 0.92);
   color: #7a5c3a;
   font-size: 0.8rem;
   font-weight: 700;
   letter-spacing: 0.04em;
-  box-shadow: 0 2px 12px rgba(0,0,0,0.12);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.12);
   opacity: 0;
   transform: translateY(6px);
-  transition: opacity 0.25s ease, transform 0.25s ease;
+  transition:
+    opacity 0.25s ease,
+    transform 0.25s ease;
 }
 
 .hm-sction-docs__preview--clickable:hover .hm-sction-docs__peek-label {
@@ -637,7 +681,9 @@
   font-size: 0.82rem;
   font-weight: 600;
   text-decoration: none;
-  transition: background 0.2s ease, transform 0.15s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.15s ease;
   cursor: pointer;
 }
 
@@ -679,7 +725,9 @@
   border: none;
   background: #d4c5b0;
   cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
+  transition:
+    background 0.2s ease,
+    transform 0.2s ease;
   padding: 0;
 }
 
@@ -703,8 +751,12 @@
 }
 
 @keyframes fadeInModal {
-  from { opacity: 0; }
-  to   { opacity: 1; }
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
 }
 
 .hm-pdf-modal__box {
@@ -716,13 +768,19 @@
   display: flex;
   flex-direction: column;
   overflow: hidden;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.35);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.35);
   animation: slideUpModal 0.25s ease;
 }
 
 @keyframes slideUpModal {
-  from { transform: translateY(24px); opacity: 0; }
-  to   { transform: translateY(0);    opacity: 1; }
+  from {
+    transform: translateY(24px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
 }
 
 .hm-pdf-modal__header {
@@ -777,7 +835,9 @@
   cursor: pointer;
   padding: 4px 8px;
   border-radius: 4px;
-  transition: background 0.15s ease, color 0.15s ease;
+  transition:
+    background 0.15s ease,
+    color 0.15s ease;
   line-height: 1;
 }
 
@@ -831,7 +891,7 @@
 }
 
 .hm-sction-org__placeholder {
-  background: rgba(255,255,255,0.07);
+  background: rgba(255, 255, 255, 0.07);
   border: 1px dashed rgba(196, 168, 130, 0.4);
   border-radius: var(--hm-radius-lg);
   padding: 4rem 2rem;
@@ -892,7 +952,9 @@
   min-height: 460px;
   transition: filter 0.35s ease;
 }
-.hm-sction-links__card:hover { filter: brightness(1.08); }
+.hm-sction-links__card:hover {
+  filter: brightness(1.08);
+}
 
 .hm-sction-links__glass {
   position: absolute;
@@ -902,13 +964,28 @@
 
 /* Per-card accent overlays */
 .hm-sction-links__card--news .hm-sction-links__glass {
-  background: linear-gradient(to top, rgba(42,31,20,0.82) 0%, rgba(42,31,20,0.2) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(42, 31, 20, 0.82) 0%,
+    rgba(42, 31, 20, 0.2) 60%,
+    transparent 100%
+  );
 }
 .hm-sction-links__card--edu .hm-sction-links__glass {
-  background: linear-gradient(to top, rgba(212,86,28,0.78) 0%, rgba(212,86,28,0.2) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(212, 86, 28, 0.78) 0%,
+    rgba(212, 86, 28, 0.2) 60%,
+    transparent 100%
+  );
 }
 .hm-sction-links__card--know .hm-sction-links__glass {
-  background: linear-gradient(to top, rgba(92,61,30,0.82) 0%, rgba(92,61,30,0.2) 60%, transparent 100%);
+  background: linear-gradient(
+    to top,
+    rgba(92, 61, 30, 0.82) 0%,
+    rgba(92, 61, 30, 0.2) 60%,
+    transparent 100%
+  );
 }
 
 .hm-sction-links__text {
@@ -919,7 +996,9 @@
   transform: translateY(8px);
   transition: transform 0.35s ease;
 }
-.hm-sction-links__card:hover .hm-sction-links__text { transform: translateY(0); }
+.hm-sction-links__card:hover .hm-sction-links__text {
+  transform: translateY(0);
+}
 
 .hm-sction-links__tag {
   font-size: 0.73rem;
@@ -944,7 +1023,9 @@
   line-height: 1.5;
   opacity: 0;
   transform: translateY(14px);
-  transition: opacity 0.35s ease 0.05s, transform 0.35s ease 0.05s;
+  transition:
+    opacity 0.35s ease 0.05s,
+    transform 0.35s ease 0.05s;
   margin: 0 0 1rem;
 }
 .hm-sction-links__card:hover .hm-sction-links__desc {
@@ -956,7 +1037,9 @@
   font-size: 1.4rem;
   opacity: 0;
   transform: translateX(-8px);
-  transition: opacity 0.3s ease 0.1s, transform 0.3s ease 0.1s;
+  transition:
+    opacity 0.3s ease 0.1s,
+    transform 0.3s ease 0.1s;
   display: inline-block;
 }
 .hm-sction-links__card:hover .hm-sction-links__arrow {
@@ -978,7 +1061,9 @@
     aspect-ratio: 16/9;
   }
 
-  .hm-sction-about__img-deco { display: none; }
+  .hm-sction-about__img-deco {
+    display: none;
+  }
 
   .hm-sction-links {
     grid-template-columns: 1fr;
@@ -989,8 +1074,14 @@
     min-height: 340px;
   }
 
-  .hm-sction-links__desc { opacity: 0.88; transform: none; }
-  .hm-sction-links__arrow { opacity: 1; transform: none; }
+  .hm-sction-links__desc {
+    opacity: 0.88;
+    transform: none;
+  }
+  .hm-sction-links__arrow {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* =====================================================
@@ -998,61 +1089,120 @@
    ===================================================== */
 @media (max-width: 768px) {
   /* Hero */
-  .hm-hero { min-height: 560px; }
+  .hm-hero {
+    min-height: 560px;
+  }
 
-  .hm-hero__title { font-size: 2.6rem; }
-  .hm-hero__subtitle { font-size: 1.6rem; }
-  .hm-hero__location { font-size: 1rem; }
+  .hm-hero__title {
+    font-size: 2.6rem;
+  }
+  .hm-hero__subtitle {
+    font-size: 1.6rem;
+  }
+  .hm-hero__location {
+    font-size: 1rem;
+  }
 
   /* Spirituality */
-  .hm-sction-spirit { min-height: 80vh; }
-  .hm-sction-spirit__heading { font-size: 2rem; }
-  .hm-sction-spirit__sub { font-size: 1rem; }
+  .hm-sction-spirit {
+    min-height: 80vh;
+  }
+  .hm-sction-spirit__heading {
+    font-size: 2rem;
+  }
+  .hm-sction-spirit__sub {
+    font-size: 1rem;
+  }
 
   /* About */
-  .hm-sction-about { padding: 64px 20px; }
-  .hm-sction-about__inner { gap: 32px; }
+  .hm-sction-about {
+    padding: 64px 20px;
+  }
+  .hm-sction-about__inner {
+    gap: 32px;
+  }
 
   /* Docs */
-  .hm-sction-docs { padding: 64px 20px; }
-  .hm-sction-docs__carousel { flex-direction: column; }
-  .hm-sction-docs__card { max-width: 100%; }
+  .hm-sction-docs {
+    padding: 64px 20px;
+  }
+  .hm-sction-docs__carousel {
+    flex-direction: column;
+  }
+  .hm-sction-docs__card {
+    max-width: 100%;
+  }
   .hm-sction-docs__btn {
     width: 44px;
     height: 44px;
   }
 
   /* Org */
-  .hm-sction-org { padding: 60px 20px; }
+  .hm-sction-org {
+    padding: 60px 20px;
+  }
 
   /* Calendar */
-  .hm-sction-cal { padding: 64px 20px; }
+  .hm-sction-cal {
+    padding: 64px 20px;
+  }
 
   /* Links */
-  .hm-sction-links__card { min-height: 280px; }
-  .hm-sction-links__title { font-size: 1.8rem; }
-  .hm-sction-links__desc { opacity: 0.85; transform: none; }
-  .hm-sction-links__arrow { opacity: 1; transform: none; }
+  .hm-sction-links__card {
+    min-height: 280px;
+  }
+  .hm-sction-links__title {
+    font-size: 1.8rem;
+  }
+  .hm-sction-links__desc {
+    opacity: 0.85;
+    transform: none;
+  }
+  .hm-sction-links__arrow {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* =====================================================
    RESPONSIVE — SMALL MOBILE (≤ 480px)
    ===================================================== */
 @media (max-width: 480px) {
-  .hm-hero__title { font-size: 2rem; }
-  .hm-hero__subtitle { font-size: 1.3rem; }
-  .hm-hero__eyebrow { font-size: 0.72rem; }
-  .hm-hero__cta { padding: 0.7rem 1.6rem; font-size: 0.82rem; }
+  .hm-hero__title {
+    font-size: 2rem;
+  }
+  .hm-hero__subtitle {
+    font-size: 1.3rem;
+  }
+  .hm-hero__eyebrow {
+    font-size: 0.72rem;
+  }
+  .hm-hero__cta {
+    padding: 0.7rem 1.6rem;
+    font-size: 0.82rem;
+  }
 
-  .hm-sction-spirit__heading { font-size: 1.7rem; }
+  .hm-sction-spirit__heading {
+    font-size: 1.7rem;
+  }
 
-  .hm-sction-about__heading { font-size: 1.9rem; }
-  .hm-sction-about__para { font-size: 0.97rem; }
+  .hm-sction-about__heading {
+    font-size: 1.9rem;
+  }
+  .hm-sction-about__para {
+    font-size: 0.97rem;
+  }
 
   .hm-sction-docs__heading,
   .hm-sction-org__heading,
-  .hm-sction-cal__heading { font-size: 1.7rem; }
+  .hm-sction-cal__heading {
+    font-size: 1.7rem;
+  }
 
-  .hm-sction-links__title { font-size: 1.6rem; }
-  .hm-sction-links__text { padding: 1.8rem; }
+  .hm-sction-links__title {
+    font-size: 1.6rem;
+  }
+  .hm-sction-links__text {
+    padding: 1.8rem;
+  }
 }

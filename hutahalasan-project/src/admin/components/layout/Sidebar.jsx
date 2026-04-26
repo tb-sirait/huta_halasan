@@ -1,41 +1,59 @@
 // src/admin/components/layout/Sidebar.jsx
-import { NavLink, useNavigate } from 'react-router-dom';
-import { useAuth } from '../../hooks/useAuth';
-import '../../styles/layout.css';
+import { NavLink, useNavigate } from "react-router-dom";
+import { useAuth } from "../../hooks/useAuth";
+import "../../styles/layout.css";
 
 const NAV = [
   {
-    section: 'Utama',
+    section: "Utama",
+    items: [{ to: "dashboard", icon: "▦", label: "Dashboard" }],
+  },
+  {
+    section: "Konten",
     items: [
-      { to: 'dashboard', icon: '▦', label: 'Dashboard' },
+      {
+        to: "konten",
+        icon: "◈",
+        label: "Konten Berita & Edukasi",
+        roles: ["Jurnalis", "Pengembang", "Manajer", "Validator"],
+      },
+      {
+        to: "pengetahuan",
+        icon: "◉",
+        label: "File Pengetahuan",
+        roles: ["Jurnalis", "Pengembang", "Manajer", "Validator"],
+      },
     ],
   },
   {
-    section: 'Konten',
+    section: "Moderasi",
     items: [
-      { to: 'konten',      icon: '◈', label: 'Konten Berita & Edukasi', roles: ['Jurnalis','Pengembang','Manajer','Validator'] },
-      { to: 'pengetahuan', icon: '◉', label: 'File Pengetahuan',         roles: ['Jurnalis','Pengembang','Manajer','Validator'] },
+      {
+        to: "komentar",
+        icon: "◎",
+        label: "Moderasi Komentar",
+        roles: ["Manajer", "Pengembang"],
+      },
+      {
+        to: "validasi",
+        icon: "◆",
+        label: "Antrian Validasi",
+        roles: ["Validator"],
+      },
     ],
   },
   {
-    section: 'Moderasi',
+    section: "Administrasi",
     items: [
-      { to: 'komentar', icon: '◎', label: 'Moderasi Komentar', roles: ['Manajer','Pengembang'] },
-      { to: 'validasi',  icon: '◆', label: 'Antrian Validasi',  roles: ['Validator'] },
-    ],
-  },
-  {
-    section: 'Administrasi',
-    items: [
-      { to: 'users', icon: '◐', label: 'Kelola User', roles: ['Pengembang'] },
+      { to: "users", icon: "◐", label: "Kelola User", roles: ["Pengembang"] },
     ],
   },
 ];
 
-export const Sidebar = ({ basePath = '/admin' }) => {
+export const Sidebar = ({ basePath = "/admin" }) => {
   const { user, logout } = useAuth();
-  const navigate         = useNavigate();
-  const subrole          = user?.subrole;
+  const navigate = useNavigate();
+  const subrole = user?.subrole;
 
   const isVisible = (roles) => !roles || roles.includes(subrole);
 
@@ -69,7 +87,7 @@ export const Sidebar = ({ basePath = '/admin' }) => {
                   key={item.to}
                   to={`${basePath}/${item.to}`}
                   className={({ isActive }) =>
-                    `sidebar-item${isActive ? ' active' : ''}`
+                    `sidebar-item${isActive ? " active" : ""}`
                   }
                 >
                   <span className="sidebar-item-icon">{item.icon}</span>
