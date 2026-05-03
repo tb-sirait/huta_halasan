@@ -1,0 +1,538 @@
+/* src/Knowledge/SectionPemimpin/sectionpemimpin.css */
+
+/* ── Root Section ─────────────────────────────────────────────────────────── */
+.sp-root {
+  margin-top: 40px;
+  border-radius: 20px;
+  border: 1px solid var(--k-border, #e5e3dc);
+  background: var(--k-card, #fff);
+  overflow: hidden;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.05);
+}
+
+/* ── Root Header (collapse toggle) ───────────────────────────────────────── */
+.sp-root-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 28px;
+  cursor: pointer;
+  user-select: none;
+  background: linear-gradient(135deg, #3b2a1a 0%, #5c3d1e 100%);
+  transition: opacity 0.18s;
+}
+
+.sp-root-header:hover {
+  opacity: 0.93;
+}
+
+.sp-root-header:focus-visible {
+  outline: 2px solid #c9a86c;
+  outline-offset: -2px;
+}
+
+.sp-root-header-left {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.sp-root-icon {
+  font-size: 28px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sp-root-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 700;
+  color: #f5e6c8;
+  letter-spacing: 0.01em;
+}
+
+.sp-root-subtitle {
+  margin: 2px 0 0;
+  font-size: 13px;
+  color: #c9a86c;
+}
+
+/* ── Chevron ──────────────────────────────────────────────────────────────── */
+.sp-chevron {
+  font-size: 13px;
+  color: #c9a86c;
+  transition: transform 0.28s cubic-bezier(0.4, 0, 0.2, 1);
+  flex-shrink: 0;
+}
+
+.sp-chevron--open {
+  transform: rotate(180deg);
+}
+
+/* ── Root Body (animated expand/collapse) ─────────────────────────────────── */
+.sp-root-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.38s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.28s ease;
+  padding: 0 24px;
+}
+
+.sp-root-body--open {
+  max-height: 3000px;
+  padding: 24px 24px 28px;
+}
+
+/* ── Sub-section ──────────────────────────────────────────────────────────── */
+.sp-subsection {
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--k-border, #e5e3dc);
+}
+
+/* ── Sub-section Header ───────────────────────────────────────────────────── */
+.sp-subsection-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 22px;
+  cursor: pointer;
+  user-select: none;
+  transition: background 0.18s;
+}
+
+.sp-subsection-header:focus-visible {
+  outline: 2px solid #c9a86c;
+  outline-offset: -2px;
+}
+
+.sp-subsection-header--pusat {
+  background: linear-gradient(90deg, #fdf3e3 0%, #fef9f0 100%);
+  border-bottom: 1px solid #f0d9a8;
+}
+
+.sp-subsection-header--pusat:hover {
+  background: linear-gradient(90deg, #fae9ca 0%, #fdf3e3 100%);
+}
+
+.sp-subsection-header--cabang {
+  background: linear-gradient(90deg, #e8f5ee 0%, #f0faf4 100%);
+  border-bottom: 1px solid #aad9be;
+}
+
+.sp-subsection-header--cabang:hover {
+  background: linear-gradient(90deg, #d4edde 0%, #e8f5ee 100%);
+}
+
+.sp-subsection-header-left {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.sp-subsection-icon {
+  font-size: 22px;
+  line-height: 1;
+  flex-shrink: 0;
+}
+
+.sp-subsection-title {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 700;
+  color: #2c1a0e;
+}
+
+.sp-subsection-count {
+  display: inline-block;
+  margin-top: 3px;
+  font-size: 12px;
+  color: #7a6a55;
+  font-weight: 400;
+}
+
+/* ── Sub-section Body ─────────────────────────────────────────────────────── */
+.sp-subsection-body {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s cubic-bezier(0.4, 0, 0.2, 1),
+    padding 0.25s ease;
+  padding: 0 16px;
+  background: var(--k-bg, #f7f5ef);
+}
+
+.sp-subsection-body--open {
+  max-height: 2400px;
+  padding: 18px 16px 20px;
+}
+
+/* ── Grid ─────────────────────────────────────────────────────────────────── */
+.sp-grid {
+  display: grid;
+  gap: 14px;
+}
+
+.sp-grid--pusat {
+  grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+}
+
+.sp-grid--cabang {
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+}
+
+/* ── Kartu Pemimpin ───────────────────────────────────────────────────────── */
+.sp-card {
+  border-radius: 14px;
+  padding: 18px 16px 14px;
+  cursor: pointer;
+  transition: transform 0.18s ease, box-shadow 0.18s ease;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
+  border: 1px solid transparent;
+  position: relative;
+  outline: none;
+}
+
+.sp-card:focus-visible {
+  outline: 2px solid #c9a86c;
+  outline-offset: 2px;
+}
+
+.sp-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+.sp-card--pusat {
+  background: #fff;
+  border-color: #f0d9a8;
+  box-shadow: 0 2px 8px rgba(180, 130, 50, 0.08);
+}
+
+.sp-card--pusat:hover {
+  border-color: #c9a86c;
+  box-shadow: 0 8px 24px rgba(180, 130, 50, 0.18);
+}
+
+.sp-card--cabang {
+  background: #fff;
+  border-color: #b8dfc8;
+  box-shadow: 0 2px 8px rgba(40, 140, 80, 0.07);
+}
+
+.sp-card--cabang:hover {
+  border-color: #5daa7e;
+  box-shadow: 0 8px 24px rgba(40, 140, 80, 0.15);
+}
+
+/* ── Avatar Placeholder ───────────────────────────────────────────────────── */
+.sp-avatar-placeholder {
+  border-radius: 50%;
+  background: linear-gradient(135deg, #5c3d1e 0%, #a0714a 100%);
+  color: #fdf3e3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  flex-shrink: 0;
+  letter-spacing: 0.04em;
+  border: 2px solid rgba(201, 168, 108, 0.35);
+}
+
+/* ── Card Body ────────────────────────────────────────────────────────────── */
+.sp-card-avatar {
+  flex-shrink: 0;
+}
+
+.sp-card-body {
+  flex: 1;
+  min-width: 0;
+}
+
+.sp-card-name {
+  margin: 5px 0 4px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #2c1a0e;
+  line-height: 1.35;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.sp-card-asal {
+  margin: 0 0 3px;
+  font-size: 12px;
+  color: #7a6a55;
+}
+
+.sp-card-punguan {
+  margin: 0;
+  font-size: 11.5px;
+  color: #9a8a75;
+  line-height: 1.4;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.sp-card-cta {
+  font-size: 12px;
+  font-weight: 600;
+  color: #a07040;
+  margin-top: 4px;
+  transition: color 0.15s;
+}
+
+.sp-card--cabang .sp-card-cta {
+  color: #3a8a5a;
+}
+
+.sp-card:hover .sp-card-cta {
+  color: #5c3d1e;
+}
+
+.sp-card--cabang:hover .sp-card-cta {
+  color: #1e6b3e;
+}
+
+/* ── Badge ────────────────────────────────────────────────────────────────── */
+.sp-card-badge {
+  display: inline-block;
+  padding: 2px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.03em;
+  line-height: 1.6;
+}
+
+.sp-badge--pusat {
+  background: #fdf3e3;
+  color: #7a4a10;
+  border: 1px solid #e8c87a;
+}
+
+.sp-badge--cabang {
+  background: #e8f5ee;
+  color: #1a6638;
+  border: 1px solid #7dca9e;
+}
+
+/* ── Modal Backdrop ───────────────────────────────────────────────────────── */
+.sp-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.52);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  animation: sp-fade-in 0.18s ease;
+}
+
+@keyframes sp-fade-in {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+/* ── Modal ────────────────────────────────────────────────────────────────── */
+.sp-modal {
+  background: #fff;
+  border-radius: 22px;
+  width: 100%;
+  max-width: 480px;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.25);
+  animation: sp-slide-up 0.22s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes sp-slide-up {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+/* ── Modal Close ──────────────────────────────────────────────────────────── */
+.sp-modal-close {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.25);
+  border: none;
+  color: #fff;
+  font-size: 16px;
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s;
+  line-height: 1;
+}
+
+.sp-modal-close:hover {
+  background: rgba(255, 255, 255, 0.4);
+}
+
+/* ── Modal Header ─────────────────────────────────────────────────────────── */
+.sp-modal-header {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 28px 24px 22px;
+}
+
+.sp-modal-header--pusat {
+  background: linear-gradient(135deg, #3b2a1a 0%, #7a4a10 100%);
+}
+
+.sp-modal-header--cabang {
+  background: linear-gradient(135deg, #1a3d2a 0%, #2e7a50 100%);
+}
+
+.sp-modal-avatar-wrap {
+  flex-shrink: 0;
+}
+
+.sp-modal-header-info {
+  min-width: 0;
+}
+
+.sp-modal-badge {
+  display: inline-block;
+  padding: 2px 10px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  margin-bottom: 6px;
+}
+
+.sp-modal-header--pusat .sp-modal-badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #fde9b2;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.sp-modal-header--cabang .sp-modal-badge {
+  background: rgba(255, 255, 255, 0.18);
+  color: #b4f0cc;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+}
+
+.sp-modal-name {
+  margin: 0 0 4px;
+  font-size: 18px;
+  font-weight: 700;
+  color: #fff;
+  line-height: 1.3;
+}
+
+.sp-modal-asal {
+  margin: 0;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* ── Modal Body ───────────────────────────────────────────────────────────── */
+.sp-modal-body {
+  padding: 20px 24px 26px;
+}
+
+.sp-modal-info-row {
+  display: flex;
+  gap: 20px;
+}
+
+.sp-modal-info-item {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  flex: 1;
+}
+
+.sp-modal-info-label {
+  font-size: 11px;
+  font-weight: 600;
+  color: #9a8a75;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+}
+
+.sp-modal-info-value {
+  font-size: 14px;
+  color: #2c1a0e;
+  font-weight: 500;
+}
+
+.sp-id-badge {
+  display: inline-block;
+  width: fit-content;
+  background: #f7f0e6;
+  border: 1px solid #e8c87a;
+  border-radius: 6px;
+  padding: 1px 8px;
+  font-family: monospace;
+  font-size: 13px;
+  color: #7a4a10;
+  font-weight: 600;
+}
+
+.sp-modal-divider {
+  height: 1px;
+  background: #f0e8d8;
+  margin: 16px 0;
+}
+
+.sp-modal-desc {
+  margin: 0;
+  font-size: 14px;
+  color: #4a3a2a;
+  line-height: 1.72;
+}
+
+/* ── Responsive ───────────────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .sp-root-header {
+    padding: 18px 18px;
+  }
+
+  .sp-root-body--open {
+    padding: 16px 14px 20px;
+  }
+
+  .sp-root-title {
+    font-size: 17px;
+  }
+
+  .sp-grid--pusat,
+  .sp-grid--cabang {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .sp-modal {
+    max-width: 100%;
+    border-radius: 18px 18px 0 0;
+    margin-top: auto;
+  }
+
+  .sp-modal-backdrop {
+    align-items: flex-end;
+    padding: 0;
+  }
+}
+
+@media (max-width: 420px) {
+  .sp-grid--pusat,
+  .sp-grid--cabang {
+    grid-template-columns: 1fr;
+  }
+}

@@ -1,0 +1,126 @@
+{
+  "pemimpin_pusat": [
+    {
+      "id": "PP-001",
+      "nama": "Ompu Tua Habonoron",
+      "asal_punguan": "Huta Halasan",
+      "status": "Pemimpin Pusat",
+      "punguan_dipimpin": "Punguan Pusat Parmalim Huta Halasan",
+      "jabatan": "Raja Habonoron",
+      "foto": "src/assets/ProfilPemimpin/raja_habonoron.jpg",
+      "deskripsi": "Raja Habonoron merupakan pimpinan tertinggi dalam struktur kepemimpinan Parmalim Bale Pasogit Huta Halasan. Beliau bertanggung jawab atas seluruh kebijakan spiritual dan adat yang menyangkut kehidupan jemaat."
+    },
+    {
+      "id": "PP-002",
+      "nama": "Ompu Tua Namora Situmorang",
+      "asal_punguan": "Huta Halasan",
+      "status": "Pemimpin Pusat",
+      "punguan_dipimpin": "Punguan Pusat Parmalim Huta Halasan",
+      "jabatan": "Raja Namora",
+      "foto": "src/assets/ProfilPemimpin/raja_namora.jpg",
+      "deskripsi": "Raja Namora bertugas sebagai penasehat utama dan penjaga nilai-nilai spiritual Parmalim. Beliau berperan penting dalam setiap upacara adat dan pemberkatan jemaat."
+    },
+    {
+      "id": "PP-003",
+      "nama": "Ompu Tua Adat Sinambela",
+      "asal_punguan": "Huta Halasan",
+      "status": "Pemimpin Pusat",
+      "punguan_dipimpin": "Punguan Pusat Parmalim Huta Halasan",
+      "jabatan": "Raja Adat",
+      "foto": "src/assets/ProfilPemimpin/raja_adat.jpg",
+      "deskripsi": "Raja Adat memegang peranan sebagai penjaga dan pelaksana hukum adat Batak dalam komunitas Parmalim. Beliau memastikan setiap tata cara dan ritual dilaksanakan sesuai ketentuan adat yang berlaku."
+    },
+    {
+      "id": "PP-004",
+      "nama": "Ompu Tua Huta Simanjuntak",
+      "asal_punguan": "Huta Halasan",
+      "status": "Pemimpin Pusat",
+      "punguan_dipimpin": "Punguan Pusat Parmalim Huta Halasan",
+      "jabatan": "Raja Huta",
+      "foto": "src/assets/ProfilPemimpin/raja_huta.jpg",
+      "deskripsi": "Raja Huta bertanggung jawab atas pengelolaan dan pemeliharaan Bale Pasogit sebagai pusat peribadatan. Beliau mengkoordinasikan seluruh kegiatan yang berlangsung di lingkungan Huta Halasan."
+    }
+  ],
+  "ulu_punguan": [
+    {
+      "id": "PC-001",
+      "nama": "Drs. Martunas Hutapea",
+      "asal_punguan": "Medan",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Medan",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_medan.jpg",
+      "deskripsi": "Ulu Punguan Medan memimpin jemaat Parmalim di wilayah Kota Medan dan sekitarnya. Beliau aktif membina hubungan antar jemaat serta memimpin ibadah rutin punguan."
+    },
+    {
+      "id": "PC-002",
+      "nama": "Parsaoran Napitupulu, S.Th",
+      "asal_punguan": "Balige",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Balige",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_balige.jpg",
+      "deskripsi": "Ulu Punguan Balige memimpin jemaat di kawasan Toba Samosir. Beliau berperan aktif dalam melestarikan tradisi Parmalim di tanah leluhur."
+    },
+    {
+      "id": "PC-003",
+      "nama": "Pangihutan Siahaan",
+      "asal_punguan": "Pematangsiantar",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Pematangsiantar",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_siantar.jpg",
+      "deskripsi": "Ulu Punguan Pematangsiantar memimpin dan membina jemaat Parmalim di kota Siantar, menyelenggarakan kegiatan adat dan keagamaan secara berkala."
+    },
+    {
+      "id": "PC-004",
+      "nama": "Mangapul Situmeang",
+      "asal_punguan": "Tarutung",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Tarutung",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_tarutung.jpg",
+      "deskripsi": "Ulu Punguan Tarutung memimpin jemaat di wilayah Tapanuli Utara, khususnya di daerah Tarutung dan sekitarnya. Aktif dalam pembinaan generasi muda Parmalim."
+    },
+    {
+      "id": "PC-005",
+      "nama": "Hariandja Silalahi",
+      "asal_punguan": "Parapat",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Parapat",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_parapat.jpg",
+      "deskripsi": "Ulu Punguan Parapat membina jemaat di kawasan wisata Danau Toba. Beliau aktif mengenalkan nilai-nilai Parmalim kepada masyarakat sekitar danau."
+    },
+    {
+      "id": "PC-006",
+      "nama": "Rudi Pangaribuan",
+      "asal_punguan": "Sidikalang",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Sidikalang",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_sidikalang.jpg",
+      "deskripsi": "Ulu Punguan Sidikalang memimpin jemaat di wilayah Dairi. Aktif mengembangkan kegiatan sosial dan keagamaan untuk jemaat Parmalim di pedesaan."
+    },
+    {
+      "id": "PC-007",
+      "nama": "Togu Nainggolan",
+      "asal_punguan": "Jakarta",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Jakarta",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_jakarta.jpg",
+      "deskripsi": "Ulu Punguan Jakarta memimpin komunitas Parmalim di perantauan Jabodetabek. Beliau menjadi jembatan antara jemaat di rantau dengan pusat peribadatan di Huta Halasan."
+    },
+    {
+      "id": "PC-008",
+      "nama": "Poltak Gultom, S.H.",
+      "asal_punguan": "Doloksanggul",
+      "status": "Pemimpin Cabang",
+      "punguan_dipimpin": "Punguan Parmalim Doloksanggul",
+      "jabatan": "Ulu Punguan",
+      "foto": "src/assets/ProfilPemimpin/ulu_doloksanggul.jpg",
+      "deskripsi": "Ulu Punguan Doloksanggul memimpin jemaat di Humbang Hasundutan. Beliau dikenal aktif dalam kegiatan adat dan pemersatu komunitas Parmalim setempat."
+    }
+  ]
+}

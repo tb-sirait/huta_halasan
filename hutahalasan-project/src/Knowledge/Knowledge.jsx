@@ -12,6 +12,7 @@ import {
 } from "../hooks/usePengetahuan.js";
 import BalePartonggoanSection from "./BalePartonggoan/BalePartonggoanSection.jsx";
 import "../styles/konten-shared.css";
+import PemimpinSection from "./PemimpinSection/PemimpinSection.jsx";
 
 const Knowledge = () => {
   const navigate = useNavigate();
@@ -267,6 +268,8 @@ const Knowledge = () => {
 
             {/* ── Bale Partonggoan Section ── */}
             <BalePartonggoanSection />
+            {/* ── Pemimpin Section ── */}
+            <PemimpinSection />
           </div>
 
           {/* Sidebar */}
